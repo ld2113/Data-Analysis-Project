@@ -15,6 +15,6 @@ df['ID Interactor B'] = df['ID Interactor B'].map(lambda x: x.lstrip('entrez gen
 
 print(df.head())
 
-G = nx.from_pandas_dataframe(df, 'ID Interactor A', 'ID Interactor B', edge_attr=['Interaction Detection Method','Interaction Types','Source Database','Interaction Identifiers','Confidence Values'], create_using=MultiGraph())
+G = nx.from_pandas_dataframe(df, 'ID Interactor A', 'ID Interactor B', edge_attr=['Interaction Detection Method','Interaction Types','Source Database','Interaction Identifiers','Confidence Values'], create_using=nx.Graph())
 
 print(df.groupby(['ID Interactor A', 'ID Interactor B']).count())
