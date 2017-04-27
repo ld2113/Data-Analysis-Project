@@ -57,43 +57,41 @@ end
 
 
 while vdiffmx > 1e-3
-   
-for i=1:dimen
-    mv(i) = mean(v{i});
-    
-    vnew{i} = -0.5*(P*v{i}  - mv(i)*psum + (mv(i)*psumsum/N - (psum'*v{i})*(1/N))*ones(N,1));
-end
 
+    for i=1:dimen
+        mv(i) = mean(v{i});
 
-vnew{1} = vnew{1}/norm(vnew{1},2);
-
-for i=2:dimen
-    pom=zeros(size(vnew{i}));
-
-    for j=1:i-1
-        pom=pom+(vnew{j}'*vnew{i})*vnew{j};
+        vnew{i} = -0.5*(P*v{i}  - mv(i)*psum + (mv(i)*psumsum/N - (psum'*v{i})*(1/N))*ones(N,1));
     end
-    
-    vnew{i}=vnew{i}-pom;
-    vnew{i}=vnew{i}/norm(vnew{i},2);
-    
-end
-
-   count = count+1;
-  
-   
-for i=1:dimen
-    vdiff(i) = norm(v{i} - vnew{i});
-end
- 
-   vdiffmx = max(vdiff);%tu
-   
-for i=1:dimen
-    v{i} = vnew{i};
-end
 
 
-   
+    vnew{1} = vnew{1}/norm(vnew{1},2);
+
+    for i=2:dimen
+        pom=zeros(size(vnew{i}));
+
+        for j=1:i-1
+            pom=pom+(vnew{j}'*vnew{i})*vnew{j};
+        end
+
+        vnew{i}=vnew{i}-pom;
+        vnew{i}=vnew{i}/norm(vnew{i},2);
+
+    end
+
+       count = count+1;
+
+
+    for i=1:dimen
+        vdiff(i) = norm(v{i} - vnew{i});
+    end
+
+       vdiffmx = max(vdiff);%tu
+
+    for i=1:dimen
+        v{i} = vnew{i};
+    end
+
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -101,10 +99,10 @@ end
 
 for i=1:dimen
     mv(i) = mean(v{i});
-    
+
     Av{i} = -0.5*(P*v{i}  - mv(i)*psum + (mv(i)*psumsum/N - (psum'*v{i})*(1/N))*ones(N,1));
     lam(i) = v{i}'*Av{i};
-    
+
     xvals{i} = sqrt(lam(i))*v{i};
     xvals{i} = xvals{i}-min(xvals{i});
     xvals{i} = xvals{i}/max(xvals{i});
@@ -117,5 +115,3 @@ locations = xvals{1};
 for i=2:dimen
     locations = [locations xvals{i}];
 end
-
-
