@@ -8,6 +8,9 @@ import pandas as pd
 import networkx as nx
 
 import matplotlib.pyplot as plt
+from time import time
+
+t1 = time()
 
 K = 30
 Kmax = 200
@@ -25,6 +28,10 @@ N = G.number_of_nodes()
 
 # Calculate shortest pathlengths dictionary in the graph up to a threshold using networkx
 p = nx.all_pairs_shortest_path_length(G,K)
+
+t2 = time()
+
+print("Start until shortest pathlengths:",t2-t1)
 
 # Reformat path lengths to sparse matrix (issue with self-interactions!)
 dist_df = pd.DataFrame.from_dict(p).replace(0,2)
@@ -61,8 +68,10 @@ v.append(np.expand_dims(np.loadtxt('random1.txt',dtype=float),1))
 v.append(np.expand_dims(np.loadtxt('random2.txt',dtype=float),1))
 #########################
 
+t3=time()
 
-# Change threshold here!!
+print("Shortest pathlength up to while loop:", t3-t2)
+
 while vdiffmax > 0.001:
 
 	for i in range(dimen):
@@ -101,5 +110,11 @@ for i in range(dimen):
 	xvals[:,i] = np.squeeze(np.sqrt(lam[i]) * v[i])
 	xvals[i] -= xvals[i].min()
 	xvals[i] /= xvals[i].max()
+
+t4=time()
+
+print("While loop until end:", t4-t3)
+
+print("Toatal time:", t4-t1)
 
 print(xvals)
