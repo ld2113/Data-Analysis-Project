@@ -20,7 +20,6 @@ dimen = 2
 df = pd.read_table("~/work/example_data.txt", engine="c")
 
 # Create networkx graph from dataframe (single edge)
-#G = nx.from_pandas_dataframe(df, 'ID Interactor A', 'ID Interactor B', create_using=nx.Graph())
 G = nx.read_edgelist('edgelist.txt',nodetype=int)
 
 # Determine total number of proteins in the network
@@ -39,8 +38,6 @@ dist_df = dist_df.fillna(0)-Kmax
 dist_df[dist_df == -Kmax] = 0
 dist_mat = sp.csr_matrix(dist_df.values)
 
-
-
 sum = dist_mat.sum(1)
 sumsum = dist_mat.sum()
 
@@ -48,7 +45,6 @@ vdiff = np.ones((dimen,1))
 vdiffmax = 1
 count = 0
 
-v = []
 vnew = []
 vdiff = []
 Av = []
@@ -57,16 +53,13 @@ lam = np.zeros(dimen)
 xvals = np.zeros((N,dimen))
 
 for i in range(dimen):
-	v.append(np.random.randn(N,1))
 	vnew.append(np.zeros((N,1)))
 	vdiff.append(np.zeros((N,1)))
 	Av.append(np.zeros((N,1)))
 
-#########################
 v = []
 v.append(np.expand_dims(np.loadtxt('random1.txt',dtype=float),1))
 v.append(np.expand_dims(np.loadtxt('random2.txt',dtype=float),1))
-#########################
 
 t3=time()
 
@@ -115,6 +108,6 @@ t4=time()
 
 print("While loop until end:", t4-t3)
 
-print("Toatal time:", t4-t1)
+print("Total time:", t4-t1)
 
 print(xvals)
