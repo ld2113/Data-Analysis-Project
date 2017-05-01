@@ -112,6 +112,6 @@ t4=time()
 
 print("While loop until end:", t4-t3)
 
-print("Toatal time:", t4-t1)
+print("Total time:", t4-t1)
 
 print(xvals)
