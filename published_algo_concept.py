@@ -101,8 +101,8 @@ for i in range(dimen):
 	lam[i] = np.dot(v[i].T,Av[i])
 
 	xvals[:,i] = np.squeeze(np.sqrt(lam[i]) * v[i])
-	xvals[i] -= xvals[i].min()
-	xvals[i] /= xvals[i].max()
+	xvals[:,i] -= xvals[:,i].min()
+	xvals[:,i] /= xvals[:,i].max()
 
 t4=time()
 
