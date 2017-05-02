@@ -8,7 +8,9 @@ import pandas as pd
 import networkx as nx
 
 import matplotlib.pyplot as plt
+
 from time import time
+import os
 
 t1 = time()
 
@@ -16,11 +18,11 @@ K = 30
 Kmax = 200
 dimen = 2
 
-# Read Biogrid data into pandas dataframe
-df = pd.read_table("~/work/example_data.txt", engine="c")
+# Create relative path to file
+script_dir = os.path.dirname(__file__)
 
 # Create networkx graph from dataframe (single edge)
-G = nx.read_edgelist('edgelist.txt',nodetype=int)
+G = nx.read_edgelist(os.path.join(script_dir, 'matlab/in_out/edgelist.txt'),nodetype=int)
 
 # Determine total number of proteins in the network
 N = G.number_of_nodes()
@@ -58,8 +60,8 @@ for i in range(dimen):
 	Av.append(np.zeros((N,1)))
 
 v = []
-v.append(np.expand_dims(np.loadtxt('random1.txt',dtype=float),1))
-v.append(np.expand_dims(np.loadtxt('random2.txt',dtype=float),1))
+v.append(np.expand_dims(np.loadtxt(os.path.join(script_dir, 'matlab/in_out/random1.txt'),dtype=float),1))
+v.append(np.expand_dims(np.loadtxt(os.path.join(script_dir, 'matlab/in_out/random2.txt'),dtype=float),1))
 
 t3=time()
 
