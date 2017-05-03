@@ -9,6 +9,7 @@ import networkx as nx
 
 import matplotlib.pyplot as plt
 from time import time
+import sys
 
 t1 = time()
 
@@ -24,6 +25,10 @@ df = df.rename(columns={'#ID Interactor A': 'ID Interactor A'})
 df['ID Interactor A'] = df['ID Interactor A'].map(lambda x: x.lstrip('entrez gene/locuslink:'))
 df['ID Interactor B'] = df['ID Interactor B'].map(lambda x: x.lstrip('entrez gene/locuslink:'))
 
+
+# Remove non-human ppi from the dataframe
+df = df[df['Taxid Interactor A'].isin(['taxid:9606'])]
+df = df[df['Taxid Interactor B'].isin(['taxid:9606'])]
 
 # Create networkx graph from dataframe (single edge)
 G = nx.from_pandas_dataframe(df, 'ID Interactor A', 'ID Interactor B', create_using=nx.Graph())
