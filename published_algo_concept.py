@@ -1,7 +1,6 @@
 from __future__ import print_function
 from __future__ import division
 
-import scipy.sparse as sp
 import numpy as np
 
 import pandas as pd
@@ -38,10 +37,10 @@ print("Start until shortest pathlengths:",t2-t1)
 dist_df = pd.DataFrame.from_dict(p).replace(0,2)
 dist_df = dist_df.fillna(0)-Kmax
 dist_df[dist_df == -Kmax] = 0
-dist_mat = sp.csr_matrix(dist_df.values)
+dist_mat = dist_df.values
 
-sum = dist_mat.sum(1)
-sumsum = dist_mat.sum()
+sum = np.expand_dims(np.sum(dist_mat,1),1)
+sumsum = np.sum(dist_mat)
 
 vdiff = np.ones((dimen,1))
 vdiffmax = 1
@@ -71,7 +70,7 @@ while vdiffmax > 0.001:
 
 	for i in range(dimen):
 		mv[i] = np.mean(v[i])
-		vnew[i] = -0.5*(dist_mat.dot(v[i]) - mv[i]*sum + (mv[i]*sumsum/N - (np.dot(sum.T,v[i])*(1/N)).item()*np.ones((N,1))))
+		vnew[i] = -0.5*(np.dot(dist_mat,v[i]) - np.multiply(mv[i],sum) + (mv[i]*sumsum/N - np.multiply(np.multiply(np.dot(sum.T,v[i]),1/N).item(),np.ones((N,1)))))
 
 	vnew[0] /= np.linalg.norm(vnew[0],2)
 
