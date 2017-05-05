@@ -21,7 +21,7 @@ dimen = 2
 # Read Biogrid data into pandas dataframe
 df = pd.read_table("~/work/BIOGRID-ORGANISM-Homo_sapiens-3.4.147.mitab.txt", engine="c")
 
-# Rename first two columns of dataframe
+# Rename first two columns of dataframe and strip 'entrez gene/locuslink:' from every row
 df = df.rename(columns={'#ID Interactor A': 'ID Interactor A'})
 df['ID Interactor A'] = df['ID Interactor A'].map(lambda x: x.lstrip('entrez gene/locuslink:'))
 df['ID Interactor B'] = df['ID Interactor B'].map(lambda x: x.lstrip('entrez gene/locuslink:'))
@@ -98,7 +98,6 @@ while vdiffmax > 0.001:
 		vdiff[i] = np.linalg.norm(v[i] - vnew[i],2)
 
 	vdiffmax = max(vdiff)
-	#print(vdiffmax)
 
 	for i in range(dimen):
 		v[i] = vnew[i]
