@@ -191,3 +191,13 @@ plt.show()
 prc=sklearn.metrics.precision_recall_curve(one_d,inv_one_d_dist)
 plt.plot(prc[0],prc[1])
 plt.show()
+
+# Plot 3D embedding
+# from mpl_toolkits.mplot3d import Axes3D
+#
+# fig = plt.figure()
+# ax = fig.add_subplot(111, projection='3d')
+#
+# ax.scatter(xvals[:,0], xvals[:,1], xvals[:,2], s=0.1)
+#
+# plt.show()
