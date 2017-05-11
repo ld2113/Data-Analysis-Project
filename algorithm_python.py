@@ -23,9 +23,9 @@ import copy
 
 
 np.random.seed(100)
-K = 4
-Kmax = 5
-dimen = 2
+K = 10
+Kmax = 11
+dimen = 4
 
 t1 = time()
 
@@ -177,6 +177,11 @@ print("Number of predicted interactions at this threshold: ", np.sum(one_d_dist_
 print("Precision: ",sklearn.metrics.precision_score(one_d,one_d_dist_bin))
 print("Accuracy: ",sklearn.metrics.accuracy_score(one_d,one_d_dist_bin))
 print("Matthews Corr Coeff: ", sklearn.metrics.matthews_corrcoef(one_d,one_d_dist_bin))
+
+# Save coordinates and name arrays
+np.save('4Dcoordinates.npy', xvals)
+np.save('names.npy', names)
+np.save('labels.npy', one_d)
 
 # Plot 2D embedding
 plot = plt.scatter(xvals[:,0],xvals[:,1])
