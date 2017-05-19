@@ -123,7 +123,8 @@ nunits = 8
 
 
 print("----Loading and processing data----")
-labels, coord = prepare_data('arrays/labels.npy', 'arrays/coord_all_interactions.npy')
+#labels, coord = prepare_data('arrays/labels.npy', 'arrays/coord_all_interactions.npy')
+labels, coord = prepare_data('arrays/labels_resampled.npy', 'arrays/4D_coord_resampled.npy')
 labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1, train_split=0.75)
 
 
