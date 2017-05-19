@@ -115,18 +115,19 @@ def set_callbacks():
 
 ############################### Main Program ###################################
 
-print("----Loading and processing data----")
-labels, coord = prepare_data('arrays/labels.npy', 'arrays/coord_all_interactions.npy')
-labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=0.001, train_split=0.75)
-
-
-print("----Setting up the model----")
 # Setting hyperparameters
 reg = 0.1
 drop = 0.5
 nlayers = 2
 nunits = 8
 
+
+print("----Loading and processing data----")
+labels, coord = prepare_data('arrays/labels.npy', 'arrays/coord_all_interactions.npy')
+labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1, train_split=0.75)
+
+
+print("----Setting up the model----")
 model = build_model(coord.shape[1], reg, drop, nlayers, nunits)
 
 
@@ -139,7 +140,7 @@ compiled_mod.fit(coord_train, labels_train, epochs=10, batch_size=64, callbacks=
 
 
 pred = compiled_mod.predict(coord_test,batch_size=64, verbose=0)
-print('\n','Final Prediciton Score Summary: ', '\n', "MAX:", max(pred),'\n' , "MIN:", min(pred),'\n')
+print('\n','Final Prediciton Score Summary (Validation Set Size:', np.abs(len(pred)),'):' , '\n', "MAX:", max(pred),'\n' , "MIN:", min(pred),'\n')
 
 # Evaluate model with test data
 #score = model.evaluate(coord_test, coord_test, batch_size=128)
