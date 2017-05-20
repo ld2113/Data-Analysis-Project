@@ -45,18 +45,13 @@ class Cust_metrics(keras.callbacks.Callback):
 		return
 
 
-def prepare_data(labels_path, coord_path):
+def normalise_coord(array_list):
 
-	# Load coordinate and labels data
-	labels = np.load(labels_path)
-	coord = np.load(coord_path)
-	#names = np.load('arrays/names.npy')
+	for i in range(len(array_list)):
+		array_list[i] -= 0.5
+		array_list[i] *= 2
 
-	# Preprocess coordinate data (zero centered and between -1 and 1)
-	coord -= 0.5
-	coord *= 2
-
-	return labels, coord
+	return array_list
 
 
 def subset_data(labels, coord, keep=1.0, train_split=1.0):
@@ -122,14 +117,20 @@ nlayers = 2
 nunits = 8
 
 
-print("----Loading and processing data----")
-#labels, coord = prepare_data('arrays/labels.npy', 'arrays/coord_all_interactions.npy')
-labels, coord = prepare_data('arrays/labels_resampled.npy', 'arrays/4D_coord_resampled.npy')
-labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1, train_split=0.75)
+print("----Loading Data----")
+labels_train = np.load('arrays/labels_075_resampled.npy')
+labels_test = np.load('arrays/labels_025.npy')
+coord_train = np.load('arrays/4D_075_cint_resampled_8x194m.npy')
+coord_test = np.load('arrays/4D_025_cint_8x32m.npy')
+
+
+print("----Processing Data----")
+coord_test, coord_train = normalise_coord([coord_test, coord_train])
+#labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1, train_split=0.75)
 
 
 print("----Setting up the model----")
-model = build_model(coord.shape[1], reg, drop, nlayers, nunits)
+model = build_model(coord_train.shape[1], reg, drop, nlayers, nunits)
 
 
 print("----Compiling the model----")
