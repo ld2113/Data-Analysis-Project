@@ -7,9 +7,9 @@ import sys
 import pickle
 
 import sklearn.metrics as met
+from imblearn.over_sampling import SMOTE
 
 import keras
-
 from keras import regularizers
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
@@ -73,6 +73,13 @@ def subset_data(labels, coord, keep=1.0, train_split=1.0):
 
 	return labels_train, labels_test, coord_train, coord_test
 
+def resample_data(labels, coord):
+
+	sm = SMOTE(random_state=42, n_jobs=10)
+	coord_resampled, labels_resampled = sm.fit_sample(coord, labels)
+
+	return labels_resampled, coord_resampled
+
 
 def build_model(indim, reg, drop, nlayers, nunits, act):
 
@@ -121,20 +128,22 @@ def schedule(epoch):
 # Setting hyperparameters
 reg = 0.0
 drop = 0.0
-nlayers = 10
-nunits = 128
+nlayers = 1
+nunits = 8
 
 
 print("----Loading Data----")
-labels_train = np.load('arrays/labels_075_resampled.npy')
-labels_test = np.load('arrays/labels_025.npy')
-coord_train = np.load('arrays/4D_075_cint_resampled_8x194m.npy')
-coord_test = np.load('arrays/4D_025_cint_8x32m.npy')
-
+#labels_train = np.load('arrays/labels_075_resampled.npy')
+#labels_test = np.load('arrays/labels_025.npy')
+#coord_train = np.load('arrays/4D_075_cint_resampled_8x194m.npy')
+#coord_test = np.load('arrays/4D_025_cint_8x32m.npy')
+labels = np.load('arrays/labels_100.npy')
+coord = np.load('arrays/4D_cint_8x129m.npy')
 
 print("----Processing Data----")
-coord_test, coord_train = normalise_coord([coord_test, coord_train])
-#labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1, train_split=0.75)
+labels, labels_test, coord, coord_test = subset_data(labels, coord, keep=0.001, train_split=0.75)
+coord_test, coord_train = normalise_coord([coord_test, coord])
+labels_train, coord_train = resample_data(labels, coord)
 
 
 print("----Setting up the model----")
