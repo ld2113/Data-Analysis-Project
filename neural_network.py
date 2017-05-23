@@ -113,9 +113,10 @@ def set_callbacks():
 	cb = []
 
 	#cb.append(keras.callbacks.ReduceLROnPlateau(monitor='loss', factor=0.5, patience=3, verbose=1, mode='auto', epsilon=0.0001, cooldown=0, min_lr=0))
-	cb.append(keras.callbacks.LearningRateScheduler(schedule))
+	#cb.append(keras.callbacks.LearningRateScheduler(schedule))
 	#cb.append(keras.callbacks.EarlyStopping(monitor='loss', min_delta=0.00001, patience=10, verbose=1, mode='auto'))
 	cb.append(Cust_metrics())
+	#cb.append(keras.callbacks.TensorBoard(log_dir='./logs', histogram_freq=1, write_graph=True, write_images=True))
 
 	return cb
 
@@ -129,21 +130,21 @@ def schedule(epoch):
 reg = 0.0
 drop = 0.0
 nlayers = 1
-nunits = 8
+nunits = 128
 
 
 print("----Loading Data----")
-#labels_train = np.load('arrays/labels_075_resampled.npy')
-#labels_test = np.load('arrays/labels_025.npy')
-#coord_train = np.load('arrays/4D_075_cint_resampled_8x194m.npy')
-#coord_test = np.load('arrays/4D_025_cint_8x32m.npy')
-labels = np.load('arrays/labels_100.npy')
-coord = np.load('arrays/4D_cint_8x129m.npy')
+labels_train = np.load('arrays/labels_075_resampled.npy')
+labels_test = np.load('arrays/labels_025.npy')
+coord_train = np.load('arrays/4D_075_cint_resampled_8x194m.npy')
+coord_test = np.load('arrays/4D_025_cint_8x32m.npy')
+#labels = np.load('arrays/labels_100.npy')
+#coord = np.load('arrays/4D_cint_8x129m.npy')
 
 print("----Processing Data----")
-labels, labels_test, coord, coord_test = subset_data(labels, coord, keep=0.001, train_split=0.75)
-coord_test, coord_train = normalise_coord([coord_test, coord])
-labels_train, coord_train = resample_data(labels, coord)
+#labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1.0, train_split=0.75)
+coord_test, coord_train = normalise_coord([coord_test, coord_train])
+#labels_train, coord_train = resample_data(labels_train, coord_train)
 
 
 print("----Setting up the model----")
