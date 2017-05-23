@@ -53,8 +53,8 @@ class Cust_metrics(keras.callbacks.Callback):
 def normalise_coord(array_list):
 
 	for i in range(len(array_list)):
-		array_list[i] -= 0.5
-		array_list[i] *= 2
+		array_list[i] -= np.mean(array_list[i], axis=0)
+		array_list[i] =  array_list[i] / np.std(array_list[i], axis=0) 
 
 	return array_list
 
@@ -143,8 +143,8 @@ coord_test = np.load('arrays/4D_025_cint_8x32m.npy')
 
 print("----Processing Data----")
 #labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1.0, train_split=0.75)
-coord_test, coord_train = normalise_coord([coord_test, coord_train])
 #labels_train, coord_train = resample_data(labels_train, coord_train)
+coord_test, coord_train = normalise_coord([coord_test, coord_train])
 
 
 print("----Setting up the model----")
