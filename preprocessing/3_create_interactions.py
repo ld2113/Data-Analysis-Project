@@ -1,4 +1,9 @@
+from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import division
+
 import numpy as np
+
 
 def create_interactions(input):
 	shape = int((input.shape[0]*input.shape[0]-input.shape[0])/2.0)
@@ -22,10 +27,10 @@ def create_interactions(input):
 
 
 # Load input
-input = np.load('../arrays/7D_coord_4x16k.npy')
+input = np.load('arrays/7D_coord_7x16k.npy')
 
 # Create interactions
 interactions = create_interactions(input)
 
 # Save to file
-np.save('../arrays/7D_cint_14x129m.npy', interactions)
+np.save('arrays/7D_cint_14x129m.npy', interactions)
