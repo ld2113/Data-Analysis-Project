@@ -44,6 +44,15 @@ def calc_pathlengths(df, K, Kmax):
 
 	return names, dist_df_orig, dist_mat
 
+def create_labels(dist_df_orig):
+	adj_df = copy.copy(dist_df_orig)
+	adj_df[adj_df!=1.0] = 0
+	adj_mat = adj_df.values
+	indices = np.triu_indices_from(adj_mat,k=1)
+	labels = adj_mat[indices]
+
+	return labels
+
 
 # Set parameters
 K = 15
@@ -56,7 +65,11 @@ df = process_df(path)
 # Calculate distance
 names, dist_df_orig, dist_mat = calc_pathlengths(df, K, Kmax)
 
+# Create labels
+labels = create_labels(dist_df_orig)
+
 # Save data
 np.save('arrays/names.npy', names)
 np.save('arrays/dist_mat.npy', dist_mat)
+np.save('arrays/labels.npy', labels)
 dist_df_orig.to_pickle('arrays/dist_df_orig.pkl')
