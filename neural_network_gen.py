@@ -3,6 +3,7 @@ from __future__ import division
 from __future__ import absolute_import
 
 import numpy as np
+import pandas as pd
 import sys
 import pickle
 
@@ -28,7 +29,8 @@ class Cust_metrics(keras.callbacks.Callback):
 
 	def on_epoch_end(self, epoch, logs={}):
 
-		epoch_pred = self.model.predict(coord_test)
+		generator_predict = gen_predict(lab_names[int(train_split*len(lab_names)):], coord_df, domains_df, batchsize)
+		epoch_pred = self.model.predict_generator(generator_predict, int(np.ceil(len(lab_names[int(0.75*len(lab_names)):])/batchsize)))
 		epoch_bin_pred = np.array(epoch_pred > 0.5).astype(int)
 		#self.losses.append(logs.get('loss'))
 
@@ -75,12 +77,46 @@ def subset_data(labels, coord, keep=1.0, train_split=1.0):
 
 	return labels_train, labels_test, coord_train, coord_test
 
+
 def resample_data(labels, coord):
 
 	sm = SMOTE(random_state=42, n_jobs=10)
 	coord_resampled, labels_resampled = sm.fit_sample(coord, labels)
 
 	return labels_resampled, coord_resampled
+
+
+def gen_train(lab_names, coord_df, domains_df, mb_size, b_size):
+
+	nmb = int(np.ceil(lab_names.shape[0]/mb_size))
+	sm = SMOTE(random_state=42, n_jobs=10)
+
+	for i in range(nmb):
+		coord1 = coord_df.loc[lab_names[i*mb_size:(i+1)*mb_size,0]].values
+		domains1 = domains_df.loc[lab_names[i*mb_size:(i+1)*mb_size,0]].values
+		coord2 = coord_df.loc[lab_names[i*mb_size:(i+1)*mb_size,1]].values
+		domains2 = domains_df.loc[lab_names[i*mb_size:(i+1)*mb_size,1]].values
+
+		mb_data = np.concatenate((coord1, coord2, domains1, domains2), axis=1)
+		mb_labels = lab_names[i*mb_size:(i+1)*mb_size,2]
+
+		coord_resampled, labels_resampled = sm.fit_sample(mb_data, mb_labels)
+
+		for j in range(int(np.ceil(labels_resampled.shape[0]/b_size))):
+			yield (coord_resampled[j*b_size:(j+1)*b_size],labels_resampled[j*b_size:(j+1)*b_size])
+
+
+def gen_predict(lab_names, coord_df, domains_df, b_size):
+	for i in range(int(np.ceil(lab_names.shape[0]/b_size))):
+		coord1 = coord_df.loc[lab_names[i*b_size:(i+1)*b_size,0]].values
+		domains1 = domains_df.loc[lab_names[i*b_size:(i+1)*b_size,0]].values
+		coord2 = coord_df.loc[lab_names[i*b_size:(i+1)*b_size,1]].values
+		domains2 = domains_df.loc[lab_names[i*b_size:(i+1)*b_size,1]].values
+
+		b_data = np.concatenate((coord1, coord2, domains1, domains2), axis=1)
+		b_labels = lab_names[i*b_size:(i+1)*b_size,2]
+
+		yield (b_data,b_labels)
 
 
 def build_model(indim, reg, drop, nlayers, nunits, act):
@@ -110,6 +146,7 @@ def compile_mod(model):
 
 	return model
 
+
 def set_callbacks():
 
 	cb = []
@@ -122,6 +159,7 @@ def set_callbacks():
 
 	return cb
 
+
 def schedule(epoch):
 	return 0.0003/pow(2,epoch)
 
@@ -131,26 +169,30 @@ def schedule(epoch):
 # Setting hyperparameters
 reg = 0.0
 drop = 0.0
+indim = 7*2 + 11664*2
 nlayers = 1
-nunits = 128
+nunits = 1000
+train_split = 0.75
+batchsize = 64
 
 
 print("----Loading Data----")
-labels_train = np.load('arrays/full_embed/7D_labels_075_resampled.npy')
-labels_test = np.load('arrays/full_embed/labels_025.npy')
-coord_train = np.load('arrays/full_embed/7D_075_cint_resampled_14x194m.npy')
-coord_test = np.load('arrays/full_embed/7D_025_cint_14x32m.npy')
-#labels = np.load('arrays/labels_100.npy')
-#coord = np.load('arrays/4D_cint_8x129m.npy')
+lab_names = np.load('arrays/full_embed/names_labels_3x129m.npy')
+coord = np.load('arrays/full_embed/7D_coord_7x16k.npy')
+names = np.load('arrays/embedding_and_names/names.npy')
+domains_df = pd.read_pickle('arrays/domain_df.pckl')
+
 
 print("----Processing Data----")
-#labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1.0, train_split=0.75)
-#labels_train, coord_train = resample_data(labels_train, coord_train)
-coord_test, coord_train = normalise_coord([coord_test, coord_train])
+coord -= 0.5
+coord *= 2.0
+coord_df = pd.DataFrame(coord, index=names)
+
+generator_train = gen_train(lab_names[0:int(train_split*len(lab_names))], coord_df, domains_df, 100000, 64)
 
 
 print("----Setting up the model----")
-model = build_model(coord_train.shape[1], reg, drop, nlayers, nunits, 'relu')
+model = build_model(indim, reg, drop, nlayers, nunits, 'relu')
 
 
 print("----Compiling the model----")
@@ -158,7 +200,10 @@ compiled_mod = compile_mod(model)
 
 
 print("----Model training----")
-compiled_mod.fit(coord_train, labels_train, epochs=5, batch_size=64, callbacks=set_callbacks())#,validation_split=0.25)
+compiled_mod.fit_generator(generator_train, int(np.ceil(len(lab_names[0:int(train_split*len(lab_names))])/batchsize)), epochs=5, callbacks=set_callbacks(), max_q_size=100, workers=1)#,validation_split=0.25)
+
+
+int(np.ceil(len(lab_names[0:int(train_split*len(lab_names))])/batchsize))
 
 
 #pred = compiled_mod.predict(coord_test,batch_size=64, verbose=0)
