@@ -33,7 +33,7 @@ class Cust_metrics(keras.callbacks.Callback):
 		#self.losses.append(logs.get('loss'))
 
 		#self.aucs.append(roc_auc_score(labels_test, y_pred))
-		print('\n', 'Custom epoch metrics:  auc:', met.roc_auc_score(labels_test, epoch_pred), end=' - ')
+		print('\n', 'Custom epoch metrics:  auroc:', met.roc_auc_score(labels_test, epoch_pred), ' - aupr:', met.average_precision_score(labels_test, epoch_pred), end=' - ')
 
 		print('mcc:', met.matthews_corrcoef(labels_test,epoch_bin_pred), ' - acc:', met.accuracy_score(labels_test,epoch_bin_pred), end=' - ')
 
@@ -54,7 +54,7 @@ def normalise_coord(array_list):
 
 	for i in range(len(array_list)):
 		array_list[i] -= np.mean(array_list[i], axis=0)
-		array_list[i] =  array_list[i] / np.std(array_list[i], axis=0) 
+		array_list[i] =  array_list[i] / np.std(array_list[i], axis=0)
 
 	return array_list
 
@@ -101,7 +101,7 @@ def build_model(indim, reg, drop, nlayers, nunits, act):
 def compile_mod(model):
 
 	# Compiling the model
-	adam = keras.optimizers.Adam(lr=0.0003, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+	adam = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 	#sdg = keras.optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=True)
 
 	model.compile(loss='binary_crossentropy', optimizer=adam, metrics=['accuracy'])
@@ -134,10 +134,10 @@ nunits = 128
 
 
 print("----Loading Data----")
-labels_train = np.load('arrays/labels_075_resampled.npy')
-labels_test = np.load('arrays/labels_025.npy')
-coord_train = np.load('arrays/4D_075_cint_resampled_8x194m.npy')
-coord_test = np.load('arrays/4D_025_cint_8x32m.npy')
+labels_train = np.load('arrays/full_embed/7D_labels_075_resampled.npy')
+labels_test = np.load('arrays/full_embed/labels_025.npy')
+coord_train = np.load('arrays/full_embed/7D_075_cint_resampled_14x194m.npy')
+coord_test = np.load('arrays/full_embed/7D_025_cint_14x32m.npy')
 #labels = np.load('arrays/labels_100.npy')
 #coord = np.load('arrays/4D_cint_8x129m.npy')
 
