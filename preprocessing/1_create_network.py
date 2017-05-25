@@ -26,11 +26,25 @@ def process_df(path):
 
 	return df
 
-def calc_pathlengths(df, K, Kmax):
+
+def create_graph(df, rm_frac=0.1):
 	# Create networkx graph from dataframe (single edge)
 	G = nx.from_pandas_dataframe(df, 'ID Interactor A', 'ID Interactor B', create_using=nx.Graph())
-	# Determine total number of proteins in the network
-	N = G.number_of_nodes()
+
+	if rm_frac > 0.0:
+		np.random.seed(42)
+		ind_sample = np.random.choice(np.arange(len(nx.edges(G))), size=int(rm_frac*len(nx.edges(G))), replace=False)
+		edgelist = nx.edges(G)
+		rm_edges = [edgelist[i] for i in ind_sample]
+		G.remove_edges_from(rm_edges)
+
+	else:
+		rm_edges = []
+
+	return G, rm_edges
+
+
+def calc_pathlengths(G, K, Kmax):
 	# Calculate shortest pathlengths dictionary in the graph up to a threshold using networkx
 	p = nx.all_pairs_shortest_path_length(G,K)
 
@@ -44,6 +58,7 @@ def calc_pathlengths(df, K, Kmax):
 
 	return names, dist_df_orig, dist_mat
 
+
 def create_labels(dist_df_orig):
 	adj_df = copy.copy(dist_df_orig)
 	adj_df[adj_df!=1.0] = 0
@@ -54,22 +69,33 @@ def create_labels(dist_df_orig):
 	return labels
 
 
+############################## Main Code #######################################
+
 # Set parameters
-K = 15
-Kmax = 16
+K = 4
+Kmax = 5
 path = "~/work/BIOGRID-ORGANISM-Homo_sapiens-3.4.147.mitab.txt"
 
 # Get data
+print('---Processing Data---')
 df = process_df(path)
 
+# Create graph and remove some edges
+print('---Processing Graph---')
+G, rm_edges = create_graph(df, rm_frac=0.1)
+
 # Calculate distance
-names, dist_df_orig, dist_mat = calc_pathlengths(df, K, Kmax)
+print('---Calculating Distances---')
+names, dist_df_orig, dist_mat = calc_pathlengths(G, K, Kmax)
 
 # Create labels
+print('---Creating Labels---')
 labels = create_labels(dist_df_orig)
 
 # Save data
-np.save('arrays/names.npy', names)
-np.save('arrays/dist_mat.npy', dist_mat)
-np.save('arrays/labels.npy', labels)
-dist_df_orig.to_pickle('arrays/dist_df_orig.pkl')
+print('---Saving Data---')
+#np.save('arrays/names.npy', names)
+np.save('arrays/075_embed/network/dist_mat_4_5.npy', dist_mat)
+np.save('arrays/075_embed/network/labels_100.npy', labels)
+np.save('arrays/075_embed/network/rm_edges.npy', rm_edges)
+dist_df_orig.to_pickle('arrays/075_embed/network/dist_df_orig_4_5.pkl')
