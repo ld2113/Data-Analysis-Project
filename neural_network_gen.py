@@ -89,7 +89,7 @@ def resample_data(labels, coord):
 def gen_train(lab_names, coord_df, domains_df, mb_size, b_size):
 
 	nmb = int(np.ceil(lab_names.shape[0]/mb_size))
-	sm = SMOTE(random_state=42, n_jobs=10)
+	sm = SMOTE(random_state=42, n_jobs=1)
 
 	for i in range(nmb):
 		coord1 = coord_df.loc[lab_names[i*mb_size:(i+1)*mb_size,0]].values
@@ -171,7 +171,7 @@ reg = 0.0
 drop = 0.0
 indim = 7*2 + 11664*2
 nlayers = 1
-nunits = 1000
+nunits = 10000
 train_split = 0.75
 batchsize = 64
 
@@ -188,7 +188,7 @@ coord -= 0.5
 coord *= 2.0
 coord_df = pd.DataFrame(coord, index=names)
 
-generator_train = gen_train(lab_names[0:int(train_split*len(lab_names))], coord_df, domains_df, 100000, 64)
+generator_train = gen_train(lab_names[0:int(train_split*len(lab_names))], coord_df, domains_df, 10000, 64)
 
 
 print("----Setting up the model----")

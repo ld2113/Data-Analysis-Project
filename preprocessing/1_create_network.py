@@ -5,6 +5,7 @@ from __future__ import division
 import numpy as np
 import pandas as pd
 import networkx as nx
+import copy
 
 
 def process_df(path):
