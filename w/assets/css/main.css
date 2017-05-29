@@ -1091,7 +1091,7 @@
 			-webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out;
 			-ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
 			transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
-			background-image: url("../../images/bg5_darker.png");
+			background-image: url("../../images/bg1_darker.png");
 			background-position: center;
 			background-size: cover;
 			background-repeat: no-repeat;
@@ -1291,7 +1291,7 @@
 
 				#header nav ul li a {
 					display: block;
-					min-width: 8.5rem;
+					min-width: 8rem;
 					height: 2.75rem;
 					line-height: 2.75rem;
 					padding: 0 1.25rem 0 1.45rem;
