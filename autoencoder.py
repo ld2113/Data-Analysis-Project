@@ -1,4 +1,4 @@
-print("in, 20, out")
+print("in, 64, out")
 import keras
 from keras.layers import Input, Dense
 from keras.models import Model
@@ -16,7 +16,7 @@ train = pd.read_pickle('arrays/domain_df.pckl').values
 
 
 input = Input(shape=(train.shape[1],))
-encoded = Dense(20, activation='tanh')(input)
+encoded = Dense(64, activation='tanh')(input)
 #encoded = Dense(1, activation='relu')(encoded)
 #encoded = Dense(1024, activation='relu')(encoded)
 
@@ -40,6 +40,8 @@ autoencoder.fit(train, train,
                 shuffle=True,
                 callbacks=cb)
 
+encoder = Model(input, encoded)
+
 print("TRAIN STATISTICS")
 print("INSUM",np.sum(train))
 pred_out = autoencoder.predict(train)
@@ -60,3 +62,7 @@ print("Precision:", met.precision_score(test, bin_test, average='micro'))
 print("AUROC:", met.roc_auc_score(test, pred_test, average='micro'))
 print("AUPRC:", met.average_precision_score(test, pred_test, average='micro'))
 '''
+
+enc_pred = encoder.predict(train)
+
+np.save('arrays/encoded_dom_64_tanh_1.npy',enc_pred)
