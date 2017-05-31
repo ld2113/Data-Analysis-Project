@@ -203,4 +203,4 @@ compiled_mod = compile_mod(model)
 
 print("----Model training----")
 n_gen_train = int(np.floor(indx/batchsize))
-compiled_mod.fit_generator(generator_train, n_gen_train, epochs=2, callbacks=set_callbacks(), max_q_size=100, workers=1)#,validation_split=0.25)
+compiled_mod.fit_generator(generator_train, n_gen_train, epochs=10, callbacks=set_callbacks(), max_q_size=100, workers=1)#,validation_split=0.25)
