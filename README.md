@@ -10,6 +10,7 @@
 - Is it actually okay to train the autoencoder without holdout?
 - use 4/7/10D embedding
 - Pass val. data directly to network (rather then testing later)
+- Write multiprocessing generator
 
 - Use crossvalidation to validate NN sklearn.cross_validation.StratifiedKfold
 - Find way to replace embedding
