@@ -73,10 +73,10 @@ def embedding(dimen, N, dist_mat):
 dist_mat = np.load('arrays/075_embed/network/dist_mat_4_5.npy')
 
 # Run embedding
-dimen = 10
+dimen = 2
 N = dist_mat.shape[0]
 print("---Running", dimen, "dimensional Embedding---")
 coord = embedding(dimen, N, dist_mat)
 
 # Save data
-np.save('arrays/075_embed/10D_coord_10x16k.npy', coord)
+np.save('arrays/075_embed/2D_coord_10x16k.npy', coord)

@@ -6,7 +6,9 @@ import numpy as np
 
 
 def create_interactions(input):
+	# IS THE SHAPE CALCULATION CORRECT HERE??
 	shape = int((input.shape[0]*input.shape[0]-input.shape[0])/2.0)
+	print("SHAPE", shape)
 	interactions = np.zeros([shape,input.shape[1]*2])
 
 	# First protein coordinates
@@ -27,10 +29,12 @@ def create_interactions(input):
 
 
 # Load input
-input = np.load('arrays/7D_coord_7x16k.npy')
+input = np.load('arrays/075_embed/network/labels_100.npy')
+
+input = np.expand_dims(input, axis = 1)
 
 # Create interactions
 interactions = create_interactions(input)
-
+print(interactions.shape)
 # Save to file
-np.save('arrays/7D_cint_14x129m.npy', interactions)
+#np.save('arrays/full_embed/names_labels_3x129m.npy', interactions)
