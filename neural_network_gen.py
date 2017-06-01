@@ -9,6 +9,7 @@ import pickle
 
 import sklearn.metrics as met
 from imblearn.over_sampling import SMOTE
+from multiprocessing_generator import ParallelGenerator
 
 import keras
 from keras import regularizers
@@ -190,7 +191,7 @@ train_lab_names_neg = train_lab_names_df[train_lab_names_df[2]==0].values
 
 test_lab_names = lab_names[indx:]
 
-generator_train = train_gen(train_lab_names_pos, train_lab_names_neg, coord_df, domains_df, batchsize)
+#generator_train = train_gen(train_lab_names_pos, train_lab_names_neg, coord_df, domains_df, batchsize)
 
 
 print("----Setting up the model----")
@@ -203,4 +204,5 @@ compiled_mod = compile_mod(model)
 
 print("----Model training----")
 n_gen_train = int(np.floor(indx/batchsize))
-compiled_mod.fit_generator(generator_train, n_gen_train, epochs=10, callbacks=set_callbacks(), max_q_size=100, workers=1)#,validation_split=0.25)
+with ParallelGenerator(train_gen(train_lab_names_pos, train_lab_names_neg, coord_df, domains_df, batchsize), max_lookahead=100) as g:
+	compiled_mod.fit_generator(g, n_gen_train, epochs=10, callbacks=set_callbacks(), max_q_size=100, workers=1)#,validation_split=0.25)
