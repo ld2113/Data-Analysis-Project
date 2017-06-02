@@ -1,16 +1,9 @@
 # Data-Analysis-Project
 
 ## ToDo
-- Fix generator (without SMOTE)
-- Do random sampling in generator instead of SMOTE (compare methods)
+- Use embedding layer for training
 - Include automatic NN metric logging
-- Compare performance of different autoencoder outputs
-- How to do partial embedding for test and validation data
-- Create network with two seperate inputs which are later joined
-- Is it actually okay to train the autoencoder without holdout?
-- use 4/7/10D embedding
-- Pass val. data directly to network (rather then testing later)
-- Write multiprocessing generator
+- Pass val. data directly (not with generator)
 
 - Use crossvalidation to validate NN sklearn.cross_validation.StratifiedKfold
 - Find way to replace embedding
@@ -19,4 +12,16 @@
 -- viz: different network structures and their performance - interactive
 -- viz: subsample embedding
 
+## Comparisons
+- Model hyperparameters (no. of layers/units, reg. strength, dropout, batchsize)
+- SMOTE vs simple oversampling
+- Single vs multi input network
+- Embedding dimensionality
+- Domains encoding (dimensionality, regularisation, activation function)
+- Auxilary output in multi input model
+
+
 ## Questions
+- How to do partial embedding for test and validation data
+- Is it actually okay to train the autoencoder without holdout?
+- What other data to include
