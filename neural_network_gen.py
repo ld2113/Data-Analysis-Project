@@ -8,7 +8,6 @@ import sys
 import pickle
 
 import sklearn.metrics as met
-from imblearn.over_sampling import SMOTE
 from multiprocessing_generator import ParallelGenerator
 
 import keras
@@ -29,7 +28,8 @@ class Cust_metrics(keras.callbacks.Callback):
 
 	def on_epoch_end(self, epoch, logs={}):
 
-		n_gen_iter = int(np.floor(test_lab_names.shape[0]/batchsize))
+		#n_gen_iter = int(np.floor(test_lab_names.shape[0]/batchsize))
+		n_gen_iter = 10000
 		with ParallelGenerator(test_gen(test_lab_names, coord_df, domains_df, batchsize), max_lookahead=100) as g:
 			epoch_pred = self.model.predict_generator(g, n_gen_iter)
 		epoch_bin_pred = np.array(epoch_pred > 0.5).astype(int)
@@ -37,7 +37,7 @@ class Cust_metrics(keras.callbacks.Callback):
 
 		print('\n', 'Custom epoch metrics:  auroc:', met.roc_auc_score(labels_test, epoch_pred), ' - aupr:', met.average_precision_score(labels_test, epoch_pred), end=' - ')
 		print('mcc:', met.matthews_corrcoef(labels_test,epoch_bin_pred), ' - acc:', met.accuracy_score(labels_test,epoch_bin_pred), end=' - ')
-		print("Prediciton  MAX:", max(epoch_pred) , "Prediction MIN:", min(epoch_pred), end=' - ')
+		print("Prediciton  MAX:", max(epoch_pred) , "MIN:", min(epoch_pred), end=' - ')
 		print("Frac. pos. pred.:", np.sum(epoch_bin_pred)/len(epoch_bin_pred))
 
 		return
@@ -85,7 +85,7 @@ def test_gen(test_lab_names, coord_df, domains_df, b_size):
 		domains2 = domains_df.loc[test_lab_names[c*b_size:(c+1)*b_size,1]].values
 
 		b_data = np.concatenate((coord1, coord2, domains1, domains2), axis=1)
-		b_labels = lab_names[c*b_size:(c+1)*b_size,2]
+		b_labels = test_lab_names[c*b_size:(c+1)*b_size,2]
 
 		c += 1
 
@@ -111,34 +111,6 @@ def train_gen(lab_names_pos, lab_names_neg, coord_df, domains_df, b_size):
 		yield (b_data,b_labels)
 
 
-def build_model(indim, reg, drop, nlayers, nunits, act):
-
-	# Setting up model
-	model = Sequential()
-
-	model.add(Dense(nunits, input_dim=indim, activation=act, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal'))
-	model.add(Dropout(drop))
-
-	for i in range(nlayers):
-		model.add(Dense(nunits, activation=act, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal'))
-		model.add(Dropout(drop))
-
-	model.add(Dense(1, activation='sigmoid'))
-
-	return model
-
-
-def compile_mod(model):
-
-	# Compiling the model
-	adam = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
-	#sdg = keras.optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=True)
-
-	model.compile(loss='binary_crossentropy', optimizer=adam, metrics=['accuracy'])
-
-	return model
-
-
 def set_callbacks():
 
 	cb = []
@@ -156,53 +128,91 @@ def schedule(epoch):
 	return 0.0003/pow(2,epoch)
 
 
+def load_full(names, train_split):
+	lab_names = np.load('arrays/full_embed/names_labels_3x129m.npy')
+	coord_df = pd.DataFrame(np.load('arrays/full_embed/4D_coord_4x16k.npy'), index=names)
+
+	indx = int(train_split*len(lab_names))
+
+	train_lab_names_df = pd.DataFrame(lab_names[0:indx], index=None)
+	train_lab_names_pos = train_lab_names_df[train_lab_names_df[2]==1].values
+	train_lab_names_neg = train_lab_names_df[train_lab_names_df[2]==0].values
+
+	test_lab_names = lab_names[indx:]
+
+	return coord_df, train_lab_names_pos, train_lab_names_neg, test_lab_names
+
+
+def load_partial(names):
+	coord_df = pd.DataFrame(np.load('arrays/090_embed/4D_coord_4x16k.npy'), index=names)
+
+	train_lab_names_pos = np.load('arrays/090_embed/nl_pos_train_01.npy')
+	train_lab_names_neg = np.load('arrays/090_embed/nl_neg_train_01.npy')
+	test_lab_names = np.load('arrays/090_embed/nl_test_01.npy')
+
+	return coord_df, train_lab_names_pos, train_lab_names_neg, test_lab_names
+
+
+
+
+
 ############################### Main Program ###################################
 
 # Setting hyperparameters
 reg = 0.0
 drop = 0.0
 nlayers = 1
-nunits = 138
-train_split = 0.9
+nunits = 128
 batchsize = 64
+act = 'relu'
 
 
+################################################################
 print("----Loading Data----")
-lab_names = np.load('arrays/full_embed/names_labels_3x129m.npy')
-coord = np.load('arrays/full_embed/4D_coord_4x16k.npy')
-domains = np.load('arrays/encoded_dom_20_relu_1.npy')
+
 names = np.load('arrays/names.npy')
+domains_df = pd.DataFrame(np.load('arrays/encoded_dom_20_relu_1.npy'), index=names)
 
-indim = coord.shape[1] * 2 + domains.shape[1] * 2
+#coord_df, train_lab_names_pos, train_lab_names_neg, test_lab_names = load_full(names, train_split=0.9)
+coord_df, train_lab_names_pos, train_lab_names_neg, test_lab_names = load_partial(names)
 
 
+################################################################
 print("----Processing Data----")
-coord -= 0.5
-coord *= 2.0
 
-indx = int(train_split*len(lab_names))
+coord_df -= 0.5
+coord_df *= 2.0
 
-coord_df = pd.DataFrame(coord, index=names)
-domains_df = pd.DataFrame(domains, index=names)
-
-train_lab_names_df = pd.DataFrame(lab_names[0:indx], index=None)
-train_lab_names_pos = train_lab_names_df[train_lab_names_df[2]==1].values
-train_lab_names_neg = train_lab_names_df[train_lab_names_df[2]==0].values
-
-test_lab_names = lab_names[indx:]
-
-#generator_train = train_gen(train_lab_names_pos, train_lab_names_neg, coord_df, domains_df, batchsize)
+indim = coord_df.shape[1] * 2 + domains_df.shape[1] * 2
 
 
+################################################################
 print("----Setting up the model----")
-model = build_model(indim, reg, drop, nlayers, nunits, 'relu')
+
+model = Sequential()
+model.add(Dense(nunits, input_dim=indim, activation=act, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal'))
+model.add(Dropout(drop))
+
+for i in range(nlayers):
+	model.add(Dense(nunits, activation=act, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal'))
+	model.add(Dropout(drop))
+
+model.add(Dense(1, activation='sigmoid'))
 
 
+################################################################
 print("----Compiling the model----")
-compiled_mod = compile_mod(model)
+
+opt = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+#opt = keras.optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=True)
+
+model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 
 
+################################################################
 print("----Model training----")
-n_gen_train = int(np.floor(indx/batchsize))
+
+#n_gen_train = int(np.floor((len(train_lab_names_pos)+len(train_lab_names_neg))/batchsize))
+n_gen_train = 50000
 with ParallelGenerator(train_gen(train_lab_names_pos, train_lab_names_neg, coord_df, domains_df, batchsize), max_lookahead=100) as g:
-	compiled_mod.fit_generator(g, n_gen_train, epochs=10, callbacks=set_callbacks(), max_q_size=100, workers=1)#,validation_split=0.25)
+	model.fit_generator(g, n_gen_train, epochs=10, callbacks=set_callbacks(), max_q_size=100, workers=1)
