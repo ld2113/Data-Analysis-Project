@@ -131,22 +131,7 @@ def schedule(epoch):
 	return 0.0003/pow(2,epoch)
 
 
-def load_full(names, train_split):
-	lab_names = np.load('arrays/full_embed/names_labels_3x129m.npy')
-	coord_df = pd.DataFrame(np.load('arrays/full_embed/4D_coord_4x16k.npy'), index=names)
-
-	indx = int(train_split*len(lab_names))
-
-	train_lab_names_df = pd.DataFrame(lab_names[0:indx], index=None)
-	train_lab_names_pos = train_lab_names_df[train_lab_names_df[2]==1].values
-	train_lab_names_neg = train_lab_names_df[train_lab_names_df[2]==0].values
-
-	test_lab_names = lab_names[indx:]
-
-	return coord_df, train_lab_names_pos, train_lab_names_neg, test_lab_names
-
-
-def load_partial(names):
+def gen_load(names):
 	coord_df = pd.DataFrame(np.load('arrays/090_embed/4D_coord_4x16k.npy'), index=names)
 
 	train_lab_names_pos = np.load('arrays/090_embed/nl_pos_train_01.npy')
@@ -176,8 +161,8 @@ print("----Loading Data----")
 names = np.load('arrays/names.npy')
 domains_df = pd.DataFrame(np.load('arrays/encoded_dom_20_relu_1.npy'), index=names)
 
-#coord_df, train_lab_names_pos, train_lab_names_neg, test_lab_names = load_full(names, train_split=0.9)
-coord_df, train_lab_names_pos, train_lab_names_neg, test_lab_names = load_partial(names)
+#Make sure that right dataset is loading (full or partial embed)!
+coord_df, train_lab_names_pos, train_lab_names_neg, test_lab_names = gen_load(names)
 
 
 ################################################################
