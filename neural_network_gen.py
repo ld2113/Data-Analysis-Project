@@ -30,8 +30,8 @@ class Cust_metrics(keras.callbacks.Callback):
 	def on_epoch_end(self, epoch, logs={}):
 
 		n_gen_iter = int(np.floor(test_lab_names.shape[0]/batchsize))
-		generator_predict = test_gen(test_lab_names, coord_df, domains_df, batchsize)
-		epoch_pred = self.model.predict_generator(generator_predict, n_gen_iter)
+		with ParallelGenerator(test_gen(test_lab_names, coord_df, domains_df, batchsize), max_lookahead=100) as g:
+			epoch_pred = self.model.predict_generator(g, n_gen_iter)
 		epoch_bin_pred = np.array(epoch_pred > 0.5).astype(int)
 		labels_test = test_lab_names[0:epoch_pred.shape[0],2]
 
