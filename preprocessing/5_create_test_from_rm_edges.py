@@ -29,19 +29,23 @@ def split_sets(nam_lab_full, rm_edges, factor):
 	neg_test = neg_train[-cut:]
 	neg_train = neg_train[:-cut]
 
-	return pos_train, neg_train, pos_test, neg_test
+	test = np.concatenate((pos_test, neg_test), axis=0)
+	np.random.shuffle(test)
+
+	return pos_train, neg_train, pos_test, neg_test, test
 
 
 
 ###### Load Data #######
-nam_lab_full = np.concatenate((np.load('arrays/names_inter_2x129m.npy'), np.expand_dims(np.load('arrays/075_embed/network/labels_100.npy'), axis=1)), axis=1)
-rm_edges = np.load('arrays/075_embed/network/rm_edges.npy').astype(int)
+nam_lab_full = np.concatenate((np.load('arrays/names_inter_2x129m.npy'), np.expand_dims(np.load('arrays/090_embed/network/labels_100.npy'), axis=1)), axis=1)
+rm_edges = np.load('arrays/090_embed/network/rm_edges.npy').astype(int)
 
 ###### Process Data ######
-pos_train, neg_train, pos_test, neg_test = split_sets(nam_lab_full, rm_edges, 0.1)
+pos_train, neg_train, pos_test, neg_test, test = split_sets(nam_lab_full, rm_edges, 0.1)
 
 ###### Save Data ######
-np.save('arrays/075_embed/nl_pos_train_01.npy',pos_train)
-np.save('arrays/075_embed/nl_neg_train_01.npy',neg_train)
-np.save('arrays/075_embed/nl_pos_test_01.npy',pos_test)
-np.save('arrays/075_embed/nl_neg_test_01.npy',neg_test)
+np.save('arrays/090_embed/nl_pos_train_01.npy',pos_train)
+np.save('arrays/090_embed/nl_neg_train_01.npy',neg_train)
+np.save('arrays/090_embed/nl_pos_test_01.npy',pos_test)
+np.save('arrays/090_embed/nl_neg_test_01.npy',neg_test)
+np.save('arrays/090_embed/nl_test_01.npy',test)

@@ -29,7 +29,7 @@ def create_interactions(input):
 
 
 # Load input
-input = np.load('arrays/075_embed/network/labels_100.npy')
+input = np.load('arrays/090_embed/network/labels_100.npy')
 
 input = np.expand_dims(input, axis = 1)
 
