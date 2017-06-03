@@ -28,8 +28,7 @@ class Cust_metrics(keras.callbacks.Callback):
 
 	def on_epoch_end(self, epoch, logs={}):
 
-		#n_gen_iter = int(np.floor(test_lab_names.shape[0]/batchsize))
-		n_gen_iter = 10000
+		n_gen_iter = int(np.floor(test_lab_names.shape[0]/batchsize))
 		with ParallelGenerator(test_gen(test_lab_names, coord_df, domains_df, batchsize), max_lookahead=100) as g:
 			epoch_pred = self.model.predict_generator(g, n_gen_iter)
 		epoch_bin_pred = np.array(epoch_pred > 0.5).astype(int)
@@ -197,7 +196,6 @@ model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 ################################################################
 print("----Model training----")
 
-#n_gen_train = int(np.floor((len(train_lab_names_pos)+len(train_lab_names_neg))/batchsize))
-n_gen_train = 50000
+n_gen_train = int(np.floor((len(train_lab_names_pos)+len(train_lab_names_neg))/batchsize))
 with ParallelGenerator(train_gen(train_lab_names_pos, train_lab_names_neg, coord_df, domains_df, batchsize), max_lookahead=100) as g:
 	model.fit_generator(g, n_gen_train, epochs=10, callbacks=set_callbacks(), max_q_size=100, workers=1)
