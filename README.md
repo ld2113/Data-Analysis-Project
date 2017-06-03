@@ -1,9 +1,7 @@
 # Data-Analysis-Project
 
 ## ToDo
-- Use embedding layer for training
-- Include automatic NN metric logging
-- Pass val. data directly (not with generator)
+- How to split test and val (two seperate 0.9 embeds or one 0.8 embed)
 
 - Try training on just domains
 
@@ -20,16 +18,21 @@
 -- viz: subsample embedding
 
 ## Comparisons
-- Model hyperparameters (no. of layers/units, reg. strength, dropout, batchsize)
-- SMOTE vs simple oversampling
-- Single vs multi input network
-- Embedding dimensionality
-- Domains encoding (dimensionality, regularisation, activation function)
-- Auxilary output in multi input model
-- Domains not coordinates and vice versa
+- First, tune network
+-- Network architecture
+-- Model hyperparameters (reg. strength, dropout, batchsize)
+-- Domains encoding (dimensionality, regularisation, activation function)
+-- Auxiliary output in multi input model
+-- Network input normalisation (coord/domains)
+
+- Once network tuned
+-- Single vs multi input network
+-- Domains not coordinates and vice versa
+
+- Probably not
+-- SMOTE vs simple oversampling
+-- Embedding dimensionality
 
 
 ## Questions
 - How to do partial embedding for test and validation data
-- Is it actually okay to train the autoencoder without holdout?
-- What other data to include
