@@ -168,9 +168,6 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 	test_lab_names = np.load(test_path)
 	train_lab_names = np.load(train_path)
 
-	test_lab_names = test_lab_names[0:10000]
-	train_lab_names = train_lab_names[0:10000]
-
 
 	################################################################
 	print("----Processing Data----")
