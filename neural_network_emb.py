@@ -32,7 +32,10 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 		def on_epoch_end(self, epoch, logs={}):
 
-			epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)
+			if input_mode == 'cd'
+				epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)
+			elif input_mode == 'c' or input_mode == 'd':
+				epoch_pred = self.model.predict(test_lab_names[:,0:2], batch_size=batchsize, verbose=1)
 			epoch_bin_pred = np.array(epoch_pred > 0.5).astype(int)
 			labels_test = test_lab_names[0:epoch_pred.shape[0],2]
 
@@ -200,4 +203,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 	################################################################
 	print("----Model training----")
 
-	model.fit([train_lab_names[:,0:2], train_lab_names[:,0:2]], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks())
+	if input_mode == 'cd':
+		model.fit([train_lab_names[:,0:2], train_lab_names[:,0:2]], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks())
+	elif input_mode == 'c' or input_mode == 'd':
+		model.fit(train_lab_names[:,0:2], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks())
