@@ -32,7 +32,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 		def on_epoch_end(self, epoch, logs={}):
 
-			if input_mode == 'cd'
+			if input_mode == 'cd':
 				epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)
 			elif input_mode == 'c' or input_mode == 'd':
 				epoch_pred = self.model.predict(test_lab_names[:,0:2], batch_size=batchsize, verbose=1)
