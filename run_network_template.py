@@ -23,9 +23,10 @@ coord_struct = [128]
 dom_struct = [128]
 concat_struct = [128]
 aux_output_weights = []
+class_weight = {0:1.0, 1:1.0}
 
 
 
 
 main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sched, lr_plat,
-		dom_path, coord_path, train_path, test_path, input_mode, coord_struct, dom_struct, concat_struct, aux_output_weights)
+		dom_path, coord_path, train_path, test_path, input_mode, coord_struct, dom_struct, concat_struct, aux_output_weights, class_weight)

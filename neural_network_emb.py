@@ -18,7 +18,7 @@ from keras.models import Sequential, Model
 from keras.layers import Input, Dense, Dropout, Activation, Embedding, Flatten, BatchNormalization
 
 def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sched, lr_plat,
-		dom_path, coord_path, train_path, test_path, input_mode, coord_struct, dom_struct, concat_struct, aux_output_weights):
+		dom_path, coord_path, train_path, test_path, input_mode, coord_struct, dom_struct, concat_struct, aux_output_weights, class_weight):
 
 	class Cust_metrics(keras.callbacks.Callback):
 		def on_train_begin(self, logs={}):
@@ -52,7 +52,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 			with open('log.csv', 'a') as f:
 				f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'),epoch+1,max_epochs,logs['loss'],logs['acc'],mcc,acc,prec,auroc,aupr,frac_pos,
-				input_mode,coord_struct,dom_struct,concat_struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,train_path,test_path,coord_path,dom_path,coord_norm,aux_output_weights,'\n']))))))
+				input_mode,coord_struct,dom_struct,concat_struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,class_weight,train_path,test_path,coord_path,dom_path,coord_norm,aux_output_weights,'\n']))))))
 
 			return
 
@@ -204,6 +204,6 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 	print("----Model training----")
 
 	if input_mode == 'cd':
-		model.fit([train_lab_names[:,0:2], train_lab_names[:,0:2]], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks())
+		model.fit([train_lab_names[:,0:2], train_lab_names[:,0:2]], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks(), class_weight = class_weight)
 	elif input_mode == 'c' or input_mode == 'd':
-		model.fit(train_lab_names[:,0:2], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks())
+		model.fit(train_lab_names[:,0:2], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks(), class_weight = class_weight)
