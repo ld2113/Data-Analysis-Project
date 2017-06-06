@@ -41,6 +41,8 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 			acc = met.accuracy_score(labels_test,epoch_bin_pred)
 			prec = met.precision_score(labels_test,epoch_bin_pred)
+			recall = met.recall_score(labels_test,epoch_bin_pred)
+			f1 = met.f1_score(labels_test,epoch_bin_pred)
 			mcc = met.matthews_corrcoef(labels_test,epoch_bin_pred)
 			auroc = met.roc_auc_score(labels_test, epoch_pred)
 			aupr = met.average_precision_score(labels_test, epoch_pred)
@@ -51,7 +53,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 			print("Frac. pos. pred.:", frac_pos)
 
 			with open('log.csv', 'a') as f:
-				f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'),epoch+1,max_epochs,logs['loss'],logs['acc'],mcc,acc,prec,auroc,aupr,frac_pos,
+				f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'),epoch+1,max_epochs,logs['loss'],logs['acc'],mcc,acc,prec,recall,f1,auroc,aupr,frac_pos,
 				input_mode,coord_struct,dom_struct,concat_struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,class_weight,train_path,test_path,coord_path,dom_path,coord_norm,aux_output_weights,'\n']))))))
 
 			return
