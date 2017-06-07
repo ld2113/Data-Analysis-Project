@@ -49,8 +49,8 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 			frac_pos = np.sum(epoch_bin_pred)/len(epoch_bin_pred)
 
 			print('\n', 'auroc:', auroc, ' - aupr:', aupr, end=' - ')
-			print('mcc:', mcc, ' - acc:', acc, ' - prec:', prec, end=' - ')
-			print("Frac. pos. pred.:", frac_pos)
+			print('mcc:', mcc, ' - acc:', acc, ' - prec:', prec, ' - recall:', recall,' - f1:', f1, end=' - ')
+			print("Frac. pos. pred.:", frac_pos
 
 			with open('log.csv', 'a') as f:
 				f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'),epoch+1,max_epochs,logs['loss'],logs['acc'],mcc,acc,prec,recall,f1,auroc,aupr,frac_pos,
