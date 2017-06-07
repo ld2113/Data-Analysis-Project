@@ -146,6 +146,14 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 				return lr/pow(2,epoch)
 			cb.append(keras.callbacks.LearningRateScheduler(schedule))
 
+		if lr_sched == '2pow2':
+			def schedule(epoch):
+				n = 0
+				if epoch%2 == 0 and epoch != 0:
+					n += 1
+				return lr/pow(2,n)
+			cb.append(keras.callbacks.LearningRateScheduler(schedule))
+
 		elif lr_plat != []:
 			cb.append(keras.callbacks.ReduceLROnPlateau(monitor='loss', factor=lr_plat[0], patience=lr_plat[1], verbose=1, mode='auto', epsilon=0.0001, cooldown=0, min_lr=0))
 
