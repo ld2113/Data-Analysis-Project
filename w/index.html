@@ -12,6 +12,28 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style media="screen">
+			div.bar {
+				display: inline-block;
+				width: 20px;
+				height: 75px;   /* We'll override height later */
+				background-color: teal;
+				margin-right: 2px;
+				}
+
+			.axis path,
+			.axis line {
+			fill: none;
+			stroke: white;
+			shape-rendering: crispEdges;
+			}
+
+			.axis text {
+			font-family: sans-serif;
+			font-size: 11px;
+			fill: white;
+			}
+		</style>
 	</head>
 	<body>
 
@@ -77,6 +99,8 @@
 							<article id="methods">
 								<h2 class="major">Methods</h2>
 								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<div class="button">Update Data</div>
+								<br><br>
 							</article>
 
 						<!-- Results -->
@@ -153,7 +177,7 @@
 
 				<!-- Footer -->
 					<footer id="footer">
-						<p class="copyright"><!---&copy;--->Leander Dony, Imperial COllege London. <!--- Website Template: <a href="https://html5up.net">HTML5 UP</a>.---></p>
+						<p class="copyright"><!---&copy;--->Leander Dony, Imperial College London. <!--- Website Template: <a href="https://html5up.net">HTML5 UP</a>.---></p>
 					</footer>
 
 			</div>
@@ -168,31 +192,13 @@
 			<script src="assets/js/main.js"></script>
 			<script src="https://d3js.org/d3.v3.min.js"></script>
 			<script src="assets/js/d3plus.full.min.js"></script>
+			<script src="assets/js/barchart.js" type="text/javascript"></script>
+			<script src="assets/js/scatter.js" type="text/javascript"></script>
+			<script src="assets/js/d3pExample.js" type="text/javascript"></script>
 			<script>
 				$(function(){
 					$("#includedContent").load("elements.html");
 				});
-			</script>
-			<script>
-				var sample_data = [
-					{"value": 100, "weight": .45, "type": "alpha"},
-					{"value": 70, "weight": .60, "type": "beta"},
-					{"value": 40, "weight": -.2, "type": "gamma"},
-					{"value": 15, "weight": .1, "type": "delta"}
-				]
-				var visualization = d3plus.viz()
-					.container("#viz")
-					.data(sample_data)
-					.type("scatter")
-					.id("type")
-					.x("value")
-					.y("weight")
-					.size("value")
-					.shape("donut")   // set shape of data display
-					.draw()
-			</script>
-			<script type="text/javascript">
-				d3.select("introduction").append("p").text("New paragraph!");
 			</script>
 	</body>
 </html>
