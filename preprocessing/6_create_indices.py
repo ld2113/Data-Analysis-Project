@@ -31,20 +31,24 @@ def resample(train_lab_names_neg, train_lab_names_pos):
 
 
 ###### Load Data #######
-train_lab_names_pos = np.load('arrays/090_embed/nl_pos_train_01_emb.npy')
-train_lab_names_neg = np.load('arrays/090_embed/nl_neg_train_01_emb.npy')
-#test_lab_names = np.load('arrays/090_embed/nl_test_01.npy')
-#dic = pickle.load(open('arrays/inverse_dic.pkl','rb'))
+#train_lab_names_pos = np.load('arrays/090_embed/nl_pos_train_01_emb.npy')
+#train_lab_names_neg = np.load('arrays/090_embed/nl_neg_train_01_emb.npy')
+dic = pickle.load(open('arrays/inverse_dic.pkl','rb'))
+
+train = np.load('arrays/080_embed/nl_train_02.npy')
+test = np.load('arrays/080_embed/nl_test_01.npy')
+val = np.load('arrays/080_embed/nl_val_01.npy')
+
 
 ###### Process Data ######
-#list = [train_lab_names_pos,train_lab_names_neg,test_lab_names]
-#list = indexify(list, dic)
+list = [train, test, val]
+list = indexify(list, dic)
 
-train_lab_emb = resample(train_lab_names_neg, train_lab_names_pos)
+#train_lab_emb = resample(train_lab_names_neg, train_lab_names_pos)
+
 
 ###### Save Data ######
-#np.save('arrays/090_embed/nl_pos_train_01_emb.npy',list[0].astype(int))
-#np.save('arrays/090_embed/nl_neg_train_01_emb.npy',list[1].astype(int))
-#np.save('arrays/090_embed/nl_test_01_emb.npy',list[2].astype(int))
-#np.save('arrays/090_embed/nl_test_01_emb.npy',list[2].astype(int))
-np.save('arrays/090_embed/nl_train_res_01_emb.npy',train_lab_emb)
+np.save('arrays/080_embed/nl_train_02_emb.npy',list[0].astype(int))
+np.save('arrays/080_embed/nl_test_01_emb.npy',list[1].astype(int))
+np.save('arrays/080_embed/nl_val_01_emb.npy',list[2].astype(int))
+#np.save('arrays/090_embed/nl_train_res_01_emb.npy',train_lab_emb)
