@@ -141,15 +141,10 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 		cb = []
 		cb.append(Cust_metrics())
 
-		if lr_sched == 'pow2':
-			def schedule(epoch):
-				return lr/pow(2,epoch)
-			cb.append(keras.callbacks.LearningRateScheduler(schedule))
-
-		if lr_sched == '2pow2':
+		if lr_sched[1] == 'pow2':
 			def schedule(epoch):
 				n = 0
-				if epoch%2 == 0 and epoch != 0:
+				if epoch%lr_sched[0] == 0 and epoch != 0:
 					n += 1
 				return lr/pow(2,n)
 			cb.append(keras.callbacks.LearningRateScheduler(schedule))
