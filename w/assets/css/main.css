@@ -1268,6 +1268,18 @@
 				line-height: 2;
 			}
 
+		#header nav p {
+			font-size: 18px;
+			font-weight: bold;
+			width: 75vw;
+			line-height: 130%;
+			margin-bottom: 0.8em;
+		}
+
+		#header nav p:last-of-type {
+			margin-bottom: 0;
+		}
+
 		#header nav ul {
 			display: -moz-flex;
 			display: -webkit-flex;
