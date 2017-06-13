@@ -92,14 +92,14 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 			dom_net = Embedding(output_dim=dom_embedding.shape[1],input_dim=dom_embedding.shape[0],weights=[dom_embedding],input_length=2,trainable=False)(dom_in)
 			dom_net = Flatten()(dom_net)
 			for n in dom_struct:
-				dom_net = Dense(n, activation=act, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(dom_net)
+				dom_net = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(dom_net)
 				dom_net = BatchNormalization()(dom_net)
 				dom_net = Activation(act)(dom_net)
 				dom_net = Dropout(drop)(dom_net)
 
 			x = keras.layers.concatenate([coord_net, dom_net])
 			for n in concat_struct:
-				x = Dense(n, activation=act, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(x)
+				x = Dense(n, activationNone,, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(x)
 				x = BatchNormalization()(x)
 				x = Activation(act)(x)
 				x = Dropout(drop)(x)
@@ -113,7 +113,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 			coord_net = Embedding(output_dim=coord_embedding.shape[1],input_dim=coord_embedding.shape[0],weights=[coord_embedding],input_length=2,trainable=False)(coord_in)
 			coord_net = Flatten()(coord_net)
 			for n in coord_struct:
-				coord_net = Dense(n, activation=act, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(coord_net)
+				coord_net = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(coord_net)
 				coord_net = BatchNormalization()(coord_net)
 				coord_net = Activation(act)(coord_net)
 				coord_net = Dropout(drop)(coord_net)
@@ -126,7 +126,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 			dom_net = Embedding(output_dim=dom_embedding.shape[1],input_dim=dom_embedding.shape[0],weights=[dom_embedding],input_length=2,trainable=False)(dom_in)
 			dom_net = Flatten()(dom_net)
 			for n in dom_struct:
-				dom_net = Dense(n, activation=act, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(dom_net)
+				dom_net = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(dom_net)
 				dom_net = BatchNormalization()(dom_net)
 				dom_net = Activation(act)(dom_net)
 				dom_net = Dropout(drop)(dom_net)
