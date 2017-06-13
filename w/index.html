@@ -125,8 +125,34 @@
 							<article id="discussion">
 								<h2 class="major">Discussion</h2>
 								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
-							</article>
 
+								<div class="field">
+									<input type="radio" id="c-button" name="input-mode" value='c' checked>
+									<label for="c-button">Coordinates-only</label>
+									<input type="radio" id="d-button" name="input-mode" value='d'>
+									<label for="d-button">Domains-only</label>
+									<input type="radio" id="cd-button" name="input-mode" value='cd'>
+									<label for="cd-button">Both</label>
+								</div>
+								<br>
+								<div class="field">
+									<input type="radio" id="adam-button" name="optim" value='adam' checked>
+									<label for="adam-button">Adam</label>
+									<input type="radio" id="sgd-button" name="optim" value='sgd'>
+									<label for="sgd-button">SGD</label>
+								</div>
+								<br>
+								<div class="field">
+									<label for="maxepochs-select">Total Epochs</label>
+									<div class="select-wrapper">
+										<select name="maxepochs-select" id="maxepochs-select">
+											<option value=5 selected>5</option>
+											<option value=10>10</option>
+										</select>
+									</div>
+								</div>
+								<br>
+							</article>
 						<!-- Conclusion -->
 							<article id="conclusion">
 								<h2 class="major">Conclusion</h2>
@@ -205,7 +231,7 @@
 			<script src="https://d3js.org/d3.v3.min.js"></script>
 			<script src="assets/js/d3plus.full.min.js"></script>
 			<script src="assets/js/d3pExample.js" type="text/javascript"></script>
-			<script src="assets/js/scatter.js" type="text/javascript"></script>
+			<script src="assets/js/filter.js" type="text/javascript"></script>
 			<script>
 				$(function(){
 					$("#includedContent").load("elements.html");
