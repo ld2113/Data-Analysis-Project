@@ -99,7 +99,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 			x = keras.layers.concatenate([coord_net, dom_net])
 			for n in concat_struct:
-				x = Dense(n, activationNone,, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(x)
+				x = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(x)
 				x = BatchNormalization()(x)
 				x = Activation(act)(x)
 				x = Dropout(drop)(x)
