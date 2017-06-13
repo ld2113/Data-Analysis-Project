@@ -18,6 +18,12 @@ from keras.layers import Input, Dense, Dropout, Activation, Embedding, Flatten, 
 
 def main(reg, drop, optim, batchsize, act, max_epochs, lr, train_split, lr_sched, lr_plat,
 		in_path, save_path, struct):
+
+	class Cust_metrics(keras.callbacks.Callback):
+		def on_train_begin(self, logs={}):
+			return
+
+		def on_train_end(self, logs={}):
 			return
 
 		def on_epoch_begin(self, epoch, logs={}):
