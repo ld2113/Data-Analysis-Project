@@ -18,7 +18,8 @@ from keras.models import Sequential, Model
 from keras.layers import Input, Dense, Dropout, Activation, Embedding, Flatten, BatchNormalization
 
 def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sched, lr_plat,
-		dom_path, coord_path, train_path, test_path, input_mode, coord_struct, dom_struct, concat_struct, aux_output_weights, class_weight):
+		dom_path, coord_path, go_path, train_path, test_path, input_mode,
+		coord_struct, dom_struct, go_struct, concat_struct, aux_output_weights, class_weight):
 
 	class Cust_metrics(keras.callbacks.Callback):
 		def on_train_begin(self, logs={}):
@@ -32,9 +33,11 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 		def on_epoch_end(self, epoch, logs={}):
 
-			if input_mode == 'cd':
+			if len(input_mode) == 3:
+				epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)
+			elif len(input_mode) == 2:
 				epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)
-			elif input_mode == 'c' or input_mode == 'd':
+			elif len(input_mode) == 1:
 				epoch_pred = self.model.predict(test_lab_names[:,0:2], batch_size=batchsize, verbose=1)
 			epoch_bin_pred = np.array(epoch_pred > 0.5).astype(int)
 			labels_test = test_lab_names[0:epoch_pred.shape[0],2]
@@ -54,7 +57,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 			with open('log.csv', 'a') as f:
 				f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'),epoch+1,max_epochs,logs['loss'],logs['acc'],mcc,acc,prec,recall,f1,auroc,aupr,frac_pos,
-				input_mode,coord_struct,dom_struct,concat_struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,class_weight,train_path,test_path,coord_path,dom_path,coord_norm,aux_output_weights,'\n']))))))
+				input_mode,coord_struct,dom_struct,go_struct,concat_struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,class_weight,train_path,test_path,coord_path,dom_path,go_path,coord_norm,aux_output_weights,'\n']))))))
 
 			return
 
@@ -76,9 +79,79 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 		return array_list
 
 
-	def build_model(input_mode, coord_struct, dom_struct, concat_struct, coord_embedding, dom_embedding):
+	def build_model(input_mode, coord_struct, dom_struct, go_struct, concat_struct, coord_embedding, dom_embedding, go_embedding):
 
-		if input_mode == 'cd':
+
+		if input_mode == 'cdg':
+			coord_in = Input(shape=(2,), dtype='int32', name='coord_in')
+			coord_net = Embedding(output_dim=coord_embedding.shape[1],input_dim=coord_embedding.shape[0],weights=[coord_embedding],input_length=2,trainable=False)(coord_in)
+			coord_net = Flatten()(coord_net)
+			for n in coord_struct:
+				coord_net = Dense(n, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(coord_net)
+				coord_net = BatchNormalization()(coord_net)
+				coord_net = Activation(act)(coord_net)
+				coord_net = Dropout(drop)(coord_net)
+
+			dom_in = Input(shape=(2,), dtype='int32', name='dom_in')
+			dom_net = Embedding(output_dim=dom_embedding.shape[1],input_dim=dom_embedding.shape[0],weights=[dom_embedding],input_length=2,trainable=False)(dom_in)
+			dom_net = Flatten()(dom_net)
+			for n in dom_struct:
+				dom_net = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(dom_net)
+				dom_net = BatchNormalization()(dom_net)
+				dom_net = Activation(act)(dom_net)
+				dom_net = Dropout(drop)(dom_net)
+
+			go_in = Input(shape=(2,), dtype='int32', name='go_in')
+			go_net = Embedding(output_dim=go_embedding.shape[1],input_dim=go_embedding.shape[0],weights=[go_embedding],input_length=2,trainable=False)(go_in)
+			go_net = Flatten()(go_net)
+			for n in go_struct:
+				go_net = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(go_net)
+				go_net = BatchNormalization()(go_net)
+				go_net = Activation(act)(go_net)
+				go_net = Dropout(drop)(go_net)
+
+			x = keras.layers.concatenate([coord_net, dom_net, go_net])
+			for n in concat_struct:
+				x = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(x)
+				x = BatchNormalization()(x)
+				x = Activation(act)(x)
+				x = Dropout(drop)(x)
+
+			output = Dense(1, activation='sigmoid', name='output')(x)
+
+			model = Model(inputs=[coord_in, dom_in, go_in], outputs=output)
+
+		elif input_mode == 'gd':
+			go_in = Input(shape=(2,), dtype='int32', name='go_in')
+			go_net = Embedding(output_dim=go_embedding.shape[1],input_dim=go_embedding.shape[0],weights=[go_embedding],input_length=2,trainable=False)(go_in)
+			go_net = Flatten()(go_net)
+			for n in go_struct:
+				go_net = Dense(n, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(go_net)
+				go_net = BatchNormalization()(go_net)
+				go_net = Activation(act)(go_net)
+				go_net = Dropout(drop)(go_net)
+
+			dom_in = Input(shape=(2,), dtype='int32', name='dom_in')
+			dom_net = Embedding(output_dim=dom_embedding.shape[1],input_dim=dom_embedding.shape[0],weights=[dom_embedding],input_length=2,trainable=False)(dom_in)
+			dom_net = Flatten()(dom_net)
+			for n in dom_struct:
+				dom_net = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(dom_net)
+				dom_net = BatchNormalization()(dom_net)
+				dom_net = Activation(act)(dom_net)
+				dom_net = Dropout(drop)(dom_net)
+
+			x = keras.layers.concatenate([go_net, dom_net])
+			for n in concat_struct:
+				x = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(x)
+				x = BatchNormalization()(x)
+				x = Activation(act)(x)
+				x = Dropout(drop)(x)
+
+			output = Dense(1, activation='sigmoid', name='output')(x)
+
+			model = Model(inputs=[go_in, dom_in], outputs=output)
+
+		elif input_mode == 'cd':
 			coord_in = Input(shape=(2,), dtype='int32', name='coord_in')
 			coord_net = Embedding(output_dim=coord_embedding.shape[1],input_dim=coord_embedding.shape[0],weights=[coord_embedding],input_length=2,trainable=False)(coord_in)
 			coord_net = Flatten()(coord_net)
@@ -134,6 +207,19 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 			model = Model(inputs=dom_in, outputs=output)
 
+		elif input_mode == 'g':
+			go_in = Input(shape=(2,), dtype='int32', name='go_in')
+			go_net = Embedding(output_dim=go_embedding.shape[1],input_dim=go_embedding.shape[0],weights=[go_embedding],input_length=2,trainable=False)(go_in)
+			go_net = Flatten()(go_net)
+			for n in go_struct:
+				go_net = Dense(n, activation=None, kernel_regularizer=regularizers.l2(reg), kernel_initializer='he_normal')(go_net)
+				go_net = BatchNormalization()(go_net)
+				go_net = Activation(act)(go_net)
+				go_net = Dropout(drop)(go_net)
+			output = Dense(1, activation='sigmoid', name='output')(go_net)
+
+			model = Model(inputs=go_in, outputs=output)
+
 		return model
 
 
@@ -171,6 +257,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 	print("----Loading Data----")
 
 	dom_embedding = np.load(dom_path)
+	go_embedding = np.load(go_path)
 
 	coord_embedding = np.load(coord_path)
 	test_lab_names = np.load(test_path)
@@ -190,7 +277,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 	################################################################
 	print("----Setting up the model----")
 
-	model = build_model(input_mode, coord_struct, dom_struct, concat_struct, coord_embedding, dom_embedding)
+	model = build_model(input_mode, coord_struct, dom_struct, go_struct, concat_struct, coord_embedding, dom_embedding, go_embedding)
 
 
 	################################################################
@@ -208,7 +295,9 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 	################################################################
 	print("----Model training----")
 
-	if input_mode == 'cd':
+	if len(input_mode) == 3:
+		model.fit([train_lab_names[:,0:2], train_lab_names[:,0:2], train_lab_names[:,0:2]], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks(), class_weight = class_weight)
+	elif len(input_mode) == 2:
 		model.fit([train_lab_names[:,0:2], train_lab_names[:,0:2]], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks(), class_weight = class_weight)
-	elif input_mode == 'c' or input_mode == 'd':
+	elif len(input_mode) == 1:
 		model.fit(train_lab_names[:,0:2], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks(), class_weight = class_weight)
