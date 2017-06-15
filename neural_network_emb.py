@@ -121,7 +121,7 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 			model = Model(inputs=[coord_in, dom_in, go_in], outputs=output)
 
-		elif input_mode == 'gd':
+		elif input_mode == 'dg':
 			go_in = Input(shape=(2,), dtype='int32', name='go_in')
 			go_net = Embedding(output_dim=go_embedding.shape[1],input_dim=go_embedding.shape[0],weights=[go_embedding],input_length=2,trainable=False)(go_in)
 			go_net = Flatten()(go_net)
