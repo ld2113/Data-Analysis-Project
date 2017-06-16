@@ -91,6 +91,8 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 				coord_net = BatchNormalization()(coord_net)
 				coord_net = Activation(act)(coord_net)
 				coord_net = Dropout(drop)(coord_net)
+			if aux_output_weights != []:
+				coord_out = Dense(1, activation='sigmoid', name='coord_out')(coord_net)
 
 			dom_in = Input(shape=(2,), dtype='int32', name='dom_in')
 			dom_net = Embedding(output_dim=dom_embedding.shape[1],input_dim=dom_embedding.shape[0],weights=[dom_embedding],input_length=2,trainable=False)(dom_in)
@@ -100,6 +102,8 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 				dom_net = BatchNormalization()(dom_net)
 				dom_net = Activation(act)(dom_net)
 				dom_net = Dropout(drop)(dom_net)
+			if aux_output_weights != []:
+				dom_out = Dense(1, activation='sigmoid', name='dom_out')(dom_net)
 
 			go_in = Input(shape=(2,), dtype='int32', name='go_in')
 			go_net = Embedding(output_dim=go_embedding.shape[1],input_dim=go_embedding.shape[0],weights=[go_embedding],input_length=2,trainable=False)(go_in)
@@ -109,6 +113,8 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 				go_net = BatchNormalization()(go_net)
 				go_net = Activation(act)(go_net)
 				go_net = Dropout(drop)(go_net)
+			if aux_output_weights != []:
+				go_out = Dense(1, activation='sigmoid', name='go_out')(go_net)
 
 			x = keras.layers.concatenate([coord_net, dom_net, go_net])
 			for n in concat_struct:
@@ -119,7 +125,11 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 			output = Dense(1, activation='sigmoid', name='output')(x)
 
-			model = Model(inputs=[coord_in, dom_in, go_in], outputs=output)
+			if aux_output_weights == []:
+				model = Model(inputs=[coord_in, dom_in, go_in], outputs=output)
+			else:
+				model = Model(inputs=[coord_in, dom_in, go_in], outputs=[output, coord_out, dom_out, go_out])
+
 
 		elif input_mode == 'dg':
 			go_in = Input(shape=(2,), dtype='int32', name='go_in')
@@ -130,6 +140,8 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 				go_net = BatchNormalization()(go_net)
 				go_net = Activation(act)(go_net)
 				go_net = Dropout(drop)(go_net)
+			if aux_output_weights != []:
+				go_out = Dense(1, activation='sigmoid', name='go_out')(go_net)
 
 			dom_in = Input(shape=(2,), dtype='int32', name='dom_in')
 			dom_net = Embedding(output_dim=dom_embedding.shape[1],input_dim=dom_embedding.shape[0],weights=[dom_embedding],input_length=2,trainable=False)(dom_in)
@@ -139,6 +151,8 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 				dom_net = BatchNormalization()(dom_net)
 				dom_net = Activation(act)(dom_net)
 				dom_net = Dropout(drop)(dom_net)
+			if aux_output_weights != []:
+				dom_out = Dense(1, activation='sigmoid', name='dom_out')(dom_net)
 
 			x = keras.layers.concatenate([go_net, dom_net])
 			for n in concat_struct:
@@ -149,7 +163,11 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 			output = Dense(1, activation='sigmoid', name='output')(x)
 
-			model = Model(inputs=[go_in, dom_in], outputs=output)
+			if aux_output_weights == []:
+				model = Model(inputs=[dom_in, go_in], outputs=output)
+			else:
+				model = Model(inputs=[dom_in, go_in], outputs=[output, dom_out, go_out])
+
 
 		elif input_mode == 'cd':
 			coord_in = Input(shape=(2,), dtype='int32', name='coord_in')
@@ -160,6 +178,8 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 				coord_net = BatchNormalization()(coord_net)
 				coord_net = Activation(act)(coord_net)
 				coord_net = Dropout(drop)(coord_net)
+			if aux_output_weights != []:
+				coord_out = Dense(1, activation='sigmoid', name='coord_out')(coord_net)
 
 			dom_in = Input(shape=(2,), dtype='int32', name='dom_in')
 			dom_net = Embedding(output_dim=dom_embedding.shape[1],input_dim=dom_embedding.shape[0],weights=[dom_embedding],input_length=2,trainable=False)(dom_in)
@@ -169,6 +189,8 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 				dom_net = BatchNormalization()(dom_net)
 				dom_net = Activation(act)(dom_net)
 				dom_net = Dropout(drop)(dom_net)
+			if aux_output_weights != []:
+				dom_out = Dense(1, activation='sigmoid', name='dom_out')(dom_net)
 
 			x = keras.layers.concatenate([coord_net, dom_net])
 			for n in concat_struct:
@@ -180,6 +202,10 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 			output = Dense(1, activation='sigmoid', name='output')(x)
 
 			model = Model(inputs=[coord_in, dom_in], outputs=output)
+			if aux_output_weights == []:
+				model = Model(inputs=[coord_in, dom_in], outputs=output)
+			else:
+				model = Model(inputs=[coord_in, dom_in], outputs=[output, coord_out, dom_out])
 
 		elif input_mode == 'c':
 			coord_in = Input(shape=(2,), dtype='int32', name='coord_in')
@@ -289,15 +315,16 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 	elif optim == 'sgd':
 		opt = keras.optimizers.SGD(lr=lr, momentum=0.0, decay=0.0, nesterov=True)
 
-	model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+	if aux_output_weights == []:
+		model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+	else:
+		model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'], loss_weights=aux_output_weights)
+
 
 
 	################################################################
 	print("----Model training----")
 
-	if len(input_mode) == 3:
-		model.fit([train_lab_names[:,0:2], train_lab_names[:,0:2], train_lab_names[:,0:2]], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks(), class_weight = class_weight)
-	elif len(input_mode) == 2:
-		model.fit([train_lab_names[:,0:2], train_lab_names[:,0:2]], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks(), class_weight = class_weight)
-	elif len(input_mode) == 1:
-		model.fit(train_lab_names[:,0:2], train_lab_names[:,2], epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks(), class_weight = class_weight)
+	fit_in = [train_lab_names[:,0:2]] * len(input_mode)
+	fit_out = [train_lab_names[:,2]] * max(1,len(aux_output_weights))
+	model.fit(fit_in, fit_out, epochs=max_epochs, batch_size=batchsize, callbacks=set_callbacks(), class_weight = class_weight)
