@@ -29,7 +29,7 @@ function scatterplotexample() {
 		.domain([0, d3.max(dataset, function(d) { return d[1]; })])
 		.range([2, 10]);
 
-	var svg = d3.select("#results")
+	var svg = d3.select("#model_tuning")
 		.append("svg")
 		.attr("width", w)
 		.attr("height", h);

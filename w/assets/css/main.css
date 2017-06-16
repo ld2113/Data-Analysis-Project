@@ -124,7 +124,7 @@
 		font-family: "Source Sans Pro", sans-serif;
 		font-weight: 300;
 		font-size: 1rem;
-		line-height: 1.25;
+		line-height: 1.15;
 	}
 
 	a {
@@ -135,6 +135,10 @@
 		border-bottom: dotted 1px rgba(255, 255, 255, 0.5);
 		text-decoration: none;
 		color: inherit;
+	}
+
+	a.nodots{
+		border-bottom: none;
 	}
 
 		a:hover {
@@ -151,7 +155,7 @@
 	}
 
 	p {
-		margin: 0 0 0.5rem 0;
+		margin: 0 0 1rem 0;
 	}
 
 		p.last {
@@ -180,6 +184,10 @@
 			width: max-content;
 			padding-bottom: 0.5rem;
 			margin: 0 0 2rem 0;
+		}
+
+		h1.nomarg, h2.nomarg, h3.nomarg, h4.nomarg, h5.nomarg, h6.nomarg {
+			margin: 0 0 0.5rem 0;
 		}
 
 	h1 {
@@ -246,11 +254,19 @@
 	code {
 		background: rgba(255, 255, 255, 0.075);
 		border-radius: 4px;
-		font-family: "Courier New", monospace;
-		font-size: 0.9rem;
+		font-size: 0.8rem;
 		margin: 0 0.25rem;
 		padding: 0.25rem 0.65rem;
 	}
+
+		code.nobox {
+			background: none;
+			border-radius: none;
+			font-family: "Courier New", monospace;
+			font-size: 0.9rem;
+			margin: 0 0;
+			padding: 0 0 0 0;
+		}
 
 	pre {
 		-webkit-overflow-scrolling: touch;
@@ -1439,7 +1455,7 @@
 
 						#header nav ul li a {
 							height: 3rem;
-							line-height: 3rem;
+							: 3rem;
 							min-width: 0;
 							width: 100%;
 						}

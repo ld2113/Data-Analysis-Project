@@ -37,7 +37,7 @@ function barchartexample() {
 	};
 
 	//Create SVG element
-	var svg = d3.select("#methods")
+	var svg = d3.select("#preprocessing")
 				.append("svg")
 				.attr("width", w)
 				.attr("height", h);

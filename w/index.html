@@ -54,14 +54,13 @@
 						</div>
 						<nav>
 							<ul>
-								<li><a href="#abstract">About</a></li>
-								<li><a href="#introduction">Background</a></li>
-								<li><a href="#methods">Methods</a></li>
-								<li><a href="#results">Results</a></li>
+								<li><a href="#about">&nbsp;&nbsp;&nbsp;About&nbsp;&nbsp;&nbsp;</a></li>
+								<li><a href="#background">Background</a></li>
+								<li><a href="#preprocessing">Preprocessing</a></li>
+								<li><a href="#dimensionality">Dimensionality</a></li>
+								<li><a href="#model_tuning">Model Tuning</a></li>
 								<li><a href="#discussion">Discussion</a></li>
 								<li><a href="#conclusion">Conclusion</a></li>
-								<li><a href="#people">People</a></li>
-								<li><a href="#elements">Elements</a></li>
 							</ul>
 						</nav>
 						<!--
@@ -78,13 +77,20 @@
 							</ul>
 						</nav>
 
+						<nav>
+							<ul>
+								<li><a href="#people">People</a></li>
+							</ul>
+						</nav>
+
 					</header>
 
 				<!-- Main -->
 					<div id="main">
 
-						<!-- Abstract -->
-							<article id="abstract">
+
+						<!-- about -->
+							<article id="about">
 								<h2 class="major">About</h2>
 								<h3>Lay Summary</h3>
 								<p>Artificial neural networks are a type of machine learning technique that can enable computers to learn complex patterns and relationships from data. This technique has been successfully employed in the fields of speech recognition, natural language understanding and computer vision. One prominent example of their application are personal assistants like Apple Siri.</p>
@@ -96,9 +102,11 @@
 								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 							</article>
 
-						<!-- Introduction -->
-							<article id="introduction">
-								<h2 class="major">Introduction</h2>
+
+						<!-- background -->
+							<article id="background">
+								<h2 class="major">Background</h2>
+
 								<h3>Protein-Protein Interaction Networks</h3>
 								<p>Proteins represent one of the key components of living organisms. They play a vital role in numerous processes including metabolism, stimulus response and transporting molecules. While some tasks can be fulfilled by individual proteins, other can only be mastered through the concerted action of multiple proteins. Such mechanisms have been found to be particularly prevalent in for example signal transduction, the immune response and transmembrane proteins.</p>
 								<p>Consequently, studying protein-protein interactions (PPIs) and the resulting interaction networks has been a key area of interest in the research community. While a better understanding of PPIs can help us explain the underlying mechanisms of protein function, this research can also highlight avenues towards novel drug and therapy design through an improved insight into disease progression.</p>
@@ -107,29 +115,49 @@
 								<p class="last">To tackle these issues, computational methods have received significant interest over the previous years in order to obtain high-quality data in a high-throughput fashion. Approaches ranged from text mining methods to machine learning based prediction algorithms using protein sequence. Attempts were also made to reduce the number of dimensions in intrinsically high-dimensional PPI data using support vector machines random forests, or neural networks.</p>
 
 								<h3>Artificial Neural Networks</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
-								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<p>Artificial neural networks (ANNs) are a class of machine learning algorithms which imitate the human brain’s structure and learning. Instead of applying hard-coded rules to solve problems, a neural network is able to learn complex features from its input data. In its most basic form, a Multilayer Perceptron (MLP),a neural network consists of an input layer, a hidden layer and an output layer. [FIGURE] Each layer is in turn comprised of multiple nodes (‘neurons’) which represent a linear transformation of the output of the previous layer (y=wx+b), followed by a non-linear transformation such as y=max(0,x) (‘activation function’). In an MLP, all nodes are fully connected. This means that each node receives inputs from all nodes in the previous layer, and feeds its outputs to all nodes in the next layer.</p>
+								<p>Neural networks can be trained both in a supervised and unsupervised fashion. In the first case, the networks is presented with the correct label (given a classification problem) alongside the corresponding input data during training. Based on the desired output, the network is then able to correct the weights of each node through a process known as backpropagation. This is an iterative process that is repeated many times during network training and can be understood as a convex optimisation problem. </p>
+								<p>One example of unsupervised learning would be a class of ANNs referred to as autoencoders. [FIGURE] Here, the network is trained to reproduce its inputs. This could easily be achieved with n = N nodes representing the identity function (where N is the dimensionality of the input data and n the number of nodes). In an autoencoder however, a hidden layer with n < N nodes is introduced, which forces the network to reduce the dimensions of the data to n and from that restore the input. This way, the network is able to learn the important features in the data without being presented with them explicitly.</p>
+								<h4 class="nomarg">Applications</h4>
+								<p class="last">Neural networks have been applied very successfully to problems from the areas of natural language understanding as well as speech and image recognition. In the realm of computational biology, neural networks have found wide applications in regulatory genomics as well as processing of cellular (<a href="https://dx.doi.org/10.15252/msb.20156651" target="_blank">Angermueller, 2016</a>) and brain imaging data (<a href="https://dx.doi.org/10.1038/nmeth.4206" target="_blank">Dorkenwald, 2017</a>). Different types of neural networks have also previously been used to predict PPIs from protein sequence: Zhao (2014) used a Probabilistic Neural Network, whereas Sun (2017) employed a stacked autoencoder.</p>
+
 								<div id="viz"></div>
 							</article>
 
-						<!-- Methods -->
-							<article id="methods">
-								<h2 class="major">Methods</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+
+						<!-- preprocessing -->
+							<article id="preprocessing">
+								<h2 class="major">Data Preprocessing</h2>
+								<h3>Data Sources</h3>
+								<p>We obtained human PPI data from the Biogrid database <code class="nobox">(BIOGRID-ORGANISM-Homo_sapiens-3.4.147.mitab.txt)</code>.</p>
+								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+
+								<h3>Data Cleaning</h3>
+								<p>Lorem ipsum</p>
+
 								<div id="addbutt" class="button">Add Data</div>
 								<div id="rmbutt" class="button">Remove Data</div>
 								<br><br>
 							</article>
 
-						<!-- Results -->
-							<article id="results">
-								<h2 class="major">Results</h2>
+
+						<!-- dimensionality -->
+							<article id="dimensionality">
+								<h2 class="major">Dimensionality Reduction</h2>
+								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+							</article>
+
+
+						<!-- model_tuning -->
+							<article id="model_tuning">
+								<h2 class="major">Model Tuning</h2>
 								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
 								<div class="button">Update Data</div>
 								<br><br>
 							</article>
 
-						<!-- Discussion -->
+
+						<!-- discussion -->
 							<article id="discussion">
 								<h2 class="major">Discussion</h2>
 								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
@@ -170,18 +198,19 @@
 									</div>
 								</form>
 							</article>
+
+
 						<!-- Conclusion -->
 							<article id="conclusion">
 								<h2 class="major">Conclusion</h2>
 								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+
+								<h3>Outlook</h3>
+								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+
 							</article>
 
-						<!-- People -->
-							<article id="people">
-								<h2 class="major">People</h2>
-								<h3>Acknowledgements</h3>
-								<h3>Contact</h3>
-							</article>
 
 						<!-- References and Attributions -->
 							<article id="ref_attr">
@@ -223,6 +252,21 @@
 								</div>
 							</article>
 
+
+						<!-- People -->
+							<article id="people">
+								<h2 class="major">People</h2>
+								<h3>Contributions</h3>
+								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+
+								<h3>Acknowledgements</h3>
+								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+
+								<h3>Contact</h3>
+								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+							</article>
+
+
 						<!-- Elements -->
 							<article id="elements">
 								<div id="includedContent"></div>
@@ -232,9 +276,8 @@
 
 				<!-- Footer -->
 					<footer id="footer">
-						<p class="copyright"><!---&copy;--->Leander Dony, Imperial College London. <!--- Website Template: <a href="https://html5up.net">HTML5 UP</a>.---></p>
+						<p class="copyright"><!---&copy;---><a class="nodots" href="#elements">Leander Dony, Imperial College London.</a><!--- Website Template: <a href="https://html5up.net">HTML5 UP</a>.---></p>
 					</footer>
-
 			</div>
 
 		<!-- BG -->
@@ -251,6 +294,7 @@
 			<script src="assets/js/plots/scatter.js" type="text/javascript"></script>
 			<script src="assets/js/plots/barchart.js" type="text/javascript"></script>
 			<script src="assets/js/plots/filter.js" type="text/javascript"></script>
+			<script src="assets/js/plots/protzoom.js" type="text/javascript"></script>
 			<script>
 				$(function(){
 					$("#includedContent").load("elements.html");
