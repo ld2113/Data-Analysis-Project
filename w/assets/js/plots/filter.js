@@ -51,11 +51,12 @@ d3.csv("logwebsite.csv", function(error, data) {
 			.text(txt);
 	}
 
-	function enterPoints(data, plot, yvar) {
+	function enterPoints(data, groupData, plot, yvar) {
+		x.domain([0, d3.max(groupData, function(d) { return d.epoch; })]).nice();
 		y.domain([0, d3.max(data, function(d) { return eval("d."+yvar); })]).nice();
-		// Add the points!
+
 		plot.selectAll(".point")
-			.data(data)
+			.data(groupData)
 			.enter().append("path")
 			.attr("class", "point")
 			.attr('fill', 'white')
@@ -76,11 +77,12 @@ d3.csv("logwebsite.csv", function(error, data) {
 			.remove();
 	}
 
-	function updatePoints(data, plot, yvar) {
-		x.domain([0, d3.max(data, function(d) { return d.epoch; })]).nice();
+	function updatePoints(data, groupData, plot, yvar) {
+		x.domain([0, d3.max(groupData, function(d) { return d.epoch; })]).nice();
+		y.domain([0, d3.max(data, function(d) { return eval("d."+yvar); })]).nice();
 
 		plot.selectAll(".point")
-			.data(data)
+			.data(groupData)
 			.transition()
 			.duration(1000)
 			.attr("transform", function(d) { return "translate(" + x(d.epoch) + "," + y(eval("d."+yvar)) + ")"; });
@@ -150,10 +152,10 @@ d3.csv("logwebsite.csv", function(error, data) {
 	createAxis(data, recplot, "Recall", "recall");
 	createAxis(data, precplot, "Precision", "prec");
 
-	enterPoints(groupData, mccplot, "mcc");
-	enterPoints(groupData, f1plot, "f1");
-	enterPoints(groupData, precplot, "prec");
-	enterPoints(groupData, recplot, "recall");
+	enterPoints(data, groupData,mccplot, "mcc");
+	enterPoints(data, groupData,f1plot, "f1");
+	enterPoints(data, groupData,precplot, "prec");
+	enterPoints(data, groupData,recplot, "recall");
 
 
 	d3.selectAll("input,select")
@@ -163,20 +165,20 @@ d3.csv("logwebsite.csv", function(error, data) {
 		var optim = d3.select('input[name="optim"]:checked').property("value");
 		var groupData = getFilteredData(data, optim, input_mode, class_weights);
 
-		updatePoints(groupData, mccplot, "mcc");
-		enterPoints(groupData, mccplot, "mcc");
+		updatePoints(data, groupData, mccplot, "mcc");
+		enterPoints(data, groupData, mccplot, "mcc");
 		exitPoints(groupData, mccplot);
 
-		updatePoints(groupData, f1plot, "f1");
-		enterPoints(groupData, f1plot, "f1");
+		updatePoints(data, groupData, f1plot, "f1");
+		enterPoints(data, groupData, f1plot, "f1");
 		exitPoints(groupData, f1plot);
 
-		updatePoints(groupData, precplot, "prec");
-		enterPoints(groupData, precplot, "prec");
+		updatePoints(data, groupData, precplot, "prec");
+		enterPoints(data, groupData, precplot, "prec");
 		exitPoints(groupData, precplot);
 
-		updatePoints(groupData, recplot, "recall");
-		enterPoints(groupData, recplot, "recall");
+		updatePoints(data, groupData, recplot, "recall");
+		enterPoints(data, groupData, recplot, "recall");
 		exitPoints(groupData, recplot);
 
 	});
