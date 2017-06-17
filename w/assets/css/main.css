@@ -1632,19 +1632,14 @@
 		}
 
 
-/* Responsive SVG */
+/* D3 */
 
-.svg-container {
-	display: inline-block;
-	position: relative;
-	width: 100%;
-	padding-bottom: 100%; /* aspect ratio */
-	vertical-align: top;
-	overflow: hidden;
+.axis path,
+.axis line {
+stroke: white;
 }
-.svg-content-responsive {
-	display: inline-block;
-	position: absolute;
-	top: 10px;
-	left: 0;
+
+.axis text {
+font-size: 1.3em;
+fill: white;
 }

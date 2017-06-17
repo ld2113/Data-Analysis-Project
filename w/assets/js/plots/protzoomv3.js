@@ -1,45 +1,42 @@
 d3.csv("logwebsite.csv", function(error, data) {
 
-	var random = d3.randomNormal(0, 0.2),
+	var random = d3.random.normal(0, 0.2),
 		sqrt3 = Math.sqrt(3),
 		points0 = d3.range(300).map(function() { return [random() + sqrt3, random() + 1, 0]; }),
 		points1 = d3.range(300).map(function() { return [random() - sqrt3, random() + 1, 1]; }),
 		points2 = d3.range(300).map(function() { return [random(), random() - 1, 2]; }),
 		points = d3.merge([points0, points1, points2]);
 
-	var margin = {top: 30, right: 30, bottom: 30, left: 50},
-		width = 0.5 * window.innerWidth - margin.left - margin.right,
-		height = 0.5 * width - margin.top - margin.bottom;
+	var width = 900,
+	height = 600,
+	svg = d3.select("#dimensionality")
+		.append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.append("g");
 
-	var svg = d3.select("#dimensionality").append("svg")
-		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom)
-		.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	var k = height / width,
+		x0 = [-4.5, 4.5],
+		y0 = [-4.5 * k, 4.5 * k],
+		x = d3.scale.linear().domain(x0).range([0, width]),
+		y = d3.scale.linear().domain(y0).range([height, 0]),
+		z = d3.scale.ordinal(d3.schemeCategory10);
 
-	var x0 = [-4.0, 4.0],
-		y0 = [-4.0, 4.0],
-		x = d3.scaleLinear().domain(x0).range([0, width]),
-		y = d3.scaleLinear().domain(y0).range([height, 0]),
-		z = d3.scaleOrdinal(d3.schemeCategory10);
+	var xAxis = d3.svg.axis()
+		.scale(x)
+		.orient("bottom")
+		.ticks(5);
 
-	var xAxis = d3.axisBottom(x),
-		yAxis = d3.axisLeft(y);
+	var yAxis = d3.svg.axis()
+		.scale(y)
+		.orient("left");
 
-	var brush = d3.brush().on("end", brushended),
+
+	var brush = d3.svg.brush().x(x).y(y).on("brush", brushended),
 		idleTimeout,
 		idleDelay = 350;
 
-	svg.append("clipPath")
-		.attr("id", "chart-area")
-		.append("rect")
-		.attr("width", width)
-		.attr("height", height);
-
-	svg.append("g")
-		.attr("id", "circles")
-		.attr("clip-path", "url(#chart-area)")
-		.selectAll("circle")
+	svg.selectAll("circle")
 		.data(points)
 		.enter().append("circle")
 		.attr("cx", function(d) { return x(d[0]); })
@@ -48,13 +45,17 @@ d3.csv("logwebsite.csv", function(error, data) {
 		.attr("fill", function(d) { return z(d[2]); });
 
 	svg.append("g")
-		.attr("class", "y axis")
-		.call(yAxis);
+		.attr("class", "axis axis--x")
+		.attr("transform", "translate(0," + (height - 10) + ")")
+		.call(xAxis);
 
 	svg.append("g")
-		.attr("class", "x axis")
-		.attr("transform", "translate(0," + height + ")")
-		.call(xAxis);
+		.attr("class", "axis axis--y")
+		.attr("transform", "translate(10,0)")
+		.call(yAxis);
+
+	svg.selectAll(".domain")
+		.style("display", "none");
 
 	svg.append("g")
 		.attr("class", "brush")
@@ -80,8 +81,8 @@ d3.csv("logwebsite.csv", function(error, data) {
 
 	function zoom() {
 		var t = svg.transition().duration(750);
-		svg.select(".x.axis").transition(t).call(xAxis);
-		svg.select(".y.axis").transition(t).call(yAxis);
+		svg.select(".axis--x").transition(t).call(xAxis);
+		svg.select(".axis--y").transition(t).call(yAxis);
 		svg.selectAll("circle").transition(t)
 			.attr("cx", function(d) { return x(d[0]); })
 			.attr("cy", function(d) { return y(d[1]); });

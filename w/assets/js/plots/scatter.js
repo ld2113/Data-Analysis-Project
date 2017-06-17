@@ -61,7 +61,6 @@ function scatterplotexample() {
 		.data(dataset)
 		.enter()
 		.append("circle")
-		.append("circle")
 		.attr("cx", function(d) {
 			return xScale(d[0]);
 		})

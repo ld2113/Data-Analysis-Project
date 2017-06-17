@@ -57,10 +57,10 @@ d3.csv("logwebsite.csv", function(error, data) {
 
 		plot.selectAll(".point")
 			.data(groupData)
-			.enter().append("circle")
+			.enter().append("path")
 			.attr("class", "point")
 			.attr('fill', 'white')
-			.attr("r", 5)
+			.attr("d", d3.svg.symbol().type("circle"))
 			.attr("transform", function(d) { return "translate(0," + height + ")"; })
 			.transition()
 			.duration(1000)
@@ -94,9 +94,9 @@ d3.csv("logwebsite.csv", function(error, data) {
 	}
 
 	function getFilteredData(data, optim, input_mode, class_weights) {
-		return data.filter(function(d) { return d.class_weight === class_weights; })
-					.filter(function(d) { return d.input_mode === input_mode; })
-					.filter(function(d) { return d.optim === optim; });
+		return data.filter(function(point) { return point.class_weight === class_weights; })
+					.filter(function(point) { return point.input_mode === input_mode; })
+					.filter(function(point) { return point.optim === optim; });
 	}
 
 
@@ -116,17 +116,21 @@ d3.csv("logwebsite.csv", function(error, data) {
 		width = 0.25 * window.innerWidth - margin.left - margin.right,
 		height = width - margin.top - margin.bottom;
 
-	var x = d3.scaleLinear()
+	var x = d3.scale.linear()
 		.range([0, width]);
 
-	var y = d3.scaleLinear()
+	var y = d3.scale.linear()
 		.range([height, 0]);
 
-	var xAxis = d3.axisBottom(x)
+	var xAxis = d3.svg.axis()
+		.scale(x)
+		.orient("bottom")
 		.tickFormat(d3.format("d"))
 		.ticks(5);
 
-	var yAxis = d3.axisLeft(y)
+	var yAxis = d3.svg.axis()
+		.scale(y)
+		.orient("left");
 
 	var class_weights = d3.select("#classweights-select").node().value;
 	var inmodbutt = d3.select('input[name="input-mode"]:checked').property("value");
