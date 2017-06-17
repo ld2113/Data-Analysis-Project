@@ -1,11 +1,12 @@
-d3.csv("logwebsite.csv", function(error, data) {
+d3.csv("coord_test.csv", function(error, data) {
 
-	var random = d3.randomNormal(0, 0.2),
-		sqrt3 = Math.sqrt(3),
-		points0 = d3.range(300).map(function() { return [random() + sqrt3, random() + 1, 0]; }),
-		points1 = d3.range(300).map(function() { return [random() - sqrt3, random() + 1, 1]; }),
-		points2 = d3.range(300).map(function() { return [random(), random() - 1, 2]; }),
-		points = d3.merge([points0, points1, points2]);
+	// var random = d3.randomNormal(0, 0.2),
+	// 	sqrt3 = Math.sqrt(3),
+	// 	points0 = d3.range(300).map(function() { return [random() + sqrt3, random() + 1, 0]; }),
+	// 	points1 = d3.range(300).map(function() { return [random() - sqrt3, random() + 1, 1]; }),
+	// 	points2 = d3.range(300).map(function() { return [random(), random() - 1, 2]; }),
+	// 	points = d3.merge([points0, points1, points2]);
+	// console.log(data)
 
 	var margin = {top: 30, right: 30, bottom: 30, left: 50},
 		width = 0.5 * window.innerWidth - margin.left - margin.right,
@@ -17,8 +18,8 @@ d3.csv("logwebsite.csv", function(error, data) {
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var x0 = [-4.0, 4.0],
-		y0 = [-4.0, 4.0],
+	var x0 = [0,1],
+		y0 = [0,1],
 		x = d3.scaleLinear().domain(x0).range([0, width]),
 		y = d3.scaleLinear().domain(y0).range([height, 0]),
 		z = d3.scaleOrdinal(d3.schemeCategory10);
@@ -40,12 +41,12 @@ d3.csv("logwebsite.csv", function(error, data) {
 		.attr("id", "circles")
 		.attr("clip-path", "url(#chart-area)")
 		.selectAll("circle")
-		.data(points)
+		.data(data)
 		.enter().append("circle")
-		.attr("cx", function(d) { return x(d[0]); })
-		.attr("cy", function(d) { return y(d[1]); })
-		.attr("r", 2.5)
-		.attr("fill", function(d) { return z(d[2]); });
+		.attr("cx", function(d) { return x(d.x_val); })
+		.attr("cy", function(d) { return y(d.y_val); })
+		.attr("r", 10)
+		.attr("fill", function(d) { return z(d.other); });
 
 	svg.append("g")
 		.attr("class", "y axis")
@@ -83,8 +84,8 @@ d3.csv("logwebsite.csv", function(error, data) {
 		svg.select(".x.axis").transition(t).call(xAxis);
 		svg.select(".y.axis").transition(t).call(yAxis);
 		svg.selectAll("circle").transition(t)
-			.attr("cx", function(d) { return x(d[0]); })
-			.attr("cy", function(d) { return y(d[1]); });
+			.attr("cx", function(d) { return x(d.x_val); })
+			.attr("cy", function(d) { return y(d.y_val); });
 	}
 
 });
