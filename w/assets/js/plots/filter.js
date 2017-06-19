@@ -1,7 +1,7 @@
 d3.csv("logwebsite.csv", function(error, data) {
 
 	function makesvg(plotname) {
-		var plot = d3.select("#discussion").append("svg")
+		var plot = d3.select("#model_tuning").append("svg")
 			.attr("id", plotname)
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
@@ -127,6 +127,7 @@ d3.csv("logwebsite.csv", function(error, data) {
 		.ticks(5);
 
 	var yAxis = d3.axisLeft(y)
+		.ticks();
 
 	var class_weights = d3.select("#classweights-select").node().value;
 	var inmodbutt = d3.select('input[name="input-mode"]:checked').property("value");
@@ -136,8 +137,8 @@ d3.csv("logwebsite.csv", function(error, data) {
 
 	var mccplot = makesvg("mccplot")
 	var f1plot = makesvg("f1plot")
-	d3.select("#discussion").append("br")
-	d3.select("#discussion").append("br")
+	d3.select("#model_tuning").append("br")
+	d3.select("#model_tuning").append("br")
 	var precplot = makesvg("precplot")
 	var recplot = makesvg("recplot")
 

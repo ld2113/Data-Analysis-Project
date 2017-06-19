@@ -8,21 +8,26 @@ d3.csv("coord_list_subset.csv", function(error, data) {
 	// 	points = d3.merge([points0, points1, points2]);
 	// console.log(data)
 
-	var margin = {top: 30, right: 30, bottom: 30, left: 60},
+	var margin = {top: 30, right: 30, bottom: 30, left: 50},
 		width = 0.5 * window.innerWidth - margin.left - margin.right,
 		height = 0.5 * width - margin.top - margin.bottom;
 
+	// var div = d3.select("#dimensionality").append("div")
+	// 	.attr("id", "tooltip")
+	// 	.attr("class", "hidden")
+	// 	.append("p")
+	// 	.append("span")
+	// 	.attr("id","value");
 
-	var svg = d3.select("#embedding_plot").append("svg")
+	var svg = d3.select("#dim_svg").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		var div = d3.select("#embedding_plot").append("div")
-			.attr("class", "tooltip")
-			.style("opacity", 0)
-			.text("-");
+	var tooltip = d3.select("#svg").append("div")
+		.attr("class", "tooltip")
+		.style("opacity", 0);
 
 	var x0 = [0,1],
 		y0 = [0,1],
@@ -65,24 +70,26 @@ d3.csv("coord_list_subset.csv", function(error, data) {
 			.attr("cx", function(d) { return x(d.x_val); })
 			.attr("cy", function(d) { return y(d.y_val); })
 			.attr("r", 3)
-			.attr("fill", "#E6550D")
-			.attr("class", "circles")
-			.on("dblclick", dblclick);
+			.attr("fill", "orange")
+			.attr("class", "circles");
 
 	svg.selectAll(".circles").on("mouseover", function(d) {
+			var xPosition = d3.select(this).attr("cx");
+			var yPosition = d3.select(this).attr("cy");
+			//console.log(document.getElementById("svg").offsetLeft);
 			d3.select("#staticimg")
 				.style("opacity",0);
-			div.transition()
-				.duration(150)
-				.style("opacity", .9);
-			div.html("<strong>Entrez ID:</strong> " + d.name)
+			tooltip
+				.style("left", xPosition + "px")
+				.style("top", yPosition + "px")
+				.select("#value")
+				.text("Entrez ID: " + d.name);
+			d3.select("#tooltip").classed("hidden", false);
 		})
 		.on("mouseout", function(d) {
 			d3.select("#staticimg")
 				.style("opacity",1);
-			div.transition()
-				.duration(500)
-				.style("opacity", 0);
+			d3.select("#tooltip").classed("hidden", true);
 		});
 
 	svg.append('svg:image')
@@ -101,10 +108,6 @@ d3.csv("coord_list_subset.csv", function(error, data) {
 		d3.select("#staticimg")
 			.style("opacity",1);
 	});
-
-	function dblclick(d){
-		window.open("https://www.ncbi.nlm.nih.gov/gene/"+d.name, '_blank');
-	}
 
 	function brushended() {
 		var s = d3.event.selection;
