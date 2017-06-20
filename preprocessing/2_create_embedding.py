@@ -70,13 +70,13 @@ def embedding(dimen, N, dist_mat):
 
 
 # Load data
-dist_mat = np.load('arrays/080_embed/network/dist_mat_4_5.npy')
+dist_mat = np.load('arrays/full_embed/network/dist_mat_4_5.npy')
 
 # Run embedding
-dimen = 4
+dimen = 2
 N = dist_mat.shape[0]
 print("---Running", dimen, "dimensional Embedding---")
 coord = embedding(dimen, N, dist_mat)
 
 # Save data
-np.save('arrays/080_embed/2D_coord_4x16k.npy', coord)
+np.save('arrays/full_embed/2D_coord_2x16k.npy', coord)

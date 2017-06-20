@@ -33,12 +33,21 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 		def on_epoch_end(self, epoch, logs={}):
 
-			if len(input_mode) == 3:
-				epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)
-			elif len(input_mode) == 2:
-				epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)
-			elif len(input_mode) == 1:
-				epoch_pred = self.model.predict(test_lab_names[:,0:2], batch_size=batchsize, verbose=1)
+			if aux_output_weights == []:
+				if len(input_mode) == 3:
+					epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)
+				elif len(input_mode) == 2:
+					epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)
+				elif len(input_mode) == 1:
+					epoch_pred = self.model.predict(test_lab_names[:,0:2], batch_size=batchsize, verbose=1)
+			else:
+				if len(input_mode) == 3:
+					epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)[0]
+				elif len(input_mode) == 2:
+					epoch_pred = self.model.predict([test_lab_names[:,0:2],test_lab_names[:,0:2]], batch_size=batchsize, verbose=1)[0]
+				elif len(input_mode) == 1:
+					epoch_pred = self.model.predict(test_lab_names[:,0:2], batch_size=batchsize, verbose=1)[0]
+
 			epoch_bin_pred = np.array(epoch_pred > 0.5).astype(int)
 			labels_test = test_lab_names[0:epoch_pred.shape[0],2]
 
@@ -55,9 +64,14 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 			print('mcc:', mcc, ' - acc:', acc, ' - prec:', prec, ' - recall:', recall,' - f1:', f1, end=' - ')
 			print("Frac. pos. pred.:", frac_pos)
 
-			with open('log.csv', 'a') as f:
-				f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'),epoch+1,max_epochs,logs['loss'],logs['acc'],mcc,acc,prec,recall,f1,auroc,aupr,frac_pos,
-				input_mode,coord_struct,dom_struct,go_struct,concat_struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,class_weight,train_path,test_path,coord_path,dom_path,go_path,coord_norm,aux_output_weights,'\n']))))))
+			if aux_output_weights == []:
+				with open('log_final.csv', 'a') as f:
+					f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'),epoch+1,max_epochs,logs['loss'],logs['acc'],mcc,acc,prec,recall,f1,auroc,aupr,frac_pos,
+					input_mode,coord_struct,dom_struct,go_struct,concat_struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,class_weight,train_path,test_path,coord_path,dom_path,go_path,coord_norm,aux_output_weights,'\n']))))))
+			else:
+				with open('log_final.csv', 'a') as f:
+					f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'),epoch+1,max_epochs,logs['loss'],logs['output_acc'],mcc,acc,prec,recall,f1,auroc,aupr,frac_pos,
+					input_mode,coord_struct,dom_struct,go_struct,concat_struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,class_weight,train_path,test_path,coord_path,dom_path,go_path,coord_norm,aux_output_weights,'\n']))))))
 
 			return
 
@@ -273,9 +287,9 @@ def main_emb(reg, drop, optim, batchsize, act, coord_norm, max_epochs, lr, lr_sc
 
 ############################### Main Program ###################################
 
-	with open('counter.txt', 'r') as f:
+	with open('counter_final.txt', 'r') as f:
 		id = int(f.readline()) + 1
-	with open('counter.txt', 'w') as f:
+	with open('counter_final.txt', 'w') as f:
 		f.write(str(id))
 
 

@@ -1,21 +1,27 @@
 # Data-Analysis-Project
 
 ## ToDo
-- How to split test and val (two seperate 0.9 embeds or one 0.8 embed)
+### Website
+- Clickable inline citations
+- Clickable bibliography
+- Clean up
 
-- Try training on just domains
+- Interactive hyperparameter exploration tool
 
-- Add more data:
--- Node degree (log transform)
--- Clusering coeff (nodewise)
--- Betw. centrality/ and others
+- Include graphics
 
-- Use crossvalidation to validate NN sklearn.cross_validation.StratifiedKfold
-- Find way to replace embedding
+### Report
+- Write:
+-- Model Tuning
+-- Results and Discussion
+-- Conclusion
+-- Methods
+-- Contributions
 
-- Website
--- viz: different network structures and their performance - interactive
--- viz: subsample embedding
+- Include citations
+
+### Other
+-
 
 ## Comparisons
 - First, tune network
@@ -35,4 +41,3 @@
 
 
 ## Questions
-- How to do partial embedding for test and validation data
