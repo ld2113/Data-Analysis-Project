@@ -1,4 +1,4 @@
-d3.csv("coord_list_subset.csv", function(error, data) {
+d3.csv("data/coord_list_names_sub12.csv", function(error, data) {
 
 	// var random = d3.randomNormal(0, 0.2),
 	// 	sqrt3 = Math.sqrt(3),
@@ -19,10 +19,10 @@ d3.csv("coord_list_subset.csv", function(error, data) {
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		var div = d3.select("#embedding_plot").append("div")
-			.attr("class", "tooltip")
-			.style("opacity", 0)
-			.text("-");
+	var div = d3.select("#embedding_plot").append("div")
+		.attr("class", "tooltip")
+		.style("opacity", 0)
+		.text("-");
 
 	var x0 = [0,1],
 		y0 = [0,1],
@@ -67,7 +67,7 @@ d3.csv("coord_list_subset.csv", function(error, data) {
 			.attr("r", 3)
 			.attr("fill", "#E6550D")
 			.attr("class", "circles")
-			.on("dblclick", dblclick);
+			.on("click", click);
 
 	svg.selectAll(".circles").on("mouseover", function(d) {
 			d3.select("#staticimg")
@@ -75,7 +75,7 @@ d3.csv("coord_list_subset.csv", function(error, data) {
 			div.transition()
 				.duration(150)
 				.style("opacity", .9);
-			div.html("<strong>Entrez ID:</strong> " + d.name)
+			div.html("<strong>Entrez ID:</strong>&nbsp;" + d.id + "&emsp; <strong>Symbol:</strong>&nbsp;" + d.symbol + "&emsp; <strong>Name:</strong>&nbsp;" + d.name)
 		})
 		.on("mouseout", function(d) {
 			d3.select("#staticimg")
@@ -102,8 +102,8 @@ d3.csv("coord_list_subset.csv", function(error, data) {
 			.style("opacity",1);
 	});
 
-	function dblclick(d){
-		window.open("https://www.ncbi.nlm.nih.gov/gene/"+d.name, '_blank');
+	function click(d){
+		window.open("https://www.ncbi.nlm.nih.gov/gene/"+d.id, '_blank');
 	}
 
 	function brushended() {

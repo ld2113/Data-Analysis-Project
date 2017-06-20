@@ -1688,7 +1688,7 @@ fill: white;
 
 div.tooltip {
 	position: relative;
-	text-align: left;
+	text-align: center;
 	width:100%;
 	padding: 0.5em 0.5em 0.5em 0.5em;
 	background: rgba(0, 0, 0, 0.0);
@@ -1697,10 +1697,9 @@ div.tooltip {
 	border-radius: 8px;
 	pointer-events: none;
 }
-/*
-#embedding_plot {
-	padding: 0.5em 0.5em 0.5em 0.5em;
-	border: 1px solid #E6550D;
+
+#nnform {
+	padding: 1.5em 1.5em 1.5em 1.5em;
+	border: 1px solid white;
 	border-radius: 8px;
 }
-*/

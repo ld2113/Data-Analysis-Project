@@ -130,7 +130,7 @@
 								<p>The resulting coordinate matrix of the shape 16109 x 4 (number of proteins x number of embedding dimensions) was used as the first input to the ANN.</p>
 								<div id="embedding_plot" style="margin-bottom: 2em;">
 									<p class="last">The figure below shows the two-dimensional embedding of all 16,109 human proteins in the Biogrid Database. Hovering the mouse over the embedding graphics will reveal an interactive application for exploring the embedding of a subsample of 1,000 proteins.</p>
-									<p style="margin-bottom: 0;"><strong>Brushing over an area while holding down the left mouse button will zoom into the specified area. Double click to zoom out. Information about each protein will be displayed upon hovering the mouse over it. Double click any protein for detailed information from the NCBI website.</strong></p>
+									<p style="margin-bottom: 0;"><strong>Brushing over an area while holding down the left mouse button will zoom into the specified area. Double click to zoom out. Information about each protein will be displayed upon hovering the mouse over it. Click any protein for detailed information from the NCBI website.</strong></p>
 								</div>
 
 								<h3>Protein domain data</h3>
@@ -263,6 +263,7 @@
 								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
 
 								<form id="nnform">
+									<h3>Hyperparameter Tuning</h3>
 									<div class="field">
 										<label for="classweight-select">Class Weight Ratio</label>
 										<div class="select-wrapper">
@@ -280,6 +281,7 @@
 											</select>
 										</div>
 									</div>
+									<h4>Model Input</h4>
 									<div class="field">
 										<input type="radio" id="c-button" name="input-mode" value='c'>
 										<label for="c-button">Coordinates-only</label>
@@ -288,6 +290,7 @@
 										<input type="radio" id="cd-button" name="input-mode" value='cd' checked>
 										<label for="cd-button">Both</label>
 									</div>
+									<h4>Model Optimiser</h4>
 									<div class="field">
 										<input type="radio" id="adam-button" name="optim" value='adam' checked>
 										<label for="adam-button">Adam</label>
