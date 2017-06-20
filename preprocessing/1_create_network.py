@@ -75,7 +75,7 @@ def create_labels(dist_df_orig):
 # Set parameters
 K = 4
 Kmax = 5
-path = "~/work/BIOGRID-ORGANISM-Homo_sapiens-3.4.147.mitab.txt"
+path = "../BIOGRID-ORGANISM-Homo_sapiens-3.4.147.mitab.txt"
 
 # Get data
 print('---Processing Data---')
@@ -83,7 +83,7 @@ df = process_df(path)
 
 # Create graph and remove some edges
 print('---Processing Graph---')
-G, rm_edges = create_graph(df, rm_frac=0.2)
+G, rm_edges = create_graph(df, rm_frac=0.0)
 
 # Calculate distance
 print('---Calculating Distances---')
@@ -96,7 +96,7 @@ labels = create_labels(dist_df_orig)
 # Save data
 print('---Saving Data---')
 #np.save('arrays/names.npy', names)
-np.save('arrays/080_embed/network/dist_mat_4_5.npy', dist_mat)
-np.save('arrays/080_embed/network/labels_100.npy', labels)
-np.save('arrays/080_embed/network/rm_edges.npy', rm_edges)
-dist_df_orig.to_pickle('arrays/080_embed/network/dist_df_orig_4_5.pkl')
+np.save('arrays/full_embed/network/dist_mat_4_5.npy', dist_mat)
+np.save('arrays/full_embed/network/labels_100.npy', labels)
+np.save('arrays/full_embed/network/rm_edges.npy', rm_edges)
+dist_df_orig.to_pickle('arrays/full_embed/network/dist_df_orig_4_5.pkl')
