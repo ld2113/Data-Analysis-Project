@@ -389,7 +389,7 @@
 		color: inherit;
 		display: block;
 		outline: 0;
-		padding: 0 1rem;
+		padding: 0 2rem 0 1rem;
 		text-decoration: none;
 		width: 100%;
 	}
@@ -438,8 +438,8 @@
 			color: #ffffff;
 			content: '\f107';
 			display: block;
-			height: 2.75rem;
-			line-height: calc(2.75rem + 0em);
+			height: 2.0rem;
+			line-height: calc(2rem + 0em);
 			pointer-events: none;
 			position: absolute;
 			right: 0;
@@ -456,7 +456,7 @@
 	input[type="password"],
 	input[type="email"],
 	select {
-		height: 2.75rem;
+		height: 2.0rem;
 	}
 
 	textarea {
@@ -1686,6 +1686,10 @@ font-size: 1.3em;
 fill: white;
 }
 
+text.ctitle {
+	font-weight: bold;
+}
+
 div.tooltip {
 	position: relative;
 	text-align: center;
@@ -1698,8 +1702,18 @@ div.tooltip {
 	pointer-events: none;
 }
 
-#nnform {
-	padding: 1.5em 1.5em 1.5em 1.5em;
-	border: 1px solid white;
+.nnplots {
+	border: 1px solid #E6550D;
 	border-radius: 8px;
+	padding: 0em 0em 0em 1em;
+}
+
+	.nnplots form {
+		margin-left: -1em;
+		padding: 1.5em 2em 0em 2em;
+		border-bottom: dotted 0.2em white;
+	}
+
+.nnsvg {
+	margin-bottom: 1.5em;
 }

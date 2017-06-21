@@ -1,7 +1,8 @@
 d3.csv("logwebsite.csv", function(error, data) {
 
 	function makesvg(plotname) {
-		var plot = d3.select("#model_tuning").append("svg")
+		var plot = d3.select(".nnplots").append("svg")
+			.attr("class", "nnsvg")
 			.attr("id", plotname)
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
@@ -93,10 +94,12 @@ d3.csv("logwebsite.csv", function(error, data) {
 			.call(xAxis);
 	}
 
-	function getFilteredData(data, optim, input_mode, class_weights) {
-		return data.filter(function(d) { return d.class_weight === class_weights; })
-					.filter(function(d) { return d.input_mode === input_mode; })
-					.filter(function(d) { return d.optim === optim; });
+	function getFilteredData(data, inputs, structure, autodims, regulbutt, drop) {
+		return data.filter(function(d) { return d.input_mode === inputs; })
+					.filter(function(d) { return d.concat_struct === structure; })
+					.filter(function(d) { return d.dom_path === autodims; })
+					.filter(function(d) { return d.drop === drop; })
+					.filter(function(d) { return d.reg === regulbutt; });
 	}
 
 
@@ -114,7 +117,7 @@ d3.csv("logwebsite.csv", function(error, data) {
 
 	var margin = {top: 30, right: 50, bottom: 50, left: 70},
 		width = 0.25 * window.innerWidth - margin.left - margin.right,
-		height = width - margin.top - margin.bottom;
+		height = 0.8*width - margin.top - margin.bottom;
 
 	var x = d3.scaleLinear()
 		.range([0, width]);
@@ -129,16 +132,16 @@ d3.csv("logwebsite.csv", function(error, data) {
 	var yAxis = d3.axisLeft(y)
 		.ticks();
 
-	var class_weights = d3.select("#classweights-select").node().value;
-	var inmodbutt = d3.select('input[name="input-mode"]:checked').property("value");
-	var optimbutt = d3.select('input[name="optim"]:checked').property("value");
+	var inputs = d3.select("#input-select").node().value;
+	var structure = d3.select("#structure-select").node().value;
+	var autodims = d3.select('input[name="dimens"]:checked').property("value");
+	var regulbutt = d3.select('input[name="regul"]:checked').property("value");
+	var drop = d3.select('input[name="drop"]:checked').property("value");
 
-	var groupData = getFilteredData(data, optimbutt, inmodbutt, class_weights);
+	var groupData = getFilteredData(data, inputs, structure, autodims, regulbutt, drop);
 
 	var mccplot = makesvg("mccplot")
 	var f1plot = makesvg("f1plot")
-	d3.select("#model_tuning").append("br")
-	d3.select("#model_tuning").append("br")
 	var precplot = makesvg("precplot")
 	var recplot = makesvg("recplot")
 
@@ -157,10 +160,13 @@ d3.csv("logwebsite.csv", function(error, data) {
 
 	d3.selectAll("input,select")
 		.on("change", function(e) {
-		var class_weights = d3.select("#classweights-select").node().value;
-		var input_mode = d3.select('input[name="input-mode"]:checked').property("value");
-		var optim = d3.select('input[name="optim"]:checked').property("value");
-		var groupData = getFilteredData(data, optim, input_mode, class_weights);
+		var inputs = d3.select("#input-select").node().value;
+		var structure = d3.select("#structure-select").node().value;
+		var autodims = d3.select('input[name="dimens"]:checked').property("value");
+		var regulbutt = d3.select('input[name="regul"]:checked').property("value");
+		var drop = d3.select('input[name="drop"]:checked').property("value");
+
+		var groupData = getFilteredData(data, inputs, structure, autodims, regulbutt, drop);
 
 		updatePoints(data, groupData, mccplot, "mcc");
 		enterPoints(data, groupData, mccplot, "mcc");

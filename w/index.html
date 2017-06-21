@@ -171,7 +171,7 @@
 								<table style="margin-bottom: 4em">
 									<thead>
 										<tr>
-											<th>Accuracy (proportion of perfectly restored domain labels)</th>
+											<th>Accuracy (proportion of proteins with perfectly restored domain labels)</th>
 											<th>F1 Score</th>
 											<th>Precision</th>
 											<th>Recall</th>
@@ -261,43 +261,53 @@
 
 								<h3>Hyperparameter tuning</h3>
 								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
-
-								<form id="nnform">
-									<h3>Hyperparameter Tuning</h3>
-									<div class="field">
-										<label for="classweight-select">Class Weight Ratio</label>
-										<div class="select-wrapper">
-											<select name="classweight-select" id="classweights-select">
-												<option value="{0: 0.01; 1: 1.0}">0.01</option>
-												<option value="{0: 0.02; 1: 1.0}">0.02</option>
-												<option value="{0: 0.05; 1: 1.0}">0.05</option>
-												<option value="{0: 1.0; 1: 20.0}">0.05(inverse)</option>
-												<option value="{0: 0.06; 1: 1.0}">0.06</option>
-												<option value="{0: 0.07; 1: 1.0}">0.07</option>
-												<option value="{0: 0.08; 1: 1.0}">0.08</option>
-												<option value="{0: 0.09; 1: 1.0}">0.09</option>
-												<option value="{0: 0.1; 1: 1.0}">0.1</option>
-												<option value="{0: 1.0; 1: 1.0}" selected>1.0</option>
-											</select>
+								<div class="nnplots">
+									<form id="nnform">
+										<h3>Hyperparameter Tuning</h3>
+										<div class="field half first">
+											<label for="input-select">Model Input</label>
+											<div class="select-wrapper">
+												<select name="input-select" id="input-select">
+													<option value="c">Embedding Coordinates</option>
+													<option value="d">Protein Domains</option>
+													<option value="g">GO Annotations</option>
+													<option value="cdg" selected>Coordinates + Domains + GO</option>
+												</select>
+											</div>
 										</div>
-									</div>
-									<h4>Model Input</h4>
-									<div class="field">
-										<input type="radio" id="c-button" name="input-mode" value='c'>
-										<label for="c-button">Coordinates-only</label>
-										<input type="radio" id="d-button" name="input-mode" value='d'>
-										<label for="d-button">Domains-only</label>
-										<input type="radio" id="cd-button" name="input-mode" value='cd' checked>
-										<label for="cd-button">Both</label>
-									</div>
-									<h4>Model Optimiser</h4>
-									<div class="field">
-										<input type="radio" id="adam-button" name="optim" value='adam' checked>
-										<label for="adam-button">Adam</label>
-										<input type="radio" id="sgd-button" name="optim" value='sgd'>
-										<label for="sgd-button">SGD</label>
-									</div>
-								</form>
+										<div class="field half">
+											<label for="structure-select">Model Structure</label>
+											<div class="select-wrapper">
+												<select name="structure-select" id="structure-select">
+													<option value="[64]">4 x 1 Layer: 64 ReLU Neurons</option>
+													<option value="[1024]">4 x 1 Layer: 1024 ReLU Neurons</option>
+													<option value="[1024; 128; 64]" selected>4 x 3 Layers: 1024, 128, 64 ReLU Neurons</option>
+												</select>
+											</div>
+										</div>
+										<div class="field half first">
+											<h4>Regularisation</h4>
+											<input type="radio" id="noreg-button" name="regul" value='0' checked>
+											<label for="noreg-button">None</label>
+											<input type="radio" id="reg-button" name="regul" value='1e-06'>
+											<label for="reg-button">L2 Regul. (1E-6)</label>
+										</div>
+										<div class="field half">
+											<h4>Dropout</h4>
+											<input type="radio" id="nodrop-button" name="drop" value='0' checked>
+											<label for="nodrop-button">None</label>
+											<input type="radio" id="drop-button" name="drop" value='0.25'>
+											<label for="drop-button">0.25</label>
+										</div>
+										<div class="field">
+											<h4>Autoencoder output dimensionality (domain &amp; GO data)</h4>
+											<input type="radio" id="threetwo-button" name="dimens" value='arrays/encoded_dom_32_tanh.npy' checked>
+											<label for="threetwo-button">32 Dimensions</label>
+											<input type="radio" id="fivetwelve-button" name="dimens" value='arrays/encoded_dom_512_tanh.npy'>
+											<label for="fivetwelve-button">512 Dimensions</label>
+										</div>
+									</form>
+								</div>
 							</article>
 
 
