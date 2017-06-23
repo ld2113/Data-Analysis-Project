@@ -1,14 +1,6 @@
 d3.csv("data/coord_list_names_sub12.csv", function(error, data) {
 
-	// var random = d3.randomNormal(0, 0.2),
-	// 	sqrt3 = Math.sqrt(3),
-	// 	points0 = d3.range(300).map(function() { return [random() + sqrt3, random() + 1, 0]; }),
-	// 	points1 = d3.range(300).map(function() { return [random() - sqrt3, random() + 1, 1]; }),
-	// 	points2 = d3.range(300).map(function() { return [random(), random() - 1, 2]; }),
-	// 	points = d3.merge([points0, points1, points2]);
-	// console.log(data)
-
-	var margin = {top: 30, right: 30, bottom: 30, left: 60},
+	var margin = {top: 30, right: 30, bottom: 50, left: 80},
 		width = 0.5 * window.innerWidth - margin.left - margin.right,
 		height = 0.5 * width - margin.top - margin.bottom;
 
@@ -52,6 +44,33 @@ d3.csv("data/coord_list_names_sub12.csv", function(error, data) {
 		.attr("transform", "translate(0," + height + ")")
 		.call(xAxis);
 
+	svg.append("text")
+		.attr("class", "ctitle")
+		.attr("x", (width / 2))
+		.attr("y", -margin.top/2)
+		.attr("fill","white")
+		.attr("text-anchor", "middle")
+		.text("Multidimensional Scaling of Human PPI Network");
+
+	svg.append("text")
+		.attr("class", "x label")
+		.attr("x", (width / 2))
+		.attr("y", height + margin.bottom/1.25)
+		.attr("fill","white")
+		.attr("text-anchor", "middle")
+		.attr("font-size", "0.8em")
+		.text("MDS Component 1");
+
+	svg.append("text")
+		.attr("class", "y label")
+		.attr("x", -height/2)
+		.attr("y", -margin.left/1.5)
+		.attr("fill","white")
+		.attr("text-anchor", "middle")
+		.attr("font-size", "0.8em")
+		.attr("transform", "rotate(-90)")
+		.text("MDS Component 2");
+
 	svg.append("g")
 		.attr("class", "brush")
 		.call(brush);
@@ -76,6 +95,9 @@ d3.csv("data/coord_list_names_sub12.csv", function(error, data) {
 				.duration(150)
 				.style("opacity", .9);
 			div.html("<strong>Entrez ID:</strong>&nbsp;" + d.id + "&emsp; <strong>Symbol:</strong>&nbsp;" + d.symbol + "&emsp; <strong>Name:</strong>&nbsp;" + d.name)
+			d3.select(this).transition()
+				.duration(150)
+				.attr("r", 7);
 		})
 		.on("mouseout", function(d) {
 			d3.select("#staticimg")
@@ -83,11 +105,15 @@ d3.csv("data/coord_list_names_sub12.csv", function(error, data) {
 			div.transition()
 				.duration(500)
 				.style("opacity", 0);
+			d3.select(this).transition()
+				.duration(500)
+				.attr("r", 3);
 		});
 
 	svg.append('svg:image')
 		.attr("id", "staticimg")
-		.attr('xlink:href', 'images/embedding_static_area.png')
+		.attr('xlink:href', 'images/embedding_static_area_bar.png')
+		.attr("preserveAspectRatio","none")
 		.attr("width", width)
 		.attr("height", height)
 		.style("pointer-events", "none");

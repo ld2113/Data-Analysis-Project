@@ -130,7 +130,7 @@
 								<p>The resulting coordinate matrix of the shape 16109 x 4 (number of proteins x number of embedding dimensions) was used as the first input to the ANN.</p>
 								<div id="embedding_plot" style="margin-bottom: 2em;">
 									<p class="last">The figure below shows the two-dimensional embedding of all 16,109 human proteins in the Biogrid Database. Hovering the mouse over the embedding graphics will reveal an interactive application for exploring the embedding of a subsample of 1,000 proteins.</p>
-									<p style="margin-bottom: 0;"><strong>Brushing over an area while holding down the left mouse button will zoom into the specified area. Double click to zoom out. Information about each protein will be displayed upon hovering the mouse over it. Click any protein for detailed information from the NCBI website.</strong></p>
+									<p style="margin-bottom: 1.5em;"><strong>Brushing over an area while holding down the left mouse button will zoom into the specified area. Double click to zoom out. Information about each protein will be displayed upon hovering the mouse over it. Click any protein for detailed information from the NCBI website.</strong></p>
 								</div>
 
 								<h3>Protein domain data</h3>
@@ -263,7 +263,8 @@
 								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
 								<div class="nnplots">
 									<form id="nnform">
-										<h3>Hyperparameter Tuning</h3>
+										<h3 style="margin-bottom: 0.25em;">Hyperparameter Exploration Tool</h3>
+										<p>Tune the hyperparameters below to find the best performing model (metrics are calculated on the validation set). The Matthews correlation coefficient is a thorough metric to measure model performance on a dataset with very imbalanced classes.</p>
 										<div class="field half first">
 											<label for="input-select">Model Input</label>
 											<div class="select-wrapper">
@@ -276,12 +277,12 @@
 											</div>
 										</div>
 										<div class="field half">
-											<label for="structure-select">Model Structure</label>
+											<label for="structure-select">Structure of each hidden layer set</label>
 											<div class="select-wrapper">
 												<select name="structure-select" id="structure-select">
-													<option value="[64]">4 x 1 Layer: 64 ReLU Neurons</option>
-													<option value="[1024]">4 x 1 Layer: 1024 ReLU Neurons</option>
-													<option value="[1024; 128; 64]" selected>4 x 3 Layers: 1024, 128, 64 ReLU Neurons</option>
+													<option value="[64]">1 Layer: 64 ReLU Neurons</option>
+													<option value="[1024]">1 Layer: 1024 ReLU Neurons</option>
+													<option value="[1024; 128; 64]" selected>3 Layers: 1024, 128, 64 ReLU Neurons</option>
 												</select>
 											</div>
 										</div>
@@ -289,7 +290,7 @@
 											<h4>Regularisation</h4>
 											<input type="radio" id="noreg-button" name="regul" value='0' checked>
 											<label for="noreg-button">None</label>
-											<input type="radio" id="reg-button" name="regul" value='1e-06'>
+											<input type="radio" id="reg-button" name="regul" value='1E-06'>
 											<label for="reg-button">L2 Regul. (1E-6)</label>
 										</div>
 										<div class="field half">
@@ -300,7 +301,7 @@
 											<label for="drop-button">0.25</label>
 										</div>
 										<div class="field">
-											<h4>Autoencoder output dimensionality (domain &amp; GO data)</h4>
+											<h4>Domain &amp; GO data input</h4>
 											<input type="radio" id="threetwo-button" name="dimens" value='arrays/encoded_dom_32_tanh.npy' checked>
 											<label for="threetwo-button">32 Dimensions</label>
 											<input type="radio" id="fivetwelve-button" name="dimens" value='arrays/encoded_dom_512_tanh.npy'>
@@ -314,7 +315,9 @@
 						<!-- discussion -->
 							<article id="discussion">
 								<h2 class="major">Results &amp; Discussion</h2>
+								<figure><img src="images/y2h.svg" alt="Y2H Scheme" style="width: 50%" align="left"><figcaption>HEllo heelo test</figcaption></figure>
 								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+
 							</article>
 
 
