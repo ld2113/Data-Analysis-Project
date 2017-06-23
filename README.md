@@ -4,40 +4,38 @@
 ### Website
 - Clickable inline citations
 - Clickable bibliography
-- Clean up
 
-- Interactive hyperparameter exploration tool
+- Navigation bar on every page?
+- Hover Glossary
+- Exit Page tooltip
 
-- Include graphics
+- Add and complete results tables
+
+- Interactive network tool
+
+- Include graphics:
+-- Pipeline Overview?
+-- Y2H figure?
+-- PPI Network?
+-- MLP
+-- Autoencoder
+-- Activation Functions?
+-- Embedding layer?
+-- General NN structure
 
 ### Report
-- Write:
--- Model Tuning
--- Results and Discussion
--- Conclusion
--- Methods
--- Contributions
+- Write Technical Appendix
 
-- Include citations
+- Fill in Data
 
 ### Other
--
-
-## Comparisons
-- First, tune network
--- Network architecture
--- Model hyperparameters (reg. strength, dropout, batchsize)
--- Domains encoding (dimensionality, regularisation, activation function)
--- Auxiliary output in multi input model
--- Network input normalisation (coord/domains)
-
-- Once network tuned
--- Single vs multi input network
--- Domains not coordinates and vice versa
-
-- Probably not
--- SMOTE vs simple oversampling
--- Embedding dimensionality
+- Run predictions
 
 
 ## Questions
+
+
+## Glossary
+- MDS
+- ANN
+- Y2H
