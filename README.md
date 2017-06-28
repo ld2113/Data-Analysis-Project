@@ -1,5 +1,5 @@
 # PROTONET
-### Data Analysis Project, MSc Bioinformatics and Theoretical Systems Biology
+### Data Analysis Project, MSc Bioinformatics and Theoretical Systems Biology, Imperial College London
 
 ## ABSTRACT
 

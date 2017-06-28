@@ -77,10 +77,10 @@ def main(reg, drop, optim, batchsize, act, max_epochs, lr, train_split, lr_sched
 					print('\n', 'insum_train:', insum, ' - outsum_train:', outsum_train, ' - acc_train:', acc_train, ' - prec_train:', prec_train, end=' - ')
 					print('recall_train:', recall_train, ' - f1_train:', f1_train, ' - auroc_train:', auroc_train, ' - aupr_train:', aupr_train)
 
-				with open('log_autoenc.csv', 'a') as f:
-					f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'), epoch+1, max_epochs,
-					train_split, logs['loss'], logs['acc'], insum_train, outsum_train, acc_train, prec_train, recall_train, f1_train, auroc_train, aupr_train, insum_test, outsum_test, acc_test, prec_test, recall_test, f1_test, auroc_test, aupr_test,
-					struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,in_path,save_path,'\n']))))))
+				# with open('log_autoenc.csv', 'a') as f:
+				# 	f.write(','.join(list(map(lambda x: str.replace(x, ",", ";"),list(map(str,[id,time.strftime('%Y%m%d'),time.strftime('%H%M'), epoch+1, max_epochs,
+				# 	train_split, logs['loss'], logs['acc'], insum_train, outsum_train, acc_train, prec_train, recall_train, f1_train, auroc_train, aupr_train, insum_test, outsum_test, acc_test, prec_test, recall_test, f1_test, auroc_test, aupr_test,
+				# 	struct,reg,drop,batchsize,act,optim,lr,lr_sched,lr_plat,in_path,save_path,'\n']))))))
 
 			return
 
@@ -154,10 +154,11 @@ def main(reg, drop, optim, batchsize, act, max_epochs, lr, train_split, lr_sched
 
 ############################### Main Program ###################################
 
-	with open('counter_autoenc.txt', 'r') as f:
-		id = int(f.readline()) + 1
-	with open('counter_autoenc.txt', 'w') as f:
-		f.write(str(id))
+	# with open('counter_autoenc.txt', 'r') as f:
+	# 	id = int(f.readline()) + 1
+	# with open('counter_autoenc.txt', 'w') as f:
+	# 	f.write(str(id))
+
 
 
 	################################################################

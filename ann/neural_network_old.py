@@ -134,16 +134,16 @@ nunits = 128
 
 
 print("----Loading Data----")
-labels_train = np.load('arrays/full_embed/7D_labels_075_resampled.npy')
-labels_test = np.load('arrays/full_embed/labels_025.npy')
-coord_train = np.load('arrays/full_embed/7D_075_cint_resampled_14x194m.npy')
-coord_test = np.load('arrays/full_embed/7D_025_cint_14x32m.npy')
-#labels = np.load('arrays/labels_100.npy')
-#coord = np.load('arrays/4D_cint_8x129m.npy')
+# labels_train = np.load('arrays/full_embed/7D_labels_075_resampled.npy')
+# labels_test = np.load('arrays/full_embed/labels_025.npy')
+# coord_train = np.load('arrays/full_embed/7D_075_cint_resampled_14x194m.npy')
+# coord_test = np.load('arrays/full_embed/7D_025_cint_14x32m.npy')
+# labels = np.load('arrays/labels_100.npy')
+# coord = np.load('arrays/4D_cint_8x129m.npy')
 
 print("----Processing Data----")
-#labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1.0, train_split=0.75)
-#labels_train, coord_train = resample_data(labels_train, coord_train)
+# labels_train, labels_test, coord_train, coord_test = subset_data(labels, coord, keep=1.0, train_split=0.75)
+# labels_train, coord_train = resample_data(labels_train, coord_train)
 coord_test, coord_train = normalise_coord([coord_test, coord_train])
 
 
@@ -159,11 +159,11 @@ print("----Model training----")
 compiled_mod.fit(coord_train, labels_train, epochs=5, batch_size=64, callbacks=set_callbacks())#,validation_split=0.25)
 
 
-#pred = compiled_mod.predict(coord_test,batch_size=64, verbose=0)
-#print('\n','Final Prediciton Score Summary (Validation Set Size:', np.abs(len(pred)),'):' , '\n', "MAX:", max(pred),'\n' , "MIN:", min(pred),'\n')
+# pred = compiled_mod.predict(coord_test,batch_size=64, verbose=0)
+# print('\n','Final Prediciton Score Summary (Validation Set Size:', np.abs(len(pred)),'):' , '\n', "MAX:", max(pred),'\n' , "MIN:", min(pred),'\n')
 
 print(compiled_mod.get_weights())
-#pickle.dump(weights,open( "weights.p", "wb"))
+# pickle.dump(weights,open( "weights.p", "wb"))
 # Evaluate model with test data
-#score = model.evaluate(coord_test, coord_test, batch_size=128)
-#print(score)
+# score = model.evaluate(coord_test, coord_test, batch_size=128)
+# print(score)

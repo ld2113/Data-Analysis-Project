@@ -1,6 +1,4 @@
-.remote-sync.json
-
-logs/*
+website/download/predictions.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
