@@ -31,7 +31,7 @@ def main(reg, drop, optim, batchsize, act, max_epochs, lr, train_split, lr_sched
 
 		def on_epoch_end(self, epoch, logs={}):
 
-			if (epoch+1)%100 == 0 and epoch != 0:
+			if (epoch+1)%500 == 0 and epoch != 0:
 				pred_train = self.model.predict(train, batch_size=batchsize, verbose=1)
 				pred_train_bin = np.array(pred_train > 0.5).astype(int)
 

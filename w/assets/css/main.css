@@ -95,6 +95,22 @@
 		font-size: 16pt;
 	}
 
+	@media screen and (min-width: 2560px) {
+
+		html {
+			font-size: 20pt;
+		}
+
+	}
+
+	@media screen and (min-width: 3840px) {
+
+		html {
+			font-size: 26pt;
+		}
+
+	}
+
 		@media screen and (max-width: 1680px) {
 
 			html {
@@ -1551,7 +1567,7 @@
 			transition: opacity 0.325s ease-in-out, transform 0.325s ease-in-out;
 			padding: 4.5rem 2.5rem 1.5rem 2.5rem ;
 			position: relative;
-			width: 100rem;
+			/*width: 100rem;*/
 			max-width: 60%;
 			background-color: rgba(27, 31, 34, 0.85);
 			border-radius: 4px;
@@ -1676,14 +1692,19 @@
 
 /* D3 */
 
-.axis path,
-.axis line {
-stroke: white;
+
+.links line {
+	stroke: #fff;
+	stroke-opacity: 0.6;
+}
+
+.axis path, .axis line {
+	stroke: white;
 }
 
 .axis text {
-font-size: 1.3em;
-fill: white;
+	font-size: 1.3em;
+	fill: white;
 }
 
 text.ctitle {
@@ -1716,4 +1737,155 @@ div.tooltip {
 
 .nnsvg {
 	margin-bottom: 1.5em;
+}
+
+
+/* Figures */
+
+figure.picture {
+	display: inline-block;
+	margin-bottom: 3em;
+}
+
+	figure.picture img {
+		vertical-align: top;
+		padding: 1em;
+		border: 1px solid white;
+		border-radius: 8px;
+	}
+
+		figure.picture img.stretch {
+			height: 17em;
+			margin: 0.5em 3em;
+		}
+
+		figure.picture img.nnstruct {
+			height: 17em;
+			margin: 0.5em 1em;
+		}
+
+	figure.picture figcaption {
+		text-align: center;
+		font-size: 0.9em;
+	}
+
+
+figure.metplots {
+	display: inline-block;
+	width: 47%;
+	margin: 0.5em 1% 3em 1%;
+}
+
+	figure.metplots img {
+		vertical-align: top;
+		padding: 0.5em;
+		width:100%;
+		border: 1px solid white;
+		border-radius: 8px;
+		margin-bottom: 0.5em;
+	}
+
+	figure.metplots figcaption {
+		text-align: center;
+		font-size: 0.9em;
+	}
+
+figure.pipeline {
+	display: inline-block;
+	width: 80%;
+	margin: 0.5em 10% 2em 10%;
+}
+
+	figure.pipeline img {
+		vertical-align: top;
+		padding: 0.5em;
+		width:100%;
+		border: 1px solid white;
+		border-radius: 8px;
+		margin-bottom: 1em;
+	}
+
+	figure.pipeline figcaption {
+		text-align: center;
+		font-size: 1em;
+	}
+
+
+#pipeline {
+	width:70%;
+	padding: 0.6em 1em 1em 1em;
+	border: 1px solid white;
+	border-radius: 8px;
+	margin: 0em 0em 2em 0em;
+}
+
+
+/* Datatips */
+
+.datatip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #E6550D;
+}
+
+.datatip .datatiptext {
+	font: inherit;
+    visibility: hidden;
+    width: 10em;
+	color: black;
+    background-color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.5em;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -5em;
+}
+
+.datatip .datatiptextlarge {
+	font: inherit;
+    visibility: hidden;
+    width: 20em;
+	color: black;
+    background-color: white;
+    text-align: justified;
+    border-radius: 6px;
+    padding: 1em;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -10em;
+}
+
+.datatip .datatiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+
+.datatip .datatiptextlarge::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+
+.datatip:hover .datatiptext {
+    visibility: visible;
+}
+
+.datatip:hover .datatiptextlarge {
+    visibility: visible;
 }

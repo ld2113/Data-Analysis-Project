@@ -1,6 +1,6 @@
 d3.csv("data/coord_list_names_sub12.csv", function(error, data) {
 
-	var margin = {top: 30, right: 30, bottom: 50, left: 80},
+	var margin = {top: 50, right: 30, bottom: 50, left: 80},
 		width = 0.5 * window.innerWidth - margin.left - margin.right,
 		height = 0.5 * width - margin.top - margin.bottom;
 
@@ -50,7 +50,7 @@ d3.csv("data/coord_list_names_sub12.csv", function(error, data) {
 		.attr("y", -margin.top/2)
 		.attr("fill","white")
 		.attr("text-anchor", "middle")
-		.text("Multidimensional Scaling of Human PPI Network");
+		.text("Interactive Multidimensional Scaling of Human PPI Network");
 
 	svg.append("text")
 		.attr("class", "x label")
@@ -86,7 +86,7 @@ d3.csv("data/coord_list_names_sub12.csv", function(error, data) {
 			.attr("r", 3)
 			.attr("fill", "#E6550D")
 			.attr("class", "circles")
-			.on("click", click);
+			.on("dblclick", dblclick);
 
 	svg.selectAll(".circles").on("mouseover", function(d) {
 			d3.select("#staticimg")
@@ -128,7 +128,7 @@ d3.csv("data/coord_list_names_sub12.csv", function(error, data) {
 			.style("opacity",1);
 	});
 
-	function click(d){
+	function dblclick(d){
 		window.open("https://www.ncbi.nlm.nih.gov/gene/"+d.id, '_blank');
 	}
 

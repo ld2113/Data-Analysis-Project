@@ -1,4 +1,4 @@
-d3.csv("logwebsite.csv", function(error, data) {
+d3.csv("data/logwebsite.csv", function(error, data) {
 
 	function makesvg(plotname) {
 		var plot = d3.select(".nnplots").append("svg")
@@ -115,7 +115,7 @@ d3.csv("logwebsite.csv", function(error, data) {
 		d.recall = +d.recall;
 		});
 
-	var margin = {top: 30, right: 50, bottom: 50, left: 70},
+	var margin = {top: 50, right: 50, bottom: 50, left: 70},
 		width = 0.25 * window.innerWidth - margin.left - margin.right,
 		height = 0.8*width - margin.top - margin.bottom;
 

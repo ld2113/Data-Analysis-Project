@@ -80,15 +80,23 @@
 								<h2 class="major">About</h2>
 								<h3>Lay Summary</h3>
 								<p>Artificial neural networks are a type of machine learning technique that can enable computers to learn complex patterns and relationships from data. This technique has been successfully employed in the fields of speech recognition, natural language understanding and computer vision. One prominent example of their application are personal assistants like Apple Siri.</p>
-								<p>In this project we have applied an artificial neural network to a biological problem: predicting novel protein-protein interactions (PPIs) in the human body. PPIs form the basis of many biological processes such as transport across membranes, cell signalling and immune response. Discovering novel interactions can therefore help us find new drug targets, but can also improve our understanding of protein function and the basis of their interaction.</p>
-								<p>We combined three separate data sources to train the neural network. Firstly, the coordinates of each protein after embedding them in a multidimensional space (interacting proteins being placed closer together). Secondly, information about the known domains of each protein. Lastly, the gene ontology labelling for each protein.</p>
-								<p class="last">When artificially removing interactions from the network, our model was able to recover 17 % of them with a precision of 16 % as well as a Matthews Correlation Coefficient and f1-score of 0.16. This result demonstrates the potential of applying novel machine learning techniques to biological problems.</p>
+								<p>In this project we have applied an artificial neural network to a biological problem: predicting novel protein-protein interactions (PPIs) in the human body by integrating a diverse range of input data sources. <span class="datatip">PPIs<span class="datatiptext">Protein-Protein Interactions</span></span>
+ form the basis of many biological processes such as transport across membranes, cell signalling and the immune response. Discovering novel interactions can therefore help us find new drug targets and therapies, but can also improve our understanding of protein function and the basis of their interaction.</p>
+								<p>We combined three separate data sources to train the neural network. Firstly, the coordinates of each protein after embedding them in a multidimensional space (interacting proteins being placed closer together). Secondly, information about the known domains of each protein. Lastly, the gene ontology annotation for each protein.</p>
+								<p class="last">When artificially removing interactions from the network, our model was able to recover 28 % of them with 13 % of all predicted interactions being correct. This result demonstrates the potential of applying novel machine learning techniques to biological problems.</p>
 
 								<h3>Abstract</h3>
+
 								<p>Current biochemical high-throughput methods for detecting novel protein-protein interactions are prone to significant Type I and Type II errors. Computational tools with the ability to produce high-quality predictions have hence been investigated for several years.</p>
-								<p>In this work, we present a feed-forward artificial neural network for the prediction and de-noising of protein-protein interaction networks. We combine known interaction data, Gene Ontology annotations and protein domain data as inputs to our model.</p>
-								<p>We were able to reconstruct artificially removed edges from the human interactome with a Matthews correlation coefficient and F1 score of 0.16. Considering the complexity of this problem, we believe that this result highlights the potential of combining supervised and unsupervised machine learning approaches to solve biological problems.</p>
+								<p>In this work, we present a feed-forward artificial neural network for the prediction of novel protein-protein interactions. We combine available interaction data, Gene Ontology annotations and protein domain data as inputs to our model. The nature of our model provides fully automated data integration without requiring manual weighting of the different input data sources.</p>
+								<p>We were able to reconstruct artificially removed edges from the human interactome with a Matthews correlation coefficient of 0.19 and F1 score of 0.17. Considering the complexity of the problem,  this result highlights the potential of combining supervised and unsupervised machine learning approaches to solve biological problems using a diverse range of input data types.</p>
 								<p>All code has been made available on <a href="https://github.com/ld2113/Data-Analysis-Project" target="_blank">GitHub</a>.</p>
+								<p class="last">The supplementary information for this project is available <a href="download/protonet-supplementary-material.pdf" target="_blank">here</a>.</p>
+
+								<h3>Tips for using this website</h3>
+								<p>Any section window such as this one can be closed in three ways in order to return to the main menu. Firstly, by clicking the grey X at the top of the section window. Secondly, by pressing the 'Escape' button on the keyboard. Thirdly, by clicking outside the section window on the blurred background area.</p>
+								<p class="last">For more information and defitions of <span class="datatip">certain words<span class="datatiptext">Additional Information.</span></span> and <span class="datatip">abbreviations<span class="datatiptext">Additional Information.</span></span>, just hover over them to display a tooltip.<br><br> Links are underlined by grey dots. <a href="#">Home.</a></p>
+
 							</article>
 
 
@@ -97,47 +105,68 @@
 								<h2 class="major">Background</h2>
 
 								<h3>Protein-Protein Interaction Networks</h3>
-								<p>Proteins represent one of the key components of living organisms. They play a vital role in numerous processes including metabolism, stimulus response and transporting molecules. While some tasks can be fulfilled by individual proteins, other can only be mastered through the concerted action of multiple proteins. Such mechanisms have been found to be particularly prevalent in for example signal transduction, the immune response and transmembrane proteins.</p>
-								<p>Consequently, studying protein-protein interactions (PPIs) and the resulting interaction networks has been a key area of interest in the research community. While a better understanding of PPIs can help us explain the underlying mechanisms of protein function, this research can also highlight avenues towards novel drug and therapy design through an improved insight into disease progression.</p>
-								<p>Until today, three different approaches have been taken to study PPIs. Initially, biochemical assays and chromatography techniques have been used to detect unknown interactions. While these methods can achieve high sensitivity and specificity, they tend to be time and labour intensive and hence inherently low throughput [EXAMPLES AND CITATION].</p>
-								<p>High-throughput techniques such as yeast two-hybrid (Y2H) screens and affinity purification coupled to mass spectrometry overcame this problem by significantly increasing the number of tested interactions per time. [EXAMPLES AND CITATION] While these methods remain the go-to approaches to screening for novel PPIs, they are still far from perfect. The main drawback besides the high costs associated with these techniques, is their low specificity: both approaches are prone to producing a large number of false positives and hence noisy data.</p>
-								<p class="last">To tackle these issues, computational methods have received significant interest over the previous years in order to obtain high-quality data in a high-throughput fashion. Approaches ranged from text mining methods to machine learning based prediction algorithms using protein sequence. Attempts were also made to reduce the number of dimensions in intrinsically high-dimensional PPI data using support vector machines random forests, or neural networks.</p>
+								<p>Proteins represent one of the key components of living organisms. They play a vital role in numerous processes including metabolism, muscle contraction and stimulus response. While some tasks can be fulfilled by individual proteins, others can only be mastered through the concerted action of multiple ones. Such pathways involving protein complexes have been found to be particularly prevalent in signal transduction and the immune response. (<a href="https://dx.doi.org/10.1038/ncomms3660" target="_blank">Herce et al., 2013</a>)</p>
+								<p>Studying protein-protein interactions (PPIs) and the resulting interaction networks has consequently been a key area of interest in the research community. While a better understanding of <span class="datatip">PPIs<span class="datatiptext">Protein-Protein Interactions</span></span>
+ can help us explain the underlying mechanisms of protein function, it can also highlight avenues towards novel drug and therapy design through an improved insight into disease progression. (<a href="https://dx.doi.org/10.1007/s12033-007-0069-2" target="_blank">Skrabanek et al., 2008</a>)</p>
+								<p>High-throughput techniques such as yeast two-hybrid (Y2H) screens (<a href="https://dx.doi.org/10.1038/340245a0" target="_blank">Fields &amp; Song, 1989</a>) and affinity purification coupled to mass spectrometry (<a href="https://dx.doi.org/10.1038/13732" target="_blank">Rigaut et al., 1999</a>) have long been the method of choice for detecting novel PPIs. The main drawback besides the high costs associated with these techniques, is their low specificity: both approaches are prone to producing a large number of false positives and hence noisy data. (<a href="https://dx.doi.org/10.1371/journal.pcbi.0030043" target="_blank">Shoemaker &amp; Panchenko, 2007</a>)</p>
+								<p class="last">To tackle these issues, computational methods have received significant interest over the previous years in order to obtain high-quality data in a high-throughput fashion. Approaches ranged from text mining methods to machine learning based prediction algorithms using protein sequence. (<a href="https://dx.doi.org/10.1021/acs.chemrev.5b00683" target="_blank">Keskin, Tuncbag &amp; Gursoy, 2016</a>)</p>
 
 								<h3>Artificial Neural Networks</h3>
-								<p>Artificial neural networks (ANNs) are a class of machine learning algorithms which imitate the human brain’s structure and learning. Instead of applying hard-coded rules to solve problems, a neural network is able to learn complex features from its input data. In its most basic form, a Multilayer Perceptron (MLP),a neural network consists of an input layer, a hidden layer and an output layer. [FIGURE] Each layer is in turn comprised of multiple nodes (‘neurons’) which represent a linear transformation of the output of the previous layer (y=wx+b), followed by a non-linear transformation such as y=max(0,x) (‘activation function’). In an MLP, all nodes are fully connected. This means that each node receives inputs from all nodes in the previous layer, and feeds its outputs to all nodes in the next layer.</p>
-								<p>Neural networks can be trained both in a supervised and unsupervised fashion. In the first case, the networks is presented with the correct label (given a classification problem) alongside the corresponding input data during training. Based on the desired output, the network is then able to correct the weights of each node through a process known as backpropagation. This is an iterative process that is repeated many times during network training and can be understood as a convex optimisation problem. </p>
-								<p>One example of unsupervised learning would be a class of ANNs referred to as autoencoders. [FIGURE] Here, the network is trained to reproduce its inputs. This could easily be achieved with n = N nodes representing the identity function (where N is the dimensionality of the input data and n the number of nodes). In an autoencoder however, a hidden layer with n < N nodes is introduced, which forces the network to reduce the dimensions of the data to n and from that restore the input. This way, the network is able to learn the important features in the data without being presented with them explicitly.</p>
+								<p>Artificial neural networks (<span class="datatip">ANNs<span class="datatiptext">Artificial Neural Networks</span></span>) are a class of machine learning algorithms which imitate the human brain’s structure and learning. Instead of applying hard-coded rules to solving a given problem, a neural network is able to automatically learn complex features from its input data.  (<a href="https://dx.doi.org/10.15252/msb.20156651" target="_blank">Angermueller et al., 2016</a>) In its most basic form, known as a Multilayer Perceptron (MLP), a neural network consists of an input layer, a hidden layer and an output layer (figure 1). Each layer is in turn comprised of multiple nodes (‘neurons’) which represent a linear transformation of the output of the previous layer (y = wx + b), followed by a non-linear transformation such as y = max(0, x) (the activation function). In an MLP, all nodes are fully connected. This means that each node receives inputs from all nodes in the previous layer, and feeds its outputs to all nodes in the next layer. (<a href="#ref_attr" target="_blank">Rosenblatt, 1961</a>)</p>
+								<p class="last">One example of <span class="datatip">unsupervised learning<span class="datatiptextlarge">Neural networks can be trained both in a supervised and unsupervised fashion. In the first case, the networks is presented with the correct label (given a classification problem) alongside the corresponding input data during training. Based on the desired output, the network is then able to correct the weights of each node through a process known as backpropagation. This is an iterative process that is repeated many times during network training and can be understood as a convex optimisation problem with the loss function (for example the likelihood function) as its objective function. (Rumelhart, 1985)</span></span> are a class of <span class="datatip">ANNs<span class="datatiptext">Artificial Neural Networks</span></span> referred to as autoencoders (<a href="https://dx.doi.org/10.1561/2200000006" target="_blank">Bengio, 2009</a>) (figure XX). Here, the network is trained to exactly reproduce its inputs. This could easily be achieved with n = N nodes representing the identity function (where N is the dimensionality of the input data and n the number of nodes). In an autoencoder however, a hidden layer with n < N nodes is introduced, which forces the network to reduce the dimensions of the data to n and from that restore the input. This way, the network is able to automatically learn the important features in the data.</p>
+								<figure class="picture">
+									<img class="nnstruct" src="images/mlp.svg" alt="Multi input ANN scheme"/>
+									<figcaption><strong>Figure 1:</strong> Multi layer perceptron (MLP) schematic with three <br>input nodes (top), five hidden nodes (one layer - middle) <br>and one output node (bottom).</figcaption>
+								</figure>
+								<figure class="picture">
+									<img class="nnstruct" src="images/autoenc.svg" alt="Single input ANN scheme"/>
+									<figcaption><strong>Figure 2:</strong> Autoencoder schematic. This <br>autoencoder is designed to reduce five <br> input dimensions to two dimensions.</figcaption>
+								</figure>
 								<h4 class="nomarg">Applications</h4>
-								<p class="last">Neural networks have been applied very successfully to problems from the areas of natural language understanding as well as speech and image recognition. In the realm of computational biology, neural networks have found wide applications in regulatory genomics as well as processing of cellular (<a href="https://dx.doi.org/10.15252/msb.20156651" target="_blank">Angermueller, 2016</a>) and brain imaging data (<a href="https://dx.doi.org/10.1038/nmeth.4206" target="_blank">Dorkenwald, 2017</a>). Different types of neural networks have also previously been used to predict PPIs from protein sequence: Zhao (2014) used a Probabilistic Neural Network, whereas Sun (2017) employed a stacked autoencoder.</p>
+								<p>Neural networks have been applied very successfully to problems from the areas of natural language understanding as well as speech and image recognition. (<a href="https://dx.doi.org/10.1038/nature14539" target="_blank">LeCun, Bengio &amp; Hinton, 2015</a>) In the realm of computational biology, neural networks have found applications in regulatory genomics as well as processing of cellular (<a href="https://dx.doi.org/10.15252/msb.20156651" target="_blank">Angermueller et al., 2016</a>) and brain imaging data (<a href="https://dx.doi.org/10.1038/nmeth.4206" target="_blank">Dorkenwald et al., 2017</a>). Neural Networks have also recently been applied to the <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+ prediction problem by<a href="https://dx.doi.org/10.1186/s12859-017-1700-2" target="_blank"> Sun et al. (2017)</a> using protein sequence as input data. Despite the authors reporting detailed metrics and high accuracy on training data, the actual model performance remains unclear as only accuracy is reported for any test-set performance despite test-sets partly being subject to high class imbalance.</p>
+								<h4 class="nomarg">Outlook</h4>
+								<p class="last">Previous <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+ prediction algorithms have mostly relied of a single type of input data such as sequence information. In this study, we aim to construct a feed-forward <span class="datatip">ANN<span class="datatiptext">Artificial Neural Network</span></span> algorithm, capable of flexibly integrating several types of input data in order to predict novel <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+. The algorithm’s test-set performance will be validated with metrics appropriate for classification tasks on highly imbalanced datasets such as the Matthews correlation coefficient and the F1 score (see definitions in the <a href="download/protonet-supplementary-material.pdf" target="_blank">technical appendix</a>).</p>
 							</article>
 
 
 						<!-- preprocessing -->
 							<article id="preprocessing">
 								<h2 class="major">Data Preprocessing</h2>
-								<h3>Data Sources</h3>
-								<p class="last">For this project, three main sources of data were used. Firstly, human PPI data from the Biogrid database, secondly Gene Ontology data for the relevant proteins as well as data about their known protein domains. For further information on the studied datasets, please consult the Methods section.</p>
+								<h3>Pipeline Overview</h3>
+								<figure class="pipeline">
+									<img src="images/pipeline.svg" alt="Pipeline Overview"/>
+									<figcaption><strong>Figure 3:</strong> Project pipeline overview.</figcaption>
+								</figure>
 
-								<h3>Data Cleaning</h3>
-								<p>As this study was focusing at the human organism, we removed protein interaction between proteins from human and non-human organisms (eg. S. Cerevisiae) using the Taxid ID feature in the Biogrid Database. Furthermore,  protein self-interactions were removed by their Entrez ID.</p>
-								<p>Protein domain cleaning?</p>
-								<p>GO data cleaning?</p>
-								<p class="last">Following the preprocessing of the input data, a total of 16109 proteins with 219,216 positive interactions (0.2 %) remained. [TABLE?]</p>
+								<h3>Data Sources</h3>
+								<p class="last">For this project, three main sources of data were used (figure 3). Firstly, human <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+ data from the Biogrid database, secondly Gene Ontology data for the relevant proteins as well as, thirdly, protein domain data. For further information on the studied datasets as well as the data cleaning procedure, please consult the <a href="#methods" target="_blank">Methods</a> section.</p>
 
 								<h3>Multidimensional Scaling of protein interaction data</h3>
-								<p>Multidimensional Scaling (MDS) is a common technique to embed N nodes of a network in an n-dimensional space where N > n. The euclidean distance between different embedded nodes hereby approximately corresponds to the shortest path-length between the two corresponding nodes in the original network.</p>
-								<p>From the Biogrid PPI data, we constructed a network using the NetworkX Python package. The network consisted of x nodes and y edges, forming an undirected simple graph. Using MDS, we embedded the network data in a four-dimensional space. using the approach proposed by Kuchaiev (2009). The provided Matlab Code was translated to Python to enable compatibility with the constructed NetworkX graph. Four dimensions were chosen a good compromise between computational cost of the embedding and representative power of the embedding. The cut-off distance for the shortest path-length was set at four as suggested in the original paper.</p>
-								<p>The resulting coordinate matrix of the shape 16109 x 4 (number of proteins x number of embedding dimensions) was used as the first input to the ANN.</p>
-								<div id="embedding_plot" style="margin-bottom: 2em;">
-									<p class="last">The figure below shows the two-dimensional embedding of all 16,109 human proteins in the Biogrid Database. Hovering the mouse over the embedding graphics will reveal an interactive application for exploring the embedding of a subsample of 1,000 proteins.</p>
-									<p style="margin-bottom: 1.5em;"><strong>Brushing over an area while holding down the left mouse button will zoom into the specified area. Double click to zoom out. Information about each protein will be displayed upon hovering the mouse over it. Click any protein for detailed information from the NCBI website.</strong></p>
+								<p>We used <span class="datatip">Multidimensional Scaling (MDS)<span class="datatiptextlarge">MDS is a common technique to embed N nodes of a network in an n-dimensional space where N > n. The euclidean distance between different embedded nodes hereby approximately corresponds to the shortest path-length between the two corresponding nodes in the original network (figure 4).</span></span> to embed the Biogrid PPI network in a four-dimensional space. </p>
+								<p>With four embedding dimensions we chose a higher dimensionality than suggested in the original publication by <a href="https://dx.doi.org/10.1371/journal.pcbi.1000454" target="_blank">Kuchaiev et al. (2009)</a> to account for the larger <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+ network considered for our study. Higher dimensional embedding data could not be obtained due to the computational and time restrictions on this project.</p>
+								<p>The resulting coordinate matrix of the shape 16,109 x 4 (number of proteins x number of embedding dimensions) was used as the first input to the neural network.</p>
+								<h4 class="nomarg">Interactive embedding explorer</h4>
+								<p class="last">The figure below shows the two-dimensional embedding of all 16,109 human proteins in the Biogrid Database. Hovering the mouse over the embedding graphics will reveal an interactive application for exploring the embedding of a subsample of 1,000 proteins.</p>
+								<div id="embedding_plot" style="margin-bottom: 0.5em;">
+									<p style="margin-bottom: 2.5em; font-size:0.8em;"><i>Brushing over an area while holding down the left mouse button will zoom into the specified area. Double click to zoom out. Information about each protein will be displayed upon hovering the mouse over it. Doubleclick any protein for detailed information from the NCBI website.</i></p>
 								</div>
+								<p style="text-align:center;"><strong>Figure 4:</strong> Two-dimensional <span class="datatip">MDS<span class="datatiptext">Multidimensional scaling. A common dimensionality reduction technique for network data.</span></span> embedding of human protein data.</p>
+								<p class="last">&nbsp;</p>
 
 								<h3>Protein domain data</h3>
-								<p>The protein domain information was originally obtained as a multi-label matrix of the shape 16109 × 11664 (number of proteins x number of domains), where each ‘1’ in the column would represent the presence of this domain in the protein (with all other columns being zero). In total, the domain data included 56358 positive labels with 5.7 % (922) of the 16109 proteins having no domain label.</p>
-								<p class="last">Due to the large number of features (protein domains) in the data, we had to reduce the size of the input matrix to a dimensionality practical for an input to a ANN. To achieve this, we employed a class of neural network, known as an autoencoder (see Background). As an unsupervised machine learning method, the autoencoder is able to automatically detect complex relationships as well as key features in the data. Using the autoencoder, we were able to reduce the dimensions of the domain data from 11664 to 64 while maintaining high reconstructability of the original input data (see below).</p>
+								<p class="last">Due to the large number of features (dimensions) in the protein domain data, we had to reduce the size of this input to a dimensionality practical for an input to an <span class="datatip">ANN<span class="datatiptext">Artificial Neural Network</span></span>. To achieve this, we employed a class of neural network, known as an autoencoder (see Background). As an unsupervised machine learning method, the autoencoder is able to automatically detect complex relationships as well as key features in the data. Using the autoencoder, we were able to reduce the dimensions of the domain data from 11,664 to 512 while maintaining high reconstruction performance for the hold-out input dataset (tables 1 and 2).</p>
 
-								<h4>optimised hyperparameters of autoencoder (protein domains)</h4>
+								<h4>optimised hyperparameters of autoencoder (protein domains) (Table 1)</h4>
 								<table style="margin-bottom: 2.5em">
 									<thead>
 										<tr>
@@ -148,26 +177,26 @@
 											<th>Optimiser</th>
 											<th>Learning Rate</th>
 											<th>Batch Size</th>
-											<th>Regularisation</th>
-											<th>Dropout</th>
+											<th>Regularisation Strength</th>
+											<th>Dropout Rate</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
+											<td>1</td>
+											<td>512</td>
+											<td>500</td>
+											<td>Tanh</td>
+											<td>Adam</td>
+											<td>0.001</td>
+											<td>64</td>
+											<td>0.0</td>
+											<td>0.0</td>
 										</tr>
 									</tbody>
 								</table>
 
-								<h4>Performance of autoencoder on protein domain hold-out data</h4>
+								<h4>Performance of autoencoder on protein domain hold-out data  (Table 2)</h4>
 								<table style="margin-bottom: 4em">
 									<thead>
 										<tr>
@@ -175,25 +204,28 @@
 											<th>F1 Score</th>
 											<th>Precision</th>
 											<th>Recall</th>
+											<th>Area under PR Curve</th>
+											<th>Area under ROC Curve</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
+											<td>0.5189</td>
+											<td>0.8867</td>
+											<td>0.9757</td>
+											<td>0.8125</td>
+											<td>0.8363</td>
+											<td>0.8833</td>
 										</tr>
 									</tbody>
 								</table>
 
 								<h3>Gene Ontology data</h3>
 								<p>The Gene Ontology (GO) represents a controlled vocabulary to describe gene and gene products such as proteins. It consists of tree parts, namely cellular component (location in the cell), molecular function (main chemical reactions carried out by the protein) and the biological process that the protein is involved in.</p>
-								<p>We were able to obtain molecular function GO data for 28 % (4,473) of the 16,109 proteins and biological process data for 27 % (4,389) of them. 71 % (11438) of the proteins had neither molecular function nor biological process GO terminology available.</p>
 								<p>As the GO data format was very much resembling the format of the protein domain data, we took the same autoencoder approach to reduce its dimensionality. As there was a near perfect overlap between the proteins that had molecular function GO annotations and the ones with biological process annotations, we concatenated the two arrays to give a combined input for the autoencoder.</p>
-								<p class="last">We were able reduce the dimensions from 10,733 (8,028 biological process annotations + 2,705 molecular function annotations) to 64 while maintaining high reconstructability of the original input data (see below).</p>
+								<p class="last">We were able reduce the dimensions from 10,733 (8,028 biological process labels + 2,705 molecular function labels) to 512 while maintaining high reconstruction performance for the hold-out input dataset (tables 3 and 4).</p>
 
-								<h4>optimised hyperparameters of autoencoder (GO annotations)</h4>
+								<h4>optimised hyperparameters of autoencoder (GO annotations)  (Table 3)</h4>
 								<table style="margin-bottom: 2.5em">
 									<thead>
 										<tr>
@@ -204,41 +236,45 @@
 											<th>Optimiser</th>
 											<th>Learning Rate</th>
 											<th>Batch Size</th>
-											<th>Regularisation</th>
-											<th>Dropout</th>
+											<th>Regularisation Strength</th>
+											<th>Dropout Rate</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
+											<td>3</td>
+											<td>4096, 1024, 512</td>
+											<td>500</td>
+											<td>Tanh</td>
+											<td>Adam</td>
+											<td>0.001</td>
+											<td>64</td>
+											<td>0.0</td>
+											<td>0.0</td>
 										</tr>
 									</tbody>
 								</table>
 
-								<h4>Performance of autoencoder on GO annotation hold-out data</h4>
-								<table style="margin-bottom: 4em">
+								<h4>Performance of autoencoder on GO annotation hold-out data (Table 4)</h4>
+								<table style="margin-bottom: 0em">
 									<thead>
 										<tr>
 											<th>Accuracy (proportion of proteins with perfectly restored domain labels)</th>
 											<th>F1 Score</th>
 											<th>Precision</th>
 											<th>Recall</th>
+											<th>Area under PR Curve</th>
+											<th>Area under ROC Curve</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
-											<td>0.5</td>
+											<td>0.8107</td>
+											<td>0.4501</td>
+											<td>0.6886</td>
+											<td>0.3343</td>
+											<td>0.3850</td>
+											<td>0.8762</td>
 										</tr>
 									</tbody>
 								</table>
@@ -249,19 +285,43 @@
 							<article id="model_tuning">
 								<h2 class="major">Model Tuning</h2>
 
-								<h3>Training, Validation and Testing Data</h3>
-								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<h3>Imbalanced datasets</h3>
+								<p class="last">Following the cleaning of the Biogrid data, a total of 16,109 proteins with 219,216 interactions (0.2 % positive samples) remained. Given the imbalanced nature of this data, accuracy was not a satisfactory performance measure for our predictive models. The reason for this is that for a dataset containing mostly negative classes, an algorithm predicting every interaction as negative would be able to achieve a high accuracy without being of any practical use. We chose the Matthews correlation coefficient as the most suitable performance measure, but also relied on further statistics such as the F1 score and the area under the ROC Curve.</p>
 
-								<h3>Using a text embedding layer</h3>
-								<p>Following the reduction of the input dimensions discussed in the previous section, we obtained a coordinate input of 4 dimensions, a domain input of 64 dimensions and a GO terminology input of XX dimensions. Considering, that there are n * (n-1) / 2 possible interactions, between 16,109 proteins, we obtained 129,741,886 samples of input data. Assuming 4 bytes of occupied memory per single number (float32), the memory required to hold all input data at once would have been around 72 GB. While we could, in theory, held all this data in memory at once, it would have prevented us from training networks in parallel on multiple GPUs due to memory constraints.</p>
-								<p class="last">To overcome this, we used the embedding layer feature provided by Keras. This layer is often used in natural understanding problems where large word embedding lists are a common occurrence. The embedding layer allows to construct network inputs at training time based on the list of indices provided. In our problem, we used the coordinates, domains and go term matrices the lookup lists for the corresponding inputs with the same list of indices provided to each input. This reduced the memory requirement of the input data to a total of 2.8 GB.</p>
+								<h3>Training, Validation and Testing Data</h3>
+								<p>The hyperparameters of a model are the ‘tuning knobs’ for optimising the performance of a given <span class="datatip">ANN<span class="datatiptext">Artificial Neural Network</span></span>. Common hyperparameters are the regularisation strength, learning rate, network structure and in our case also the type of model input.</p>
+								<p>In order to be able to asses the ‘true’ performance of our model, we assume that any part of the input data which the model has not been trained on is a good representation of ‘unseen’ data to which the model might be applied in the future. For this reason a proportion of the input data is kept on the side throughout the whole training and optimisation process in order to serve as a measure of the model performance once the model has been trained and optimised. This is referred to as the test set. It is important to note here, that any model training or optimisation of hyperparameters cannot involve the test set as this would expose our model to overfitting: instead of learning the general trends and structure in the data (which would also be present in any new data), the model would start learning the unimportant features (noise) present only in the training data. Any overfitting negatively affects the true performance of the model and is therefore to be avoided.</p>
+								<p class="last">In order to still be able to tune the hyperparameters of the model, a further hold-out set besides the test set is required. We refer to this as the validation set. We constructed a training, validation and test set with equal distributions of positive and negative samples and a split of 0.8 : 0.1 : 0.1. Details on how we constructed and split the datasets can be found in the <a href="download/protonet-supplementary-material.pdf" target="_blank">technical appendix</a>.</p>
+
+								<h3>Using an embedding layer</h3>
+								<p>To overcome memory limitations stemming from the high dimensionality and large sample number of our input data, we combined the dimensionality reduction by autoencoder with the embedding layer feature provided by Keras. This layer is often used in natural understanding problems where large word embedding lists are a common occurrence. The embedding layer allows to construct network inputs at training time based on a list of lookup-table indices provided.</p>
+								<p class="last">In our study, we used the coordinates, domains and go term tables as the lookup tables for the three inputs respectively, with the same list of indices provided to each input. This reduced the memory requirement of the input data to a total of 1.5 GB from between 1 TB and 22 TB otherwise. Details on the memory requirements can be found in the <a href="download/protonet-supplementary-material.pdf" target="_blank">technical appendix</a>.</p>
 
 								<h3>General network structure</h3>
-								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<p>Using the embedding layer discussed in the previous section, we were able to construct several feed-forward <span class="datatip">ANN<span class="datatiptext">Artificial Neural Network</span></span> architectures. Depending on the number of inputs fed into the network, we settled on two general network architectures. Both structures have a set of fully connected hidden layers, directly following each model input (coordinates / domains / GO annotations).</p>
+								<p>In the case of more than one input, the outputs of each set of hidden layers are concatenated and fed into a further set of layers of the same properties as the previous sets. The output of the final set is then fed into the single output neuron with a sigmoid activation function (figure 5). Any network output smaller than 0.5 was interpreted as a negative prediction (no interaction present between the two proteins in question) while an output of 0.5 or larger was interpreted as a positive prediction (interaction present). In the case of a single input, the outputs of the first set of hidden layers were fed directly into the output neuron (figure 6).</p>
+								<p class="last">A detailed outline of the network structure as well the underlying mathematical functions can be found in the <a href="download/protonet-supplementary-material.pdf" target="_blank">technical appendix</a>.</p>
+
+								<figure class="picture">
+									<img class="stretch" src="images/multi.svg" alt="Multi input ANN scheme"/>
+									<figcaption><strong>Figure 5:</strong> Schematic of neural network architecture <br>with multiple inputs.</figcaption>
+								</figure>
+								<figure class="picture">
+									<img class="stretch" src="images/single.svg" alt="Single input ANN scheme"/>
+									<figcaption><strong>Figure 6:</strong> Schematic of neural network <br>architecture with a single input.</figcaption>
+								</figure>
 
 								<h3>Hyperparameter tuning</h3>
-								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
-								<div class="nnplots">
+								<p>A key aspect of developing a good predictive model is the hyperparameter tuning. Given the computational cost of training our models (7 – 20 hours per model) and the large number of hyperparameters, an exhaustive search of all possible parameter combinations was not feasible. We therefore started by identifying the most important hyperparameters in a greedy-type manner (varying one parameter at a time and continuing with the one that results the better validation performance). The most interesting hyperparameters and their impact on model performance can be explored in the interactive tool below.</p>
+								<p>Beyond the options available in the interactive tool, we explored further parameter combinations, leading to the following conclusions:
+								<ul style="margin-left: 2em;">
+									<li>The stochastic gradient descent optimiser with Nesterov momentum (<a href="#ref_attr" target="_blank">Nesterov, 1983</a>) and default learning rate of 0.01 performed consistently better than the Adam optimiser (<a href="https://arxiv.org/abs/1412.6980" target="_blank">Kingma &amp; Ba, 2014</a>) with its default learning rate 0.001.</li>
+									<li>Varying the learning rate from the default values or introducing a learning rate decay schedule did not increase model performance.</li>
+									<li>Oversampling the minority class (positive interactions) using <span class="datatip">SMOTE<span class="datatiptext">Synthetic Minority Over-sampling Technique. A common technique used to balance an imbalance dataset.</span></span> (<a href="https://dx.doi.org/10.1613/jair.953" target="_blank">Chawla et al., 2002</a>) as well as simple oversampling by duplication lead to significantly poorer results than weighting the loss on the majority class at 0.08 : 1.0 during network training.</li>
+									<li>Adding auxiliary outputs prior to the concatenation layer did not increase model performance.</li>
+								</ul>
+								</p>
+								<div class="nnplots" id="nnplots" style="display: block;">
 									<form id="nnform">
 										<h3 style="margin-bottom: 0.25em;">Hyperparameter Exploration Tool</h3>
 										<p>Tune the hyperparameters below to find the best performing model (metrics are calculated on the validation set). The Matthews correlation coefficient is a thorough metric to measure model performance on a dataset with very imbalanced classes.</p>
@@ -315,20 +375,163 @@
 						<!-- discussion -->
 							<article id="discussion">
 								<h2 class="major">Results &amp; Discussion</h2>
-								<figure><img src="images/y2h.svg" alt="Y2H Scheme" style="width: 50%" align="left"><figcaption>HEllo heelo test</figcaption></figure>
-								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<h3>Comparing different model inputs</h3>
+								<p>The choice of model input had a very consistent effect on the model performance. As expected, models with all three inputs achieved the highest predictive performance on the validation set, followed by the models with just the embedding coordinates as inputs. Models with only protein domains as inputs showed slightly lower performance while models that only relied on only the GO data as input, had the lowest performance (cf. Hyperparameter Exploration Tool in the <a href="#model_tuning">Model Tuning</a> section).</p>
+								<p>To understand the performance differences between the single-input models, it is worth considering the different types of data being used. While the domain and GO data are independent for every single protein, there is a strong interdependence between the embedding coordinates of the proteins. In practice, this means that the coordinates of one protein in most cases depend on the coordinates of all other proteins in the network. Consequently, the higher performance of the coordinates only input becomes intuitive.</p>
+								<p>The lower performance of the GO-only input models compared to the domains-only data is most likely explained by the sparsity of the GO data: 71 % of the proteins had neither molecular function nor biological process GO annotations available. Domain data was unavailable only 6 % of the proteins in question.</p>
+								<p class="last">In their original publication on predicting novel <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
 
+ and de-noising existing <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+ networks using <span class="datatip">MDS<span class="datatiptext">Multidimensional scaling. A common dimensionality reduction technique for network data.</span></span>,  <a href="https://dx.doi.org/10.1371/journal.pcbi.1000454" target="_blank">Kuchaiev et al. (2009)</a> suggested to apply a threshold to the euclidean distance between proteins post embedding to verify interactions. We compared the ability of this simple distance based approach to reconstruct interactions with the performance of our coordinates-only input network, given the same task. We found that our network performed significantly better on reconstructing interactions from a given network (compare tables 5 and 7 below). For the comparison we chose the euclidean distance threshold that maximised the Matthews correlation coefficient.</p>
+
+								<h4>Reconstructing interactions using only euclidian distance (Table 5)</h4>
+								<table style="margin-bottom: 4em">
+									<thead>
+										<tr>
+											<th>Matthews Corr. Coeff.</th>
+											<th>F1 Score</th>
+											<th>Accuracy</th>
+											<th>Precision</th>
+											<th>Recall</th>
+											<th>AU PR Curve</th>
+											<th>AU ROC Curve</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>0.0163</td>
+											<td>0.0174</td>
+											<td>0.9972</td>
+											<td>0.0211</td>
+											<td>0.0147</td>
+											<td>0.0042</td>
+											<td>0.6159</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<h3>The final model</h3>
+								<p class="last">From the hyperparameter tuning we selected the model with the highest Matthews correlation coefficient when testing on the validation data. The hyperparameters of our final model are listed below (table 6).</p>
+								<h4>Hyperparameters of final model (Table 6)</h4>
+								<table style="margin-bottom: 1em">
+									<thead>
+										<tr>
+											<th>Sets of hidden layers</th>
+											<th>Hidden layers per set</th>
+											<th>Nodes per hidden layer</th>
+											<th>Epochs (training)</th>
+											<th>Model Input</th>
+											<th>Batchsize</th>
+											<th>Activation Function (final layer)</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>4</td>
+											<td>3</td>
+											<td>1024,128,64</td>
+											<td>7</td>
+											<td>Coordinates+Domains+GO</td>
+											<td>64</td>
+											<td>Sigmoid</td>
+										</tr>
+									</tbody>
+								</table>
+								<table style="margin-bottom: 4em">
+									<thead>
+										<tr>
+											<th>Activation Function (hidden layers)</th>
+											<th>Optimiser</th>
+											<th>Learning Rate</th>
+											<th>Regularisation Strength</th>
+											<th>Dropout Rate</th>
+											<th><span class="datatip">MDS<span class="datatiptext">Multidimensional scaling. A common dimensionality reduction technique for network data.</span></span> Embedding Dimensions</th>
+											<th>Domains &amp; GO input dimensions</th>
+											<th>Class Weight Ratio (pos:neg)</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>ReLU</td>
+											<td>SGD + Nesterov</td>
+											<td>0.01</td>
+											<td>1E-6</td>
+											<td>0.0</td>
+											<td>4</td>
+											<td>512</td>
+											<td>0.08&nbsp;:&nbsp;1.0</td>
+										</tr>
+									</tbody>
+								</table>
+
+
+								<h3>Restoring artificially removed interactions</h3>
+								<p>As described in the model tuning section, we validated the performance of our model to predict novel <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+ interactions using a hold-out test set constructed by artificially removing edges from the full Biogrid Human <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+ network. We interpreted the ability of the network to reconstruct the removed edges as a good measure of how well it would be able to detect novel PPI.</p>
+								<p class="last">As can be seen from the full performance report in table 7 below as well as figures 7 and 8, we were able to reconstruct edges with a Matthews correlation coefficient of 0.19. Considering the complexity of the task and the type input data used, we consider the result to be a strong indication for the potential of applying neural network-type machine learning techniques to biological network problems.</p>
+								<h4>Test-set performance of final model (Table 7)</h4>
+								<table style="margin-bottom: 2em">
+									<thead>
+										<tr>
+											<th>Matthews Corr. Coeff.</th>
+											<th>F1 Score</th>
+											<th>Accuracy</th>
+											<th>Precision</th>
+											<th>Recall</th>
+											<th>AU PR Curve</th>
+											<th>AU ROC Curve</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>0.1850</td>
+											<td>0.1729</td>
+											<td>0.9955</td>
+											<td>0.1252</td>
+											<td>0.2795</td>
+											<td>0.1316</td>
+											<td>0.9127</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<figure class="metplots">
+									<img src="images/prcurve.svg" alt="PR Curve"/>
+									<figcaption><strong>Figure 7:</strong> Precision-recall curve for final model.</figcaption>
+								</figure>
+								<figure class="metplots">
+									<img src="images/roccurve.svg" alt="ROC Curve"/>
+									<figcaption><strong>Figure 8:</strong> ROC curve for final model.</figcaption>
+								</figure>
+
+								<h3>Predicting novel interactions</h3>
+								<p>We applied our final model to a set of human proteins not represented in the Biogrid database. A condition for selecting the set of proteins were present protein domain information, as no GO annotations were available for human proteins not in the Biogrid Database. This way we ensured sufficient information about the proteins present in the input data despite the reduced information content in the embedding coordinates of proteins without any known interactions in the database.</p>
+								<p class="last">Overall we predicted 298,535 novel interactions between the 16,109 proteins from the Biogrid and the 3,116 newly added ones (as well as between the newly added ones). A subsection of the network is shown in figure 9 below. The full prediction results are available as a <a href="download/predictions.csv">csv file</a>.</p>
+
+								<div id="network_plot" style="margin-bottom: 1em;">
+									<p style="margin-bottom: 1.5em; font-size: 0.8em;"><i>Click and drag any node to rearrange the graph. Information about each protein will be displayed upon hovering the mouse over it. Doubleclick any protein for detailed information from the NCBI website.</i></p>
+								</div>
+								<p style="text-align:center; font-size: 0.9em;"><strong>Figure 9:</strong> Subgraph created from the combined network of known and predicted <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+. The graph was built by selecting four proteins from the interaction network (large circles)x their direct neighbours and all the interactions (known and predicted) between the proteins. White circles represent proteins originally present in the Biogrid human PPI network, orange circles represent newly added ones. Edges between different coloured graphs hence correspond predicted interactions whereas edges between white nodes represent interactions from the original Biogrid <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+ network.</p>
 							</article>
 
 
 						<!-- Conclusion -->
 							<article id="conclusion">
 								<h2 class="major">Conclusion</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
-								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<p>In this study we applied a feed-forward neural network algorithm to predict novel protein-protein interactions by combining data on previously known interactions, protein domain data and Gene Ontology annotations. When restoring artificially removed interactions from unseen data, we achieved a Matthews correlation coefficient of 0.19, F1 score of 0.17 and area under the ROC Curve of 0.91.</p>
+								<p>We used our model to predict interactions between human proteins not represented in the Biogrid database and identified a total of 298,535 novel interactions for 3,116 proteins. These predictions could provide a valuable starting point for further biological and computational studies on the interactions of these proteins.</p>
+								<p class="last">To our knowledge our algorithm is the first neural network-based prediction algorithm for protein-protein interaction which allows for straightforward integration of diverse types of input data. Unlike many other computational prediction algorithms, our approach does not require any complex considerations with regards to correctly weighting the different inputs. We hence believe that there is a large potential in improving the algorithm as more diverse data becomes available.</p>
 
-								<h3>Outlook</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<h3>Future work</h3>
+								<p>Given the limited time available for this project, we believe that there is still room for improvement with regards to our algorithm. Future work could include exploring how additional input data sources such as network statistics of each protein (such as node degree or node-wise clustering coefficient) could improve the model performance. Additional studies could also investigate the impact of the incompleteness of the GO annotations on the model performance by running comparative predictions solely based on proteins with full annotations as input.</p>
 
 							</article>
 
@@ -336,7 +539,36 @@
 						<!-- methods -->
 							<article id="methods">
 								<h2 class="major">Methods</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+
+								<h3>Data Sources</h3>
+								<p>Human <span class="datatip">PPI<span class="datatiptext">Protein-Protein Interaction</span></span>
+
+ data was obtained from the Biogrid database (Stark et al., 2005) as a mitab file:<br><i>ORGANISM-Homo_sapiens-3.4.147.mitab.txt</i></p>
+								<p>Interpro protein domain annotations were obtained from the Ensembl BioMart (<a href="https://dx.doi.org/10.1093/database/bar030" target="_blank">Kinsella et al., 2011</a>) using the biomaRt R package (<a href="https://dx.doi.org/10.1093/bioinformatics/bti525" target="_blank">Durinck, 2005</a>).</p>
+								<p class="last">Gene Ontology annotations were obtained from the Gene Ontology website (<a href="https://dx.doi.org/10.1093/nar/gku1179" target="_blank">The Gene Ontology Consortium, 2015</a>) <i>Homo sapiens</i> data set (accessed 3rd June 2017).</p>
+
+								<h3>Data Cleaning</h3>
+								<p>As this study was focusing on the human organism, we removed protein interaction between proteins from human and non-human organisms (such as <i>Saccharomyces cerevisiae</i>) using the Taxid ID feature in the Biogrid Database. Furthermore, protein self-interactions were removed by their Entrez ID.</p>
+								<p class="last">GO annotations based on proteins being part of larger complexes were removed from the GO dataset prior to data processing. Cellular compartment GO annotations were removed from the dataset as we were not able to reliable remove any annotations which were inferred from protein complexes.</p>
+
+								<h3>Software</h3>
+								<p>We used the Anaconda3 4.4.0 Python3 distribution with NetworkX 1.11, Pandas 0.20.1 and Numpy 1.12.1.</p>
+								<p>We used Keras 2.0.2 (<a href="https://github.com/fchollet/keras" target="_blank">Chollet, 2015</a>) with the Theano 0.9.0 (<a href="http://arxiv.org/abs/1605.02688" target="_blank">Theano Development Team, 2016</a>) backend.</p>
+								<p class="last">We provide the full anaconda environment file on <a href="https://github.com/ld2113/Data-Analysis-Project" target="_blank">GitHub</a> for reproducibility.</p>
+
+								<h3>Hardware</h3>
+								<p>Computations were carried out on two machines:</p>
+								<ul style="margin-left: 2em">
+									<li>2x Intel(R) Xeon(R) CPU E5-2640 v4 @ 2.40GHz; 192GB RAM; 1x Nvidia Tesla K80</li>
+									<li>2x Intel(R) Xeon(R) CPU E5-2643 v3 @ 3.40GHz; 128 GB RAM; 6x Nvidia Tesla K80</li>
+								</ul>
+
+								<h3>Code</h3>
+								<p class="last">All code written for this project is available on <a href="https://github.com/ld2113/Data-Analysis-Project" target="_blank">GitHub</a>.</p>
+
+								<h3>Technical Appendix</h3>
+								<p>The supplementary information (technical appendix) for this project is available <a href="download/protonet-supplementary-material.pdf" target="_blank">here</a>.</p>
+
 							</article>
 
 
@@ -346,9 +578,29 @@
 
 								<h3>References</h3>
 								<ul class="alt">
-									<li>Chollet, F. a. o. (2015) Keras. GitHub.</li>
-									<li>Kuchaiev, O., Rašajski, M., Higham, D. J. &amp; Pržulj, N. (2009) Geometric De-noising of Protein-Protein Interaction Networks. PLOS Computational Biology. 5 (8), e1000454 - 10.1371/journal.pcbi.1000454.</li>
-									<li>Theano Development Team. (2016) Theano: A Python framework for fast computation of mathematical expressions. ArXiv e-Prints. abs/1605.02688.</li>
+									<li>Angermueller, C., Pärnamaa, T., Parts, L. &amp; Stegle, O. (2016) Deep learning for computational biology. <I>Molecular Systems Biology. </I>12 (7), 878. <a href="https://dx.doi.org/10.15252/msb.20156651" target="_blank">LINK.</a></li>
+									<li>Bengio, Y. (2009) Learning Deep Architectures for AI. <I>Foundations and Trends in Machine Learning. </I>2 (1), 1-127. <a href="https://dx.doi.org/10.1561/2200000006" target="_blank">LINK.</a></li>
+									<li>Chawla, N. V., Bowyer, K. W., Hall, L. O. &amp; Kegelmeyer, W. P. (2002) SMOTE: synthetic minority over-sampling technique. <I>Journal of Artificial Intelligence Research. </I>16, 321-357. <a href="https://dx.doi.org/10.1613/jair.953" target="_blank">LINK.</a></li>
+									<li>Chollet, F. a. o. (2015) <I>Keras. </I>GitHub.  <a href="https://github.com/fchollet/keras" target="_blank">LINK.</a></li>
+									<li>Dorkenwald, S., Schubert, P. J., Killinger, M. F., Urban, G., Mikula, S., Svara, F. &amp; Kornfeld, J. (2017) Automated synaptic connectivity inference for volume electron microscopy. <I>Nature Methods </I>14 (4), 435-442. <a href="https://dx.doi.org/10.1038/nmeth.4206" target="_blank">LINK.</a></li>
+									<li>Durinck, S., Moreau, Y., Kasprzyk, A., Davis, S., De Moor, B., Brazma, A. &amp; Huber, W. (2005) BioMart and Bioconductor: a powerful link between biological databases and microarray data analysis. <I>Bioinformatics. </I>21 (16), 3439. <a href="https://dx.doi.org/10.1093/bioinformatics/bti525" target="_blank">LINK.</a></li>
+									<li>Fields, S. &amp; Song, O. (1989) A novel genetic system to detect protein–protein interactions. <I>Nature. </I>340 (6230), 245-246. <a href="https://dx.doi.org/10.1038/340245a0" target="_blank">LINK.</a></li>
+									<li>Herce, H. D., Deng, W., Helma, J., Leonhardt, H. &amp; Cardoso, M. C. (2013) Visualization and targeted disruption of protein interactions in living cells. <I>Nature Communications. </I> 4, 2660. <a href="https://dx.doi.org/10.1038/ncomms3660" target="_blank">LINK.</a></li>
+									<li>Keskin, O., Tuncbag, N. &amp; Gursoy, A. (2016) Predicting Protein-Protein Interactions from the Molecular to the Proteome Level. <I>Chemical Reviews. </I>116 (8), 4884-4909. <a href="https://dx.doi.org/10.1021/acs.chemrev.5b00683" target="_blank">LINK.</a></li>
+									<li>Kingma, D. &amp; Ba, J. (2014) Adam: A method for stochastic optimization. <I>ArXiv Preprint arXiv:1412.6980. </I> <a href="https://arxiv.org/abs/1412.6980" target="_blank">LINK.</a></li>
+									<li>Kinsella, R. J., Kahari, A., Haider, S., Zamora, J., Proctor, G., Spudich, G., Almeida-King, J., Staines, D., Derwent, P., Kerhornou, A., Kersey, P. &amp; Flicek, P. (2011) Ensembl BioMarts: a hub for data retrieval across taxonomic space. <I>Database. </I>2011 bar030. <a href="https://dx.doi.org/10.1093/database/bar030" target="_blank">LINK.</a></li>
+									<li>Kuchaiev, O., Rašajski, M., Higham, D. J. &amp; Pržulj, N. (2009) Geometric De-noising of Protein-Protein Interaction Networks. <I>PLOS Computational Biology. </I>5 (8), e1000454. <a href="https://dx.doi.org/10.1371/journal.pcbi.1000454" target="_blank">LINK.</a></li>
+									<li>LeCun, Y., Bengio, Y. &amp; Hinton, G. (2015) Deep learning. <I>Nature. </I>521 (7553), 436-444. <a href="https://dx.doi.org/10.1038/nature14539" target="_blank">LINK.</a></li>
+									<li>Nesterov, Y. (1983) A method of solving a convex programming problem with convergence rate O (1/k2). <I>Soviet Mathematics Doklady. </I>pp.372-376. Direct link unavailable.</li>
+									<li>Rigaut, G., Shevchenko, A., Rutz, B., Wilm, M., Mann, M. &amp; Seraphin, B. (1999) A generic protein purification method for protein complex characterization and proteome exploration. <I>Nature Biotechnology </I>17 (10), 1030-1032. <a href="https://dx.doi.org/10.1038/13732" target="_blank">LINK.</a></li>
+									<li>Rosenblatt, F. (1961) <I>Principles of Neurodynamics: Perceptrons and the Theory of Brain Mechanisms. </I>Washington DC, Spartan Books. Direct link unavailable.</li>
+									<li>Rumelhart, D. E., Hinton, G. E. &amp; Williams, R. J. (1985) <I>Learning internal representations by error propagation. </I>La Jolla, California, California Univ San Diego La Jolla Inst for Cognitive Science. Report number: ICS 8856.  <a href="http://www.dtic.mil/dtic/tr/fulltext/u2/a164453.pdf" target="_blank">LINK.</a></li>
+									<li>Shoemaker, B. A. &amp; Panchenko, A. R. (2007) Deciphering Protein-Protein Interactions. Part II. Computational Methods to Predict Protein and Domain Interaction Partners. <I>PLOS Computational Biology. </I>3 (4), e43. <a href="https://dx.doi.org/10.1371/journal.pcbi.0030043" target="_blank">LINK.</a></li>
+									<li>Skrabanek, L., Saini, H. K., Bader, G. D. &amp; Enright, A. J. (2008) Computational Prediction of Protein-Protein Interactions. <I>Molecular Biotechnology. </I>38 (1), 1-17. <a href="https://dx.doi.org/10.1007/s12033-007-0069-2" target="_blank">LINK.</a></li>
+									<li>Stark, C., Breitkreutz, B., Reguly, T., Boucher, L., Breitkreutz, A. &amp; Tyers, M. (2005) BioGRID: a general repository for interaction datasets. <I>Nucleic Acids Research. </I>34, D535-D539. <a href="https://dx.doi.org/10.1093/nar/gkj109" target="_blank">LINK.</a></li>
+									<li>Sun, T., Zhou, B., Lai, L. &amp; Pei, J. (2017) Sequence-based prediction of protein protein interaction using a deep-learning algorithm. <I>BMC Bioinformatics. </I>18, 277. <a href="https://dx.doi.org/10.1186/s12859-017-1700-2" target="_blank">LINK.</a></li>
+									<li>The Gene Ontology Consortium. (2015) Gene Ontology Consortium: going forward. <I>Nucleic Acids Research. </I>43 (D1), D1049. <a href="https://dx.doi.org/10.1093/nar/gku1179" target="_blank">LINK.</a></li>
+									<li>Theano Development Team. (2016) Theano: A Python framework for fast computation of mathematical expressions. <I>ArXiv e-Prints. </I>abs/1605.02688. <a href="http://arxiv.org/abs/1605.02688" target="_blank">LINK.</a></li>
 								</ul>
 
 								<h3>Attributions</h3>
@@ -375,6 +627,12 @@
 												<td><a href="https://commons.wikimedia.org/wiki/File:Social_Network_Visualization.png" target="_blank">Martin Grandjean</a></td>
 												<td><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank">CC BY-SA 4.0</a></td>
 											</tr>
+											<tr>
+												<td>Technical Appendix Template</td>
+												<td>Arsclassica Article</td>
+												<td><a href="http://www.latextemplates.com/template/arsclassica-article" target="_blank">Lorenzo Pantieri  &amp; Vel</a></td>
+												<td><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en" target="_blank">CC BY-NC-SA 3.0</a></td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
@@ -384,27 +642,24 @@
 						<!-- People -->
 							<article id="people">
 								<h2 class="major">People</h2>
-								<h3>Contributions</h3>
-								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
-
 								<h3>Acknowledgements</h3>
-								<p class="last">Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<p class="last">First and foremost I would like to thank my supervisor Dr Thomas Thorne for his excellent supervision and support during my project. Only through his guidance was I able to master a project of this scale in the limited amount of time available. I furthermore would like to thank Prof Michael Stumpf and Dr Juliane Liepe for providing me with additional computational resources and desk space for this project.</p>
+
+								<h3>Contributions</h3>
+								<p class="last">LD familiarised himself with basic and advanced topics in machine learning using neural networks by completing the <a href="http://cs231n.stanford.edu/" target="_blank">CS231n</a> Stanford University lecture course at the start of the project. LD designed, and optimised neural network architecture and the data preprocessing pipeline. LD produced results. TT conceived the project idea and provided guidance to valuable resources. TT provided protein domain and GO data and novel proteins in CSV format. LD designed the website and wrote up the project.</p>
 
 								<h3>Contact</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
-							</article>
-
-
-						<!-- Elements -->
-							<article id="elements">
-								<div id="includedContent"></div>
+								<ul class="alt">
+									<li><strong>Leander Dony</strong><br>MSc Bioinformatics and Theoretical Systems Biology, Imperial College London. (<a href="mailto:leander.dony13@ic.ac.uk" target="_blank">leander.dony13@ic.ac.uk</a>)</li>
+									<li>Supervisor: <strong>Dr Thomas Thorne</strong><br>Safra Research Fellow, Faculty of Medicine, Department of Medicine, Imperial College London.</li>
+								</ul>
 							</article>
 
 					</div>
 
 				<!-- Footer -->
 					<footer id="footer">
-						<p class="copyright"><!---&copy;---><a class="nodots" href="#elements">Leander Dony, Imperial College London.</a><!--- Website Template: <a href="https://html5up.net">HTML5 UP</a>.---></p>
+						<p class="copyright"><!---&copy;--->Leander Dony, Imperial College London.<!--- Website Template: <a href="https://html5up.net">HTML5 UP</a>.---></p>
 					</footer>
 			</div>
 
@@ -417,17 +672,30 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="https://d3js.org/d3.v4.min.js"></script>
-			<!--<script src="assets/js/d3plus.full.min.js"></script>
-			<script src="assets/js/plots/d3pExample.js" type="text/javascript"></script>
-			<script src="assets/js/plots/scatter.js" type="text/javascript"></script>
-			<script src="assets/js/plots/barchart.js" type="text/javascript"></script>
-			<script src="assets/js/plots/zoomexample.js" type="text/javascript"></script>-->
 			<script src="assets/js/plots/filter.js" type="text/javascript"></script>
 			<script src="assets/js/plots/protzoom.js" type="text/javascript"></script>
+			<script src="assets/js/plots/network.js" type="text/javascript"></script>
+			<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+			<script src="tooltip/tooltip.js"></script>
+			<script src="assets/js/jquery.glossarize.js"></script>
 			<script>
-				$(function(){
-					$("#includedContent").load("elements.html");
+			$(function(){
+				$('#main').glossarizer({
+				sourceURL: 'glossary.json',
+					callback: function(){
+						new tooltip();
+					}
 				});
-			</script>
+			});
+			</script>-->
+			<!--<script type="text/javascript">
+				$('p a').tooltip().eq(0).tooltip('show').tooltip('disable').one('mouseout', function() {
+				$(this).tooltip('enable');
+			});
+
+			setTimeout(function() {
+				$('p a').tooltip().eq(0).tooltip('hide').tooltip('enable');
+				}, 5000);
+			</script>-->
 	</body>
 </html>

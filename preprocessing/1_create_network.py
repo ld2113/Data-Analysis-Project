@@ -33,12 +33,12 @@ def create_graph(df, rm_frac=0.1):
 	G = nx.from_pandas_dataframe(df, 'ID Interactor A', 'ID Interactor B', create_using=nx.Graph())
 
 	if rm_frac > 0.0:
-		np.random.seed(42)
-		ind_sample = np.random.choice(np.arange(len(nx.edges(G))), size=int(rm_frac*len(nx.edges(G))), replace=False)
-		edgelist = nx.edges(G)
-		rm_edges = [edgelist[i] for i in ind_sample]
-		G.remove_edges_from(rm_edges)
-
+		# np.random.seed(42)
+		# ind_sample = np.random.choice(np.arange(len(nx.edges(G))), size=int(rm_frac*len(nx.edges(G))), replace=False)
+		# edgelist = nx.edges(G)
+		# rm_edges = [edgelist[i] for i in ind_sample]
+		G.remove_edges_from(list(map(tuple,np.load('arrays/08_testing/network/rm_edges_09_test.npy').astype(int).tolist())))
+		rm_edges = []
 	else:
 		rm_edges = []
 
@@ -83,7 +83,7 @@ df = process_df(path)
 
 # Create graph and remove some edges
 print('---Processing Graph---')
-G, rm_edges = create_graph(df, rm_frac=0.0)
+G, rm_edges = create_graph(df, rm_frac=0.1)
 
 # Calculate distance
 print('---Calculating Distances---')
@@ -96,7 +96,7 @@ labels = create_labels(dist_df_orig)
 # Save data
 print('---Saving Data---')
 #np.save('arrays/names.npy', names)
-np.save('arrays/full_embed/network/dist_mat_4_5.npy', dist_mat)
-np.save('arrays/full_embed/network/labels_100.npy', labels)
-np.save('arrays/full_embed/network/rm_edges.npy', rm_edges)
-dist_df_orig.to_pickle('arrays/full_embed/network/dist_df_orig_4_5.pkl')
+np.save('arrays/08_testing/network/dist_mat_4_5.npy', dist_mat)
+np.save('arrays/08_testing/network/labels_100.npy', labels)
+# np.save('arrays/full_embed/network/rm_edges.npy', rm_edges)
+dist_df_orig.to_pickle('arrays/08_testing/network/dist_df_orig_4_5.pkl')
