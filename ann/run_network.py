@@ -18,7 +18,7 @@ go_path = '../../data/encoded_go_tanh_512.npy'
 coord_path = '../../data/080_embed/4D_coord_4x16k.npy'
 train_path = '../../data/080_embed/nl_train_02_emb.npy'
 test_path = '../../data/080_embed/nl_val_01_emb.npy'
-#alle ramining cdg schon gemacht24.6:
+
 input_mode = 'g' # 'c'-> coordinates only; 'd'-> domains only; 'g'-> go terms only; 'cdg'-> all three
 coord_struct = [64]
 dom_struct = [64]
